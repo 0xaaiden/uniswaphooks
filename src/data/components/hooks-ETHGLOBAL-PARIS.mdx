@@ -1,0 +1,47 @@
+---
+title: EthCC Paris Hookathon
+emoji: 🥖
+category: hooks
+container: p-6 max-w-md mx-auto
+seo:
+  title: EthCC Paris Hookathon
+  description: Hooks submitted during the EthCC Paris Hookathon 2023
+components:
+  1:
+    title: Median Price Oracle
+    description: An initial exploration of a median price oracle that is more resistant to manipulation than TWAP. It includes an approximation algorithm where a running median can provide substantial gas efficiency on both read and write.
+    creator: saucepoint
+    website: https://github.com/saucepoint/
+    github: https://github.com/saucepoint/median-oracles
+  2:
+    title: Impermanent Loss Hedge (Makemake)
+    description: A hook to explore ways to hedge impermanent loss for LPs by buying out of the money call options on the underlying asset. When liquidity is added to the pool, the hook is called & executes a purchase of the req. amount of calls in Lyra options protocol.
+    creator: makemake-kbo
+    website: https://github.com/makemake-kbo/
+    github: https://github.com/makemake-kbo/sdhasidhas
+  3:
+    title: Hedge
+    description: Risk management strategies using hooks. The project showcases how hedging mechanisms can mitigate price volatility risks in a trader's portfolio.
+    creator: vanillaHill
+    website: https://github.com/vanillaHill/
+    github: https://github.com/vanillaHill/hedge
+  4:
+    title: Trading Hours
+    description: Traditional market opening/closing hours to a Uniswap v4 pool using a beforeSwap hook. Users are only able to trade between 8am and 4pm.
+    creator: bennoprice
+    website: https://github.com/bennoprice/
+    github: https://github.com/bennoprice/univ4/blob/main/src/TradingHours.sol
+  5:
+    title: Dynamic Fee
+    description: Adjusts with the goal of cutting LP losses to arbitrageurs, and an implementation of a shared fungible liquidity position (similar to a vault).
+    creator: ArrakisFinance
+    website: https://github.com/ArrakisFinance/
+    github: https://github.com/ArrakisFinance/uni-v4-playground/blob/main/contracts/ArrakisHookV1.sol
+---
+
+# EthCC Paris Hookathon
+
+<CollectionList
+  componentsData={componentsData}
+  componentContainer={componentContainer}
+/>

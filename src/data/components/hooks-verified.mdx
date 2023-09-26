@@ -1,0 +1,54 @@
+---
+title: Verified
+emoji: ✅
+category: hooks
+container: p-6 max-w-md mx-auto
+
+seo:
+  title: Verified Hooks
+  description: Hooks audited and verified by the Uniswap Foundation
+components:
+  1:
+    title: Full Range
+    description: A hook that allows a Uniswap pool to provide liquidity for a range of prices. This can be used to create a market maker for a volatile asset or to provide more liquidity for a thin market.
+    creator: Uniswap Labs
+    website: https://github.com/Uniswap/v4-periphery
+    github: https://github.com/Uniswap/v4-periphery/blob/main/contracts/hooks/examples/FullRange.sol
+  2:
+    title: Geomean Oracle
+    description: A unique hook making a Uniswap pool function as an oracle. The geomean price is calculated using the prices of the assets in the pool. This can be used to get a more accurate price for an asset than a single oracle.
+    creator: Uniswap Labs
+    website: https://github.com/Uniswap/v4-periphery
+    github: https://github.com/Uniswap/v4-periphery/blob/main/contracts/hooks/examples/GeomeanOracle.sol
+  3:
+    title: Limit Order
+    description: A hook that allows users to place limit orders. This means that they can specify the price at which they are willing to buy or sell an asset. If the market price reaches the limit price, the order will be executed.
+    creator: Uniswap Labs
+    website: https://github.com/Uniswap/v4-periphery
+    github: https://github.com/Uniswap/v4-periphery/blob/main/contracts/hooks/examples/LimitOrder.sol
+  4:
+    title: TWAMM
+    description: A TWAMM (Time Weighted Average Market Maker) is a type of market maker that uses time-weighted averages to calculate the prices of assets. This can be used to reduce the volatility of the market and to provide more accurate prices for assets.
+    creator: Uniswap Labs
+    website: https://github.com/Uniswap/v4-periphery
+    github: https://github.com/Uniswap/v4-periphery/blob/main/contracts/hooks/examples/TWAMM.sol
+  5:
+    title: Volatility Oracle
+    description: A volatility oracle is a contract that provides information about the volatility of an asset. This information can be used to price options and other derivatives.
+    creator: Uniswap Labs
+    website: https://github.com/Uniswap/v4-periphery
+    github: https://github.com/Uniswap/v4-periphery/blob/main/contracts/hooks/examples/VolatilityOracle.sol
+  6:
+    title: Truncated Oracle
+    description: A truncated oracle is an onchain price oracle that records the price of an asset in a Uniswap liquidity pool using the geometric mean formula.
+    creator: Uniswap Labs
+    website: https://github.com/Uniswap/v4-periphery
+    github: https://github.com/Uniswap/v4-periphery/blob/trunc-oracle/contracts/hooks/TruncGeoOracle.sol
+---
+
+# Verified Hooks
+
+<CollectionList
+  componentsData={componentsData}
+  componentContainer={componentContainer}
+/>
