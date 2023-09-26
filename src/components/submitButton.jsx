@@ -56,9 +56,10 @@ onClick={(ev) =>
   //wait 1s 
   ev.preventDefault();
   handleClick();
-  new Promise(r => setTimeout(r, 1000)).then(
+  new Promise(r => setTimeout(r, 500)).then(
     () => {
-      
+      // go to https://github.com/0xaaiden/uniswaphooks/issues/new?assignees=0xaaiden&labels=new-hook&projects=&template=hooks_addition.md&title=%5BNew+Hook%5D%3A+Your+Hook+Name
+      window.location.href = 'https://github.com/0xaaiden/uniswaphooks/issues/new?assignees=0xaaiden&labels=new-hook&projects=&template=hooks_addition.md&title=%5BNew+Hook%5D%3A+Your+Hook+Name'
     }
   );
   }}
