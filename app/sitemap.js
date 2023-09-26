@@ -39,24 +39,24 @@ export default async function sitemap() {
     return componentsByCategory.flatMap((componentItem) => componentItem)
   }
 
-  async function getBlogs() {
-    const blogsPath = join(process.cwd(), '/src/data/posts')
+  // async function getBlogs() {
+  //   const blogsPath = join(process.cwd(), '/src/data/posts')
 
-    const blogSlugs = await fs.readdir(blogsPath)
+  //   const blogSlugs = await fs.readdir(blogsPath)
 
-    return await Promise.all(
-      blogSlugs.map(async (blogSlug) => {
-        const blogSlugFormatted = blogSlug.replace('.mdx', '')
+  //   return await Promise.all(
+  //     blogSlugs.map(async (blogSlug) => {
+  //       const blogSlugFormatted = blogSlug.replace('.mdx', '')
 
-        return `blog/${blogSlugFormatted}`
-      })
-    )
-  }
+  //       return `blog/${blogSlugFormatted}`
+  //     })
+  //   )
+  // }
 
   const siteSlugs = await Promise.all([
     getCategories(),
     getComponents(),
-    getBlogs(),
+    // getBlogs(),
   ])
 
   const transformedSlugs = siteSlugs.flatMap((siteSlug) => {
