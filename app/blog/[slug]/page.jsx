@@ -18,7 +18,7 @@ const mdxComponents = {
   BlogPreview,
 }
 
-const postsPath = join(process.cwd(), '/src/data/posts')
+// const postsPath = join(process.cwd(), '/src/data/posts')
 
 // export async function generateMetadata({ params }) {
 //   // const { blogData } = await getPost(params)
@@ -39,9 +39,9 @@ const postsPath = join(process.cwd(), '/src/data/posts')
 //   }
 // }
 
-export async function generateStaticParams() {
-  return await fs.readdir(postsPath)
-}
+// export async function generateStaticParams() {
+//   return await fs.readdir(postsPath)
+// }
 
 async function getPost(params) {
 //   const postPath = join(postsPath, `${params.slug}.mdx`)
