@@ -23,37 +23,37 @@ export const metadata = {
   },
 }
 
-const postsPath = join(process.cwd(), '/src/data/posts')
+// const postsPath = join(process.cwd(), '/src/data/posts')
 
-async function getPosts() {
-  const blogSlugs = await fs.readdir(postsPath)
+// async function getPosts() {
+//   const blogSlugs = await fs.readdir(postsPath)
 
-  const blogPosts = await Promise.all(
-    blogSlugs.map(async (blogSlug) => {
-      const postPath = join(postsPath, blogSlug)
-      const blogItem = await fs.readFile(postPath, 'utf-8')
+//   const blogPosts = await Promise.all(
+//     blogSlugs.map(async (blogSlug) => {
+//       const postPath = join(postsPath, blogSlug)
+//       const blogItem = await fs.readFile(postPath, 'utf-8')
 
-      const { data: blogData } = matter(blogItem)
+//       const { data: blogData } = matter(blogItem)
 
-      return {
-        title: blogData.title,
-        date: blogData.date,
-        emoji: blogData.emoji,
-        slug: blogSlug.replace('.mdx', ''),
-      }
-    })
-  )
+//       return {
+//         title: blogData.title,
+//         date: blogData.date,
+//         emoji: blogData.emoji,
+//         slug: blogSlug.replace('.mdx', ''),
+//       }
+//     })
+//   )
 
-  return blogPosts.sort((blogA, blogB) => {
-    const dateA = new Date(blogA.date)
-    const dateB = new Date(blogB.date)
+//   return blogPosts.sort((blogA, blogB) => {
+//     const dateA = new Date(blogA.date)
+//     const dateB = new Date(blogB.date)
 
-    return dateB - dateA
-  })
-}
+//     return dateB - dateA
+//   })
+// }
 
 export default async function Page() {
-  const blogPosts = await getPosts()
+  // const blogPosts = await getPosts()
 
   return (
     <>
@@ -66,7 +66,7 @@ export default async function Page() {
       </HeroBanner>
 
       <Container classNames="pb-8 lg:pb-12">
-        <BlogGrid blogPosts={blogPosts} />
+        {/* <BlogGrid blogPosts={blogPosts} /> */}
       </Container>
     </>
   )
