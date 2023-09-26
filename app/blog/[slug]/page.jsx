@@ -20,63 +20,63 @@ const mdxComponents = {
 
 const postsPath = join(process.cwd(), '/src/data/posts')
 
-export async function generateMetadata({ params }) {
-  const { blogData } = await getPost(params)
+// export async function generateMetadata({ params }) {
+//   // const { blogData } = await getPost(params)
 
-  return {
-    title: `${blogData.title} | UniswapHooks`,
-    description: blogData.description,
-    openGraph: {
-      title: `${blogData.title} | UniswapHooks`,
-      description: blogData.description,
-      ...ogMeta,
-    },
-    twitter: {
-      title: `${blogData.title} | UniswapHooks`,
-      description: blogData.description,
-      ...twitterMeta,
-    },
-  }
-}
+//   return {
+//     title: `${blogData.title} | UniswapHooks`,
+//     description: blogData.description,
+//     openGraph: {
+//       title: `${blogData.title} | UniswapHooks`,
+//       description: blogData.description,
+//       ...ogMeta,
+//     },
+//     twitter: {
+//       title: `${blogData.title} | UniswapHooks`,
+//       description: blogData.description,
+//       ...twitterMeta,
+//     },
+//   }
+// }
 
 export async function generateStaticParams() {
   return await fs.readdir(postsPath)
 }
 
 async function getPost(params) {
-  const postPath = join(postsPath, `${params.slug}.mdx`)
-  const postItem = await fs.readFile(postPath, 'utf-8')
+//   const postPath = join(postsPath, `${params.slug}.mdx`)
+//   const postItem = await fs.readFile(postPath, 'utf-8')
 
-  const { content, data: frontmatter } = matter(postItem)
+//   const { content, data: frontmatter } = matter(postItem)
 
-  const mdxSource = await serialize(content, {
-    mdxOptions: {
-      remarkPlugins: [remarkSlug],
-      rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]],
-    },
-    scope: frontmatter,
-  })
+//   const mdxSource = await serialize(content, {
+//     mdxOptions: {
+//       remarkPlugins: [remarkSlug],
+//       rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]],
+//     },
+//     scope: frontmatter,
+//   })
 
-  return {
-    blogData: frontmatter,
-    blogContent: mdxSource,
-  }
-}
+//   return {
+//     blogData: frontmatter,
+//     blogContent: mdxSource,
+//   }
+// }
 
-export default async function Page({ params }) {
-  const { blogData, blogContent } = await getPost(params)
+// export default async function Page({ params }) {
+//   const { blogData, blogContent } = await getPost(params)
 
-  const schemaData = {
-    '@context': 'http://schema.org',
-    '@type': 'NewsArticle',
-    headline: `${blogData.title}`,
-    image: 'https://www.uniswaphooks.com/og.jpg',
-    datePublished: `${blogData.date}`,
-  }
+//   const schemaData = {
+//     '@context': 'http://schema.org',
+//     '@type': 'NewsArticle',
+//     headline: `${blogData.title}`,
+//     image: 'https://www.uniswaphooks.com/og.jpg',
+//     datePublished: `${blogData.date}`,
+//   }
 
   return (
     <>
-      <script
+      {/* <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
@@ -96,7 +96,7 @@ export default async function Page({ params }) {
             mdxComponents={mdxComponents}
           />
         </article>
-      </Container>
+      </Container> */}
     </>
   )
 }
