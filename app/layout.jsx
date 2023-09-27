@@ -26,7 +26,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Curated Uniswap v4 Hooks Directory',
-    description: 'Top Uniswap v4 Hooks for your next DeFi project.',
+    description: 'Community-Curated Uniswap v4 Hooks for seamless DeFi integrations.',
   },
 }
 
