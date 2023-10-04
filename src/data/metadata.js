@@ -2,7 +2,7 @@ export const ogMeta = {
   url: 'https://www.uniswaphooks.com/',
   siteName: 'Uniswap v4 Hooks Directory',
   type: 'website',
-  images: ['https://www.uniswaphooks.com/og.jpg'],
+  images: ['https://www.uniswaphooks.com/og.png'],
 }
 
 export const twitterMeta = {
