@@ -3,7 +3,7 @@ import Container from '@component/Container'
 export default function HeaderBanner() {
   return (
     <section className="-mt-px border-y border-gray-200 bg-gray-100">
-      {/* <Container classNames="py-1.5">
+      <Container classNames="py-1.5">
         <a
           href="https://github.com/0xaaiden/uniswaphooks"
           rel="noreferrer"
@@ -18,7 +18,7 @@ export default function HeaderBanner() {
             🎉
           </span>
         </a>
-      </Container> */}
+      </Container>
     </section>
   )
 }
