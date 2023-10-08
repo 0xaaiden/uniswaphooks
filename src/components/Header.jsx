@@ -19,11 +19,11 @@ export default function Header() {
   useEffect(() => setShowMenu(false), [routerPathname])
 
   const menuLinks = [
-    // {
-    //   title: 'Hooks',
-    //   href: '/components/hooks',
-    //   external: false,
-    // },
+    {
+      title: 'Blog',
+      href: '/blog',
+      external: false,
+    },
   ]
 
   return (
