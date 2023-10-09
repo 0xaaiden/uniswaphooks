@@ -9,10 +9,10 @@ export default function Footer() {
       title: 'FAQs',
       href: '/about/faqs',
     },
-    // {
-    //   title: 'Acknowledgements',
-    //   href: '/about/acknowledgements',
-    // },
+    {
+      title: 'Acknowledgements',
+      href: '/about/acknowledgements',
+    },
     // {
     //   title: 'Sponsors',
     //   href: '/about/sponsors',
