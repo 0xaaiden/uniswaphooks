@@ -59,10 +59,9 @@ export default async function Page() {
     <>
       <HeroBanner
         title="Blog"
-        subtitle="Tailwind CSS Blog with Tips and Tricks"
+        subtitle=""
       >
-        Learn Tailwind CSS tips and tricks that you can use in your work to help
-        write cleaner, more maintainable code and help you be more productive.
+        
       </HeroBanner>
 
       <Container classNames="pb-8 lg:pb-12">
