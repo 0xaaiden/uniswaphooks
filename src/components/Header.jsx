@@ -20,6 +20,11 @@ export default function Header() {
 
   const menuLinks = [
     {
+      title: "Chains",
+      href: "/chains",
+      external: false,
+    },
+    {
       title: 'Blog',
       href: '/blog',
       external: false,

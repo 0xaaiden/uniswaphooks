@@ -15,6 +15,7 @@
     "@vercel/analytics": "^1.0.2",
     "@vercel/og": "^0.5.17",
     "emojisplosion": "^2.6.1",
+    "lucide-react": "^0.287.0",
     "next": "^13.4.19",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
@@ -26,6 +27,7 @@
     "@next/eslint-plugin-next": "^13.5.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.10",
+    "@types/node": "20.8.6",
     "autoprefixer": "^10.4.15",
     "eslint": "^8.49.0",
     "eslint-config-next": "^13.4.19",
@@ -41,6 +43,7 @@
     "remark": "^14.0.3",
     "remark-html": "^15.0.1",
     "remark-slug": "^7.0.1",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "typescript": "5.2.2"
   }
 }

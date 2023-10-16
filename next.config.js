@@ -3,6 +3,9 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
 },
+  images: {
+    domains: ['chainlist.org', "i.imgur.com", "icons.llamao.fi"],
+  },
   reactStrictMode: true,
   experimental: {
     appDir: true,
