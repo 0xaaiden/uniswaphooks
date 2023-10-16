@@ -42,11 +42,16 @@ async function getChains() {
         currency: chainData.currency,
         poolManager: chainData.poolManagerAddress,
         slug: chainSlug.replace('.mdx', ''),
+        tags: chainData.tags,
+        docs: chainData.docs,
       }
     })
   )
 
-  return chainPosts
+  return chainPosts.sort(
+    // Conduit Testnet with chainId 111 should come first
+    (a, b) => (a.chainID === 111 ? -1 : b.chainID === 111 ? 1 : 0)
+  )
 }
 
 export default async function Page() {

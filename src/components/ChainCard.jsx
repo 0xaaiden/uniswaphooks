@@ -10,6 +10,27 @@ export default function ChainCard({ chainPost }) {
       <div className="h-full overflow-auto rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
         <div className="max-w-md overflow-auto p-4 sm:p-6 lg:p-4">
           {/* Top center: Name of chain and its logo */}
+          {chainPost.docs ? (
+            <Link href={chainPost.docs} target="_blank">
+              <span class="absolute right-3 flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="-ms-1 me-1.5 h-4 w-4"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <p class="whitespace-nowrap text-sm">Official</p>
+              </span>
+            </Link>
+          ) : null}
           <div className="mb-6 mt-1 flex items-center justify-center gap-2 align-baseline ">
             <Image
               aria-hidden="true"
