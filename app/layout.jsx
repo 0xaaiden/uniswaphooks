@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react'
 
 import { Inter } from 'next/font/google'
 
@@ -11,13 +11,15 @@ import '@style/site.css'
 import Footer from '@component/Footer'
 import Header from '@component/Header'
 import HeaderBanner from '@component/HeaderBanner'
+import Ads from './ads'
 
 export const metadata = {
   title: 'Uniswap v4 Hooks Directory',
   description: 'Curated Uniswap v4 Hooks.',
   openGraph: {
     title: 'Uniswap v4 Hooks Directory | Curated Open Source Hooks',
-    description: 'Discover top Uniswap v4 Hooks for seamless DeFi integrations.',
+    description:
+      'Discover top Uniswap v4 Hooks for seamless DeFi integrations.',
     url: 'https://www.uniswaphooks.com/',
     siteName: 'UniswapHooks',
     type: 'website',
@@ -26,7 +28,8 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Curated Uniswap v4 Hooks Directory',
-    description: 'Community-Curated Uniswap v4 Hooks for seamless DeFi integrations.',
+    description:
+      'Community-Curated Uniswap v4 Hooks for seamless DeFi integrations.',
   },
 }
 
@@ -41,7 +44,7 @@ export default function RootLayout({ children }) {
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_KEY}`}
       />
-{/* <script async src="https://unpkg.com/emojisplosion/lib/easy.js"></script> */}
+      {/* <script async src="https://unpkg.com/emojisplosion/lib/easy.js"></script> */}
 
       <Script id="google-analytics">
         {`
@@ -61,11 +64,10 @@ export default function RootLayout({ children }) {
       <body className={`${inter.variable} font-sans antialiased`}>
         <Header />
         <HeaderBanner />
-
+        <Ads />
         <main className="bg-white">{children}</main>
         <Analytics />
         <Footer />
-
       </body>
     </html>
   )
