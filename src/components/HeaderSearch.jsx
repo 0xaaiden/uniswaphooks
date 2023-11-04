@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+'use client'
 
 import { usePathname } from 'next/navigation'
-
 import Link from 'next/link'
 
+import { useEffect, useRef, useState } from 'react'
 import { useClickAway, useDebounce } from 'react-use'
 
 export default function HeaderSearch() {
@@ -70,7 +70,7 @@ export default function HeaderSearch() {
 
   return (
     <div ref={refDropdown} className="relative flex h-16 items-center">
-      <form role="search" className="min-w-[100px] max-w-[120px] sm:max-w-none">
+      <form role="search" className="w-full sm:max-w-none">
         <label htmlFor="SiteSearch" className="sr-only">
           Search
         </label>
@@ -91,7 +91,7 @@ export default function HeaderSearch() {
       </form>
 
       {showDropdown && (
-        <div className="absolute right-0 top-14 z-50 w-64 rounded-lg border border-gray-100 bg-white shadow-lg">
+        <div className="absolute right-0 top-14 z-50 w-full rounded-lg border border-gray-100 bg-white shadow-lg">
           {searchResults.length ? (
             <ul className="max-h-64 space-y-1 overflow-auto p-2">
               {searchResults.map((searchResult) => (
@@ -99,6 +99,7 @@ export default function HeaderSearch() {
                   <Link
                     href={`/components/${searchResult.category.slug}/${searchResult.slug}`}
                   >
+                    
                     <div className="flex items-center justify-between rounded-md px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100 focus:bg-gray-50">
                       <span>{searchResult.title}</span>
 

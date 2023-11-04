@@ -1,5 +1,4 @@
-"use client"
-import {useEffect} from 'react';
+'use client'
 import { emojisplosion } from 'emojisplosion'
 
 export default function SubmitButton() {
@@ -22,11 +21,11 @@ export default function SubmitButton() {
     }
 
     emojisplosion({
-      physics:{
+      physics: {
         fontSize: {
           max: 43,
           min: 24,
-      },
+        },
       },
       //emoji hook
       emojis: ['🪝', '🦄'],
@@ -43,29 +42,23 @@ export default function SubmitButton() {
   }
 
   return (
-    <div className=" mt-8 flex justify-center">
-    <script>
-      
-    </script>
-  <a
-class="inline-block rounded border-2 border-current px-8 py-3 text-md font-bold text-neutral-600 transition hover:-rotate-2 hover:scale-110 focus:outline-none focus:ring active:text-pink-500"
-id="submit-button"
-onClick={(ev) =>
-
-{
-  //wait 1s 
-  ev.preventDefault();
-  handleClick();
-  new Promise(r => setTimeout(r, 500)).then(
-    () => {
-      // go to https://github.com/0xaaiden/uniswaphooks/issues/new?assignees=0xaaiden&labels=new-hook&projects=&template=hooks_addition.md&title=%5BNew+Hook%5D%3A+Your+Hook+Name
-      window.location.href = 'https://github.com/0xaaiden/uniswaphooks/issues/new?assignees=0xaaiden&labels=new-hook&projects=&template=hooks_addition.md&title=%5BNew+Hook%5D%3A+Your+Hook+Name'
-    }
-  );
-  }}
->
-<span className='mr-2 '>🎉</span> Submit a new Hook
-</a>
-  </div>
-  );
+    <div className="flex justify-center">
+      <a
+        className="inline-flex items-center rounded-md border-2 border-current px-3 py-1.5 text-xs font-semibold text-gray-900 transition hover:-rotate-2 hover:scale-110 focus:outline-none focus:ring active:text-pink-500"
+        id="submit-button"
+        onClick={(ev) => {
+          //wait 1s
+          ev.preventDefault()
+          handleClick()
+          new Promise((r) => setTimeout(r, 500)).then(() => {
+            // go to https://github.com/0xaaiden/uniswaphooks/issues/new?assignees=0xaaiden&labels=new-hook&projects=&template=hooks_addition.md&title=%5BNew+Hook%5D%3A+Your+Hook+Name
+            window.location.href =
+              'https://github.com/0xaaiden/uniswaphooks/issues/new?assignees=0xaaiden&labels=new-hook&projects=&template=hooks_addition.md&title=%5BNew+Hook%5D%3A+Your+Hook+Name'
+          })
+        }}
+      >
+        <span className="mr-2 ">🎉</span> Submit a new Hook
+      </a>
+    </div>
+  )
 }
