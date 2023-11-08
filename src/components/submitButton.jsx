@@ -1,10 +1,12 @@
 'use client'
+
+import Link from 'next/link'
 import { emojisplosion } from 'emojisplosion'
 
 export default function SubmitButton() {
   const handleClick = () => {
     const element = document.getElementById('submit-button')
-
+    setTimeout(() => {}, 500)
     let cumulativeOffset = function (element) {
       var top = 0,
         left = 0
@@ -43,22 +45,16 @@ export default function SubmitButton() {
 
   return (
     <div className="flex justify-center">
-      <a
+      <Link
         className="inline-flex items-center rounded-md border-2 border-current px-3 py-1.5 text-xs font-semibold text-gray-900 transition hover:-rotate-2 hover:scale-110 focus:outline-none focus:ring active:text-pink-500"
         id="submit-button"
-        onClick={(ev) => {
-          //wait 1s
-          ev.preventDefault()
+        href="/add-new-hook"
+        onClick={() => {
           handleClick()
-          new Promise((r) => setTimeout(r, 500)).then(() => {
-            // go to https://github.com/0xaaiden/uniswaphooks/issues/new?assignees=0xaaiden&labels=new-hook&projects=&template=hooks_addition.md&title=%5BNew+Hook%5D%3A+Your+Hook+Name
-            window.location.href =
-              'https://github.com/0xaaiden/uniswaphooks/issues/new?assignees=0xaaiden&labels=new-hook&projects=&template=hooks_addition.md&title=%5BNew+Hook%5D%3A+Your+Hook+Name'
-          })
         }}
       >
-        <span className="mr-2 ">🎉</span> Submit a new Hook
-      </a>
+        <span className="mr-2">🎉</span> Submit a new Hook
+      </Link>
     </div>
   )
 }

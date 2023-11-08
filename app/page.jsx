@@ -1,4 +1,3 @@
-// "use client"
 import matter from 'gray-matter'
 import { join } from 'path'
 import { promises as fs } from 'fs'
@@ -75,6 +74,7 @@ export default async function Page() {
           that can be used in your project. Each hook is self-contained and can
           be used independently.
         </p>
+
         <HeaderSearch />
       </HeroBanner>
 

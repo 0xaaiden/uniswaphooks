@@ -69,7 +69,7 @@ export default function HeaderSearch() {
   }
 
   return (
-    <div ref={refDropdown} className="relative flex h-16 items-center">
+    <div ref={refDropdown} className="relative flex h-16 items-center py-8">
       <form role="search" className="w-full sm:max-w-none">
         <label htmlFor="SiteSearch" className="sr-only">
           Search
@@ -99,7 +99,6 @@ export default function HeaderSearch() {
                   <Link
                     href={`/components/${searchResult.category.slug}/${searchResult.slug}`}
                   >
-                    
                     <div className="flex items-center justify-between rounded-md px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100 focus:bg-gray-50">
                       <span>{searchResult.title}</span>
 
