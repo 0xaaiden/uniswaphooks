@@ -24,7 +24,7 @@
     "clsx": "^2.0.0",
     "emojisplosion": "^2.6.1",
     "lucide-react": "^0.287.0",
-    "next": "^13.4.19",
+    "next": "14.0.2-canary.26",
     "next-auth": "^4.24.4",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
