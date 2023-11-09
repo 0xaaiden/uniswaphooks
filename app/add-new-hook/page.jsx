@@ -3,7 +3,6 @@ import { ogMeta, twitterMeta } from '@data/metadata'
 import Container from '@component/Container'
 import HeroBanner from '@component/HeroBanner'
 import NewHookForm from '@component/NewHookForm'
-import { Toaster } from '@component/reusable/Toaster'
 
 export const metadata = {
   title: 'Add a new Hook | UniswapHooks',
@@ -30,8 +29,6 @@ export default async function Page() {
       <Container classNames="max-w-lg px-8 pb-8 lg:pb-12">
         <NewHookForm />
       </Container>
-
-      <Toaster />
     </>
   )
 }

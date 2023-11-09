@@ -32,8 +32,9 @@ async function getComponents() {
               `${categorySlug}-`,
               ''
             )
-            const componentCount = componentData.components ? Object.values(componentData.components).length : 0;
-
+            const componentCount = componentData.components
+              ? Object.values(componentData.components).length
+              : 0
 
             return {
               id: componentSlugFormatted,
