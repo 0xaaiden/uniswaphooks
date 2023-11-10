@@ -2,9 +2,9 @@
   "name": "uniswaphooks",
   "version": "0.1.0",
   "scripts": {
-    "build": "next build",
+    "build": "next build && prisma generate",
     "start": "next start",
-    "dev": "next dev",
+    "dev": "next dev && prisma generate",
     "lint": "next lint",
     "css": "yarn css:components && yarn css:blogs",
     "css:blogs": "npx tailwindcss -i src/styles/blogs.css -o public/blogs.css -m",
