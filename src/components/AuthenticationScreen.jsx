@@ -5,12 +5,25 @@ import { useSession } from 'next-auth/react'
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-import Dashboard from '@component/Dashboard'
+import { DataTable } from '@component/dashboard/components/DataTable'
 import UnauthentificationScreen from '@component/UnauthenticatedScreen'
+import { columns } from '@component/dashboard/components/Columns'
+
+const hooks = [
+  {
+    id: 1,
+    title: 'Hook 1',
+    description: 'Hook 1 description',
+    creator: 'Hook 1 creator',
+    website: 'Hook 1 website',
+    github: 'Hook 1 github',
+    status: 'todo',
+  },
+]
 
 export default function AuthentificationScreen() {
   const { data: session } = useSession()
-  
+
   if (!session && process.env.NODE_ENV !== 'development') {
     return (
       <>
@@ -35,7 +48,5 @@ export default function AuthentificationScreen() {
     )
   }
 
-  return (
-    <Dashboard />
-  )
+  return <DataTable data={hooks} columns={columns} />
 }

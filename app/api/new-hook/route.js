@@ -7,7 +7,7 @@ export async function POST(req) {
     const body = JSON.parse(bodyAsString)
     const { title, description, creator, website, github } = body
 
-    const newHook = await prisma.component.create({
+    const newHook = await prisma.hook.create({
       data: {
         title,
         description,

@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Component {
+model Hook {
   id Int @id @default(autoincrement())
 
   title       String
@@ -16,7 +16,7 @@ model Component {
   website     String
   github      String
 
-  verified Boolean @default(false)
+  status String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
