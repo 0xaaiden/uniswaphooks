@@ -11,7 +11,7 @@ import UnauthentificationScreen from '@component/UnauthenticatedScreen'
 export default function AuthentificationScreen() {
   const { data: session } = useSession()
   
-  if (!session) {
+  if (!session && process.env.NODE_ENV !== 'development') {
     return (
       <>
         <Transition.Root show={true} as={Fragment}>
