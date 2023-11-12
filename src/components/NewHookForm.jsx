@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 
+import { extractCreator } from '@lib/utils'
+
 import {
   Form,
   FormControl,
@@ -19,9 +21,9 @@ import { Input } from '@component/reusable/Input'
 import { Textarea } from '@component/reusable/Textarea'
 
 const formSchema = z.object({
-  name: z.string().min(2).max(50),
+  title: z.string().min(2).max(50),
   description: z.string().min(2).max(50),
-  githubRepo: z.string().url(),
+  github: z.string().url(),
   website: z.string().url(),
 })
 
@@ -30,16 +32,28 @@ export default function NewHookForm() {
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      title: '',
       description: '',
-      githubRepo: '',
+      github: '',
       website: '',
     },
   })
 
-  function onSubmit(values) {
-    console.log(values)
-    router.push('/thank-you')
+  async function onSubmit(values) {
+    values.creator = extractCreator(values.github)
+    try {
+      const response = await fetch('/api/new-hook', {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      router.push('/thank-you')
+    } catch (error) {
+      console.log('Submission error:', error)
+      router.push('/error')
+    }
   }
 
   return (
@@ -47,7 +61,7 @@ export default function NewHookForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={control}
-          name="name"
+          name="title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Hook name</FormLabel>
@@ -79,7 +93,7 @@ export default function NewHookForm() {
           <div className="flex-1">
             <FormField
               control={control}
-              name="githubRepo"
+              name="github"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>GitHub Repository</FormLabel>

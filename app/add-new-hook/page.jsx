@@ -23,10 +23,10 @@ export default async function Page() {
     <>
       <HeroBanner
         title="Add a new Hook"
-        subtitle="Please ensure your hook adheres to the standards and guidelines of the UniswapHooks community and does not introduce security vulnerabilities. If you have any questions, please reach out to us on Telegram."
+        subtitle="Please ensure your hook adheres to the standards and guidelines of the UniswapHooks community."
       ></HeroBanner>
 
-      <Container classNames="max-w-lg px-8 pb-8 lg:pb-12">
+      <Container classNames="max-w-md px-32 pb-8 lg:pb-12">
         <NewHookForm />
       </Container>
     </>

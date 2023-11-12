@@ -8,16 +8,16 @@ datasource db {
 }
 
 model Component {
-  id          Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  title        String
+  title       String
   description String
   creator     String
   website     String
   github      String
 
-  verified    Boolean @default(false)
+  verified Boolean @default(false)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
