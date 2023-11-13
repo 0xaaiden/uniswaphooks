@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { DotsHorizontalIcon } from "@radix-ui/react-icons"
-import { Row } from "@tanstack/react-table"
+import { DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { Row } from '@tanstack/react-table'
 
-import { Button } from "@component/reusable/Button"
+import { Button } from '@component/reusable/Button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,9 +16,9 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@component/reusable/DropdownMenu"
+} from '@component/reusable/DropdownMenu'
 
-import { hookSchema } from "@component/dashboard/data/schema"
+import { hookSchema } from '@component/dashboard/data/schema'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -27,6 +27,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  console.log(row.original)
   const hook = hookSchema.parse(row.original)
 
   return (
@@ -34,7 +35,7 @@ export function DataTableRowActions<TData>({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
         >
           <DotsHorizontalIcon className="h-4 w-4" />
           <span className="sr-only">Open menu</span>
@@ -45,9 +46,7 @@ export function DataTableRowActions<TData>({
         <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Delete
-        </DropdownMenuItem>
+        <DropdownMenuItem>Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

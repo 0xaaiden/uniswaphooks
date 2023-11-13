@@ -15,8 +15,8 @@ const hooks = [
     title: 'Hook 1',
     description: 'Hook 1 description',
     creator: 'Hook 1 creator',
-    website: 'Hook 1 website',
-    github: 'Hook 1 github',
+    website: 'https://github.com/FindMalek/FindServices',
+    github: 'https://github.com/',
     status: 'todo',
   },
 ]
