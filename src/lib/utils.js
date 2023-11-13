@@ -6,8 +6,7 @@ export function cn(...inputs) {
 }
 
 export function extractCreator(github) {
-  const githubSplit = github.split('/')
-  return githubSplit[githubSplit.length - 2]
+  return github.split('/')[3]
 }
 
 export async function readStream(stream) {

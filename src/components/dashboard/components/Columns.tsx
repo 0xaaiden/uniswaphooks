@@ -1,15 +1,17 @@
 'use client'
 
+import Link from 'next/link'
+
 import { ColumnDef } from '@tanstack/react-table'
 
 import { Checkbox } from '@component/reusable/Checkbox'
 
 import { statuses } from '@component/dashboard/data/data'
-import { Task } from '@component/dashboard/data/schema'
+import { Hook } from '@component/dashboard/data/schema'
 import { DataTableColumnHeader } from '@component/dashboard/components/ColumnHeader'
 import { DataTableRowActions } from '@component/dashboard/components/RowActions'
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Hook>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -34,9 +36,11 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Task" />
+      <DataTableColumnHeader column={column} title="Hook ID" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
+    cell: ({ row }) => (
+      <div className="w-[80px]">HOOK-{row.getValue('id')}</div>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
@@ -51,6 +55,44 @@ export const columns: ColumnDef<Task>[] = [
           <span className="max-w-[500px] truncate font-medium">
             {row.getValue('title')}
           </span>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'website',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Website" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <Link
+            href={row.getValue('website')}
+            target="_blank"
+            className="max-w-[200px] truncate font-medium text-blue-600 hover:underline"
+          >
+            {row.getValue('website')}
+          </Link>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'github',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Github" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <Link
+            target="_blank"
+            href={row.getValue('github')}
+            className="max-w-[200px] truncate font-medium text-blue-600 hover:underline"
+          >
+            {row.getValue('github')}
+          </Link>
         </div>
       )
     },

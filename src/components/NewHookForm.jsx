@@ -22,7 +22,7 @@ import { Textarea } from '@component/reusable/Textarea'
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
-  description: z.string().min(2).max(50),
+  description: z.string().min(2),
   github: z.string().url(),
   website: z.string().url(),
 })
@@ -40,15 +40,17 @@ export default function NewHookForm() {
   })
 
   async function onSubmit(values) {
+    console.log(values)
     values.creator = extractCreator(values.github)
     try {
-      const response = await fetch('/api/new-hook', {
+      const response = await fetch('/api/hook', {
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
           'Content-Type': 'application/json',
         },
       })
+      console.log(response)
       router.push('/thank-you')
     } catch (error) {
       console.log('Submission error:', error)

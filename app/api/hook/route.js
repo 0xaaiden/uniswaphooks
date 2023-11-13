@@ -45,3 +45,36 @@ export async function POST(req) {
     )
   }
 }
+
+export async function GET() {
+  try {
+    const hooks = await prisma.hook.findMany()
+
+    return new Response(
+      JSON.stringify({
+        message: 'Hooks fetched successfully',
+        data: hooks,
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+  } catch (err) {
+    console.log(err)
+    return new Response(
+      JSON.stringify({
+        message: 'Something went wrong',
+        error: err.message,
+      }),
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+  }
+}
