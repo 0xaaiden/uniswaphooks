@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Hook {
-  id Int @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
 
   title       String
   description String
@@ -16,9 +16,25 @@ model Hook {
   website     String
   github      String
 
-  category String
+  status      String   @default("pending")
 
-  status String @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id       String     @id @unique
+
+  title    String
+  category String
+  emoji    String
+  count    Int     @default(0)
+  tag      String?
+
+  hooks    Hook[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

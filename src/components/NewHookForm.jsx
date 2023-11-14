@@ -50,7 +50,6 @@ export default function NewHookForm() {
           'Content-Type': 'application/json',
         },
       })
-      console.log(response)
       router.push('/thank-you')
     } catch (error) {
       console.log('Submission error:', error)
