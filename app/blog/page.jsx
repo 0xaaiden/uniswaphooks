@@ -9,7 +9,7 @@ import HeroBanner from '@component/HeroBanner'
 import BlogGrid from '@component/BlogGrid'
 
 export const metadata = {
-  title: ' Blog | UniswapHooks',
+  title: 'Blog | UniswapHooks',
   description: '.',
   openGraph: {
     title: 'Blog | UniswapHooks',
@@ -17,7 +17,7 @@ export const metadata = {
     ...ogMeta,
   },
   twitter: {
-    title: ' Blog | UniswapHooks',
+    title: 'Blog | UniswapHooks',
     description: '.',
     ...twitterMeta,
   },
@@ -57,12 +57,7 @@ export default async function Page() {
 
   return (
     <>
-      <HeroBanner
-        title="Blog"
-        subtitle=""
-      >
-        
-      </HeroBanner>
+      <HeroBanner title="Blog" subtitle=""></HeroBanner>
 
       <Container classNames="pb-8 lg:pb-12">
         <BlogGrid blogPosts={blogPosts} />

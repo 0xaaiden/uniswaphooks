@@ -13,9 +13,9 @@ export default function HeroBanner({ children, subtitle, title }) {
           </h2>
         </div>
 
-        <p className="mx-auto mt-6 max-w-lg text-base/relaxed text-gray-600">
+        <div className="mx-auto mt-6 max-w-lg text-base/relaxed text-gray-600">
           {children}
-        </p>
+        </div>
       </Container>
     </section>
   )

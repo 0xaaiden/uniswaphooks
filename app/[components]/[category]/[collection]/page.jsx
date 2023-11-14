@@ -68,30 +68,29 @@ async function getCollection(params) {
 }
 
 export default async function Page({ params }) {
-  console.log('params', params)
   const { collectionData, collectionContent } = await getCollection(params)
 
   const componentsData = {
     componentContainer: collectionData.container || '',
-    componentsData: collectionData.components ? Object.entries(collectionData.components).map(
-      ([componentId, componentItem]) => {
-        return {
-          id: componentId,
-          title: componentItem.title,
-          description: componentItem.description,
-          github: componentItem.github,
-          website: componentItem.website,
-          slug: collectionData.slug,
-          category: collectionData.category,
-          container: componentItem.container || '',
-          creator: componentItem.creator || '',
-          dark: !!componentItem.dark,
-        }
-      }
-    ) : [],
+    componentsData: collectionData.components
+      ? Object.entries(collectionData.components).map(
+          ([componentId, componentItem]) => {
+            return {
+              id: componentId,
+              title: componentItem.title,
+              description: componentItem.description,
+              github: componentItem.github,
+              website: componentItem.website,
+              slug: collectionData.slug,
+              category: collectionData.category,
+              container: componentItem.container || '',
+              creator: componentItem.creator || '',
+              dark: !!componentItem.dark,
+            }
+          }
+        )
+      : [],
   }
-
-
   return (
     <Container classNames="py-8 lg:py-12 space-y-8 lg:space-y-12">
       <CollectionLinks
@@ -101,15 +100,15 @@ export default async function Page({ params }) {
       {/* <Ad adType="text" adClass="bordered horizontal" adId="collection-page" /> */}
       <div
         className="prose max-w-none
-          
-      "
+            
+        "
       >
         <MdxRemoteRender
           mdxSource={collectionContent}
           mdxComponents={mdxComponents}
           mdxScope={componentsData}
         />
-      </div>{' '}
+      </div>
     </Container>
   )
 }

@@ -1,4 +1,3 @@
-// "use client"
 import matter from 'gray-matter'
 import { join } from 'path'
 import { promises as fs } from 'fs'
@@ -6,7 +5,7 @@ import { promises as fs } from 'fs'
 import Container from '@component/Container'
 import HeroBanner from '@component/HeroBanner'
 import CollectionGrid from '@component/CollectionGrid'
-import SubmitButton from '@component/submitButton'
+import HeaderSearch from '@component/HeaderSearch'
 
 async function getComponents() {
   const componentsPath = join(process.cwd(), '/src/data/components')
@@ -36,7 +35,9 @@ async function getComponents() {
               `${componentData.category}-`,
               ''
             )
-      const componentCount = componentData.components ? Object.values(componentData.components).length : 0;
+            const componentCount = componentData.components
+              ? Object.values(componentData.components).length
+              : 0
             return {
               title: componentData.title,
               slug: componentSlugTrue,
@@ -61,20 +62,23 @@ async function getComponents() {
 
 export default async function Page() {
   const componentsByCategory = await getComponents()
-  
+  console.log(componentsByCategory)
+
   return (
     <>
       <HeroBanner
         title="Uniswap v4 Hooks"
         subtitle="Open Source Directory for Uniswap v4 Hooks"
       >
-        A community-curated collection of hooks implementations for Uniswap v4 that can
-        be used in your project. Each hook is self-contained and can be used
-        independently.
-        <SubmitButton />
+        <p>
+          A community-curated collection of hooks implementations for Uniswap v4
+          that can be used in your project. Each hook is self-contained and can
+          be used independently.
+        </p>
 
+        <HeaderSearch />
       </HeroBanner>
-      
+
       <Container classNames="pb-8 lg:pb-12">
         <ul className="space-y-8">
           {componentsByCategory.map(({ categoryTitle, componentItems }) => {

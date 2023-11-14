@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -16,12 +12,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["app/*"],
       "@component/*": ["src/components/*"],
       "@data/*": ["src/data/*"],
       "@style/*": ["src/styles/*"],
-      "@util/*": ["src/utils/*"]
+      "@util/*": ["src/utils/*"],
+      "@lib/*": ["src/lib/*"]
     },
     "plugins": [
       {
@@ -29,13 +27,6 @@
       }
     ]
   },
-  "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "app/dashboard/layout.jsx"],
+  "exclude": ["node_modules"]
 }
