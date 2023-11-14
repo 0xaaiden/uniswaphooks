@@ -1,5 +1,6 @@
 'use client'
 
+import React, { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 
 import { Fragment } from 'react'
@@ -11,9 +12,23 @@ import { columns } from '@component/dashboard/components/Columns'
 
 export default function AuthentificationScreen() {
   const { data: session } = useSession()
-  //fetch hooks from database
-  const { data: hooks } = fetch('/api/hook', { method: 'GET' })
-  console.log(hooks)
+  const [hooksData, setHooksData] = useState([]) 
+
+  useEffect(() => {
+    fetch('/api/hook', { method: 'GET' })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        return response.json()
+      })
+      .then((data) => {
+        setHooksData(data.data)
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error)
+      })
+  }, [])
 
   if (!session && process.env.NODE_ENV !== 'development') {
     return (
@@ -41,7 +56,7 @@ export default function AuthentificationScreen() {
 
   return (
     <div className="px-20 py-20">
-      <DataTable data={hooks} columns={columns} />
+      <DataTable data={hooksData} columns={columns} />
     </div>
   )
 }

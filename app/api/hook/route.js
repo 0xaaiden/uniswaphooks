@@ -49,7 +49,6 @@ export async function POST(req) {
 export async function GET() {
   try {
     const hooks = await prisma.hook.findMany()
-
     return new Response(
       JSON.stringify({
         message: 'Hooks fetched successfully',

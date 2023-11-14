@@ -39,7 +39,7 @@ export const columns: ColumnDef<Hook>[] = [
       <DataTableColumnHeader column={column} title="Hook ID" />
     ),
     cell: ({ row }) => (
-      <div className="w-[80px]">HOOK-{row.getValue('id')}</div>
+      <div className="w-[400px]">HOOK-{row.getValue('id')}</div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -70,9 +70,9 @@ export const columns: ColumnDef<Hook>[] = [
           <Link
             href={row.getValue('website')}
             target="_blank"
-            className="max-w-[200px] truncate font-medium text-blue-600 hover:underline"
+            className="max-w-[100px] truncate font-medium text-blue-600 hover:underline"
           >
-            {row.getValue('website')}
+            Website Link
           </Link>
         </div>
       )
@@ -89,9 +89,9 @@ export const columns: ColumnDef<Hook>[] = [
           <Link
             target="_blank"
             href={row.getValue('github')}
-            className="max-w-[200px] truncate font-medium text-blue-600 hover:underline"
+            className="max-w-[50px] truncate font-medium text-blue-600 hover:underline"
           >
-            {row.getValue('github')}
+            Github Repository
           </Link>
         </div>
       )
