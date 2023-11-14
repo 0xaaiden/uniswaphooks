@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useClickAway, useDebounce } from 'react-use'
 
+import Fuse from 'fuse.js'
+
 export default function HeaderSearch() {
   const routerPathname = usePathname()
 
@@ -16,41 +18,37 @@ export default function HeaderSearch() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchQueryDebounced, setSearchQueryDebounced] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const [fuse, setFuse] = useState(null)
+
+  const fuseOptions = {
+    includeScore: true,
+    keys: ['title'],
+  }
 
   useEffect(() => {
     const getSearchResults = async () => {
       const searchResults = await fetchSearchResults()
-      const sortedSearchResults = searchResults.sort((resultA, resultB) =>
-        resultA.title.localeCompare(resultB.title)
-      )
-
-      setSearchResults(sortedSearchResults)
-      setInitialResults(sortedSearchResults)
+      const fuseInstance = new Fuse(searchResults, fuseOptions)
+      setFuse(fuseInstance)
+      setInitialResults(searchResults)
     }
 
     getSearchResults()
-
-    return () => {}
   }, [])
 
   useEffect(() => {
     if (!searchQuery) {
       setSearchResults(initialResults)
-
       return
     }
 
-    const filteredResults = initialResults.filter(function (initialResult) {
-      const { title: initialTitle } = initialResult
-
-      return initialTitle
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase().trim())
-    })
-
-    setSearchResults(filteredResults)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQueryDebounced])
+    if (fuse) {
+      const filteredResults = fuse
+        .search(searchQuery.trim())
+        .map((result) => result.item)
+      setSearchResults(filteredResults)
+    }
+  }, [searchQueryDebounced, fuse])
 
   useEffect(() => {
     setSearchQuery('')

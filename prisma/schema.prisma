@@ -16,6 +16,8 @@ model Hook {
   website     String
   github      String
 
+  category String
+
   status String @default("pending")
 
   createdAt DateTime @default(now())

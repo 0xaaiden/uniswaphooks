@@ -34,6 +34,7 @@
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "emojisplosion": "^2.6.1",
+    "fuse.js": "^7.0.0",
     "lucide-react": "^0.287.0",
     "next": "14.0.2-canary.26",
     "next-auth": "^4.24.4",
