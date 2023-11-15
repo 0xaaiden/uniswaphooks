@@ -80,7 +80,8 @@ export default function HeaderSearch() {
           value={searchQuery}
           placeholder="Search..."
           id="SiteSearch"
-          className="w-full rounded-md border-gray-200 text-sm"
+          autoComplete="off"
+          className="w-full rounded-md border-gray-500 text-sm"
         />
 
         <button tabIndex={-1} className="sr-only">
