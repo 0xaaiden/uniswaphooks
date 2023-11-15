@@ -79,3 +79,63 @@ export async function GET() {
     )
   }
 }
+
+export async function PUT(req) {
+  console.log(req)
+  try {
+    const bodyAsString = await readStream(req.body)
+    const body = JSON.parse(bodyAsString)
+    const {
+      id,
+      title,
+      description,
+      creator,
+      website,
+      github,
+      status,
+      categoryId,
+    } = body
+    console.log(body)
+    const updatedHook = await prisma.hook.update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        description,
+        creator,
+        website,
+        github,
+        status,
+        categoryId,
+      },
+    })
+
+    return new Response(
+      JSON.stringify({
+        message: 'Hook updated successfully',
+        data: updatedHook,
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+  } catch (err) {
+    console.log(err)
+    return new Response(
+      JSON.stringify({
+        message: 'Something went wrong',
+        error: err.message,
+      }),
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+  }
+}

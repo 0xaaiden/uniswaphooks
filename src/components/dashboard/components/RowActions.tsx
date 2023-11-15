@@ -32,7 +32,6 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const hook = hookSchema.parse(row.original)
-  console.log(hook)
 
   return (
     <DropdownMenu>

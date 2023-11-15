@@ -12,18 +12,34 @@ import { columns } from '@component/dashboard/components/Columns'
 
 export default function AuthentificationScreen() {
   const { data: session } = useSession()
-  const [hooksData, setHooksData] = useState([]) 
+  const [hooksData, setHooksData] = useState([])
+  const [categoriesData, setCategoriesData] = useState([])
 
   useEffect(() => {
-    fetch('/api/hook', { method: 'GET' })
-      .then((response) => {
+    Promise.all([
+      fetch('/api/category', { method: 'GET' }).then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }
         return response.json()
-      })
-      .then((data) => {
-        setHooksData(data.data)
+      }),
+      fetch('/api/hook', { method: 'GET' }).then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        return response.json()
+      }),
+    ])
+      .then(([categoriesResponse, hooksResponse]) => {
+        const categoriesData = categoriesResponse.data
+        const hooksData = hooksResponse.data
+
+        const hooksWithCategories = hooksData.map((hook) => ({
+          ...hook,
+          categories: categoriesData,
+        }))
+
+        setHooksData(hooksWithCategories)
       })
       .catch((error) => {
         console.error('Fetch error:', error)

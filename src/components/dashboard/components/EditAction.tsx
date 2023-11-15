@@ -4,6 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
+import { createElement } from 'react'
+
 import {
   Dialog,
   DialogContent,
@@ -22,37 +24,60 @@ import {
   FormLabel,
   FormMessage,
 } from '@component/reusable/Form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@component/reusable/Select'
 import { Input } from '@component/reusable/Input'
 import { Button } from '@component/reusable/Button'
 import { Textarea } from '@component/reusable/Textarea'
 
 import { hookSchema } from '@component/dashboard/data/schema'
+import { statuses } from '@component/dashboard/data/data'
 
 const formSchema = z.object({
+  id: z.number(),
+  categoryId: z.string(),
   title: z.string(),
   description: z.string(),
   creator: z.string(),
   github: z.string().url(),
   website: z.string().url(),
-  status: z.enum(['published', 'accepted', 'pending', 'canceled']),
-  category: z.string(),
+  status: z.string(),
 })
 
 export default function EditAction(hook: z.infer<typeof hookSchema>) {
-  console.log(hook)
   const { handleSubmit, control } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      categoryId: hook.categoryId ?? '',
       title: hook.title ?? '',
       description: hook.description ?? '',
       creator: hook.creator ?? '',
       github: hook.github ?? '',
       website: hook.website ?? '',
+      status: hook.status ?? '',
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
+    values.id = hook.id
+    console.log(values)
+
+    //TODO: Fix this (It's not updating the hook)
+
+    try {
+      await fetch('/api/hook', {
+        method: 'PUT',
+        body: JSON.stringify(values),
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -73,6 +98,34 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
         {/* @ts-ignore: It is really a random error of spreading. */}
         <Form>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+            <FormField
+              control={control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {hook.categories.map((category) => (
+                        <SelectItem value={category.id}>
+                          {category.emoji}
+                          {category.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <div className="flex gap-4 space-x-2">
               <FormField
                 control={control}
@@ -81,7 +134,11 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
                   <FormItem>
                     <FormLabel>Hook title</FormLabel>
                     <FormControl>
-                      <Input placeholder={hook.title} {...field} />
+                      <Input
+                        placeholder={hook.title}
+                        autoComplete="off"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       This is the title of the hook.
@@ -97,7 +154,11 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
                   <FormItem>
                     <FormLabel>Creator</FormLabel>
                     <FormControl>
-                      <Input placeholder={hook.creator} {...field} />
+                      <Input
+                        placeholder={hook.creator}
+                        autoComplete="off"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       This is the name of the creator.
@@ -115,7 +176,11 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea placeholder={hook.description} {...field} />
+                    <Textarea
+                      placeholder={hook.description}
+                      autoComplete="off"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     This is the description of the hook.
@@ -140,7 +205,11 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
                       </Link>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder={hook.github} {...field} />
+                      <Input
+                        placeholder={hook.github}
+                        autoComplete="off"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       This is the public github repository.
@@ -164,7 +233,11 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
                       </Link>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder={hook.website} {...field} />
+                      <Input
+                        placeholder={hook.website}
+                        autoComplete="off"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       This is the website of the hook.
@@ -175,7 +248,38 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
               />
             </div>
 
-            <DialogFooter className="">
+            <DialogFooter className="flex w-full justify-between">
+              <FormField
+                control={control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a status" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {statuses.map((status) => (
+                          <SelectItem key={status.value} value={status.value}>
+                            <div className="flex items-center space-x-2">
+                              <span className="mr-8">
+                                {status.icon && createElement(status.icon)}
+                              </span>
+                              <span>{status.label}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Button type="submit">Save changes</Button>
             </DialogFooter>
           </form>
