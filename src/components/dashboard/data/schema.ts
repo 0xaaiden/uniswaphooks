@@ -3,6 +3,7 @@ import { z } from 'zod'
 export const hookSchema = z.object({
   id: z.number(),
   title: z.string(),
+  creator: z.string(),
   description: z.string(),
   website: z.string().url(),
   github: z.string().url(),
