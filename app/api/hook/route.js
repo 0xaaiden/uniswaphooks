@@ -50,7 +50,11 @@ export async function POST(req) {
 
 export async function GET() {
   try {
-    const hooks = await prisma.hook.findMany()
+    const hooks = await prisma.hook.findMany({
+      include: {
+        category: true,
+      },
+    })
     return new Response(
       JSON.stringify({
         message: 'Hooks fetched successfully',
@@ -80,7 +84,6 @@ export async function GET() {
 }
 
 export async function PUT(req) {
-  console.log(req)
   try {
     const bodyAsString = await readStream(req.body)
     const body = JSON.parse(bodyAsString)
@@ -94,7 +97,7 @@ export async function PUT(req) {
       status,
       categoryId,
     } = body
-    console.log(body)
+
     const updatedHook = await prisma.hook.update({
       where: {
         id,

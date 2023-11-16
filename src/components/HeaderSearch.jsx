@@ -72,6 +72,8 @@ export default function HeaderSearch() {
       (item) => item.status === 'published'
     )
 
+    console.log(publishedSearchJson)
+
     return publishedSearchJson
   }
 
@@ -109,7 +111,8 @@ export default function HeaderSearch() {
                       <span>{searchResult.title}</span>
 
                       <span className="block rounded bg-gray-900 px-1.5 py-0.5 text-[10px] text-white">
-                        {searchResult.categoryId}
+                        {searchResult.category.emoji}{' '}
+                        {searchResult.category.title}
                       </span>
                     </div>
                   </Link>
