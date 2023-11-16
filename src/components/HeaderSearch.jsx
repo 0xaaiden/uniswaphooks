@@ -72,8 +72,6 @@ export default function HeaderSearch() {
       (item) => item.status === 'published'
     )
 
-    console.log(publishedSearchJson)
-
     return publishedSearchJson
   }
 

@@ -6,6 +6,7 @@ import Container from '@component/Container'
 import HeroBanner from '@component/HeroBanner'
 import CollectionGrid from '@component/CollectionGrid'
 import HeaderSearch from '@component/HeaderSearch'
+import PopularHooks from '@component/PopularHooks'  
 
 async function getComponents() {
   const componentsPath = join(process.cwd(), '/src/data/components')
@@ -76,6 +77,7 @@ export default async function Page() {
         </p>
 
         <HeaderSearch />
+        <PopularHooks />
       </HeroBanner>
 
       <Container classNames="pb-8 lg:pb-12">
