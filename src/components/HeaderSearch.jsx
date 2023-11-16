@@ -38,7 +38,7 @@ export default function HeaderSearch() {
 
   useEffect(() => {
     if (!searchQuery) {
-      setSearchResults(initialResults)
+      setSearchResults(initialResults.slice(0, 4))
       return
     }
 
@@ -46,6 +46,7 @@ export default function HeaderSearch() {
       const filteredResults = fuse
         .search(searchQuery.trim())
         .map((result) => result.item)
+        .slice(0, 4)
       setSearchResults(filteredResults)
     }
   }, [searchQueryDebounced, fuse])
@@ -60,10 +61,18 @@ export default function HeaderSearch() {
   useDebounce(() => setSearchQueryDebounced(searchQuery), 500, [searchQuery])
 
   async function fetchSearchResults() {
-    const searchResults = await fetch('/api/search')
+    const searchResults = await fetch('/api/hook', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     const searchJson = await searchResults.json()
+    const publishedSearchJson = searchJson.data.filter(
+      (item) => item.status === 'published'
+    )
 
-    return searchJson
+    return publishedSearchJson
   }
 
   return (
@@ -95,14 +104,12 @@ export default function HeaderSearch() {
             <ul className="max-h-64 space-y-1 overflow-auto p-2">
               {searchResults.map((searchResult) => (
                 <li key={searchResult.id}>
-                  <Link
-                    href={`/components/${searchResult.category.slug}/${searchResult.slug}`}
-                  >
+                  <Link target="_blank" href={searchResult.github}>
                     <div className="flex items-center justify-between rounded-md px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100 focus:bg-gray-50">
                       <span>{searchResult.title}</span>
 
                       <span className="block rounded bg-gray-900 px-1.5 py-0.5 text-[10px] text-white">
-                        {searchResult.category.title}
+                        {searchResult.categoryId}
                       </span>
                     </div>
                   </Link>
