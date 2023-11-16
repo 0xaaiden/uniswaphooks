@@ -20,6 +20,7 @@ import {
 } from '@component/reusable/DropdownMenu'
 
 import EditAction from '@component/dashboard/components/EditAction'
+import DeleteAction from '@component/dashboard/components/DeleteAction'
 
 import { hookSchema } from '@component/dashboard/data/schema'
 import { statuses } from '@component/dashboard/data/data'
@@ -45,13 +46,12 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-
         <DropdownMenuItem>
           <Link target="_blank" href={hook.github}>
             View
           </Link>
         </DropdownMenuItem>
-        
+
         <DropdownMenuSeparator />
 
         {/* @ts-ignore: It is really a random error of spreading. */}
@@ -70,7 +70,10 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+
+        {/* @ts-ignore: It is really a random error of spreading. */}
+        <DeleteAction {...hook} />
+        
       </DropdownMenuContent>
     </DropdownMenu>
   )

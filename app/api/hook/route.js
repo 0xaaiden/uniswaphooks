@@ -138,3 +138,44 @@ export async function PUT(req) {
     )
   }
 }
+
+export async function DELETE(req) {
+  try {
+    const bodyAsString = await readStream(req.body)
+    const body = JSON.parse(bodyAsString)
+    const { id } = body
+
+    const deletedHook = await prisma.hook.delete({
+      where: {
+        id,
+      },
+    })
+
+    return new Response(
+      JSON.stringify({
+        message: 'Hook deleted successfully',
+        data: deletedHook,
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+  } catch (err) {
+    console.log(err)
+    return new Response(
+      JSON.stringify({
+        message: 'Something went wrong',
+        error: err.message,
+      }),
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+  }
+}
