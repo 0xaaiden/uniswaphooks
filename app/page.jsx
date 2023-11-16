@@ -62,7 +62,6 @@ async function getComponents() {
 
 export default async function Page() {
   const componentsByCategory = await getComponents()
-  console.log(componentsByCategory)
 
   return (
     <>

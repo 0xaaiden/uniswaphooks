@@ -3,8 +3,9 @@ import Link from 'next/link'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { useState, createElement } from 'react'
 
-import { createElement } from 'react'
+import { Loader2 } from 'lucide-react'
 
 import {
   Dialog,
@@ -50,25 +51,24 @@ const formSchema = z.object({
 })
 
 export default function EditAction(hook: z.infer<typeof hookSchema>) {
+  const [isLoading, setIsLoading] = useState(false)
   const { handleSubmit, control } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      categoryId: hook.categoryId ?? '',
-      title: hook.title ?? '',
-      description: hook.description ?? '',
-      creator: hook.creator ?? '',
-      github: hook.github ?? '',
-      website: hook.website ?? '',
-      status: hook.status ?? '',
+      id: hook.id,
+      categoryId: hook.categoryId,
+      title: hook.title,
+      description: hook.description,
+      creator: hook.creator,
+      github: hook.github,
+      website: hook.website,
+      status: hook.status,
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    setIsLoading(true)
     values.id = hook.id
-    console.log(values)
-
-    //TODO: Fix this (It's not updating the hook)
 
     try {
       await fetch('/api/hook', {
@@ -77,13 +77,15 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
       })
     } catch (error) {
       console.error(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild className="m-0">
-        <Button variant="ghost" className="pl-2">
+        <Button variant="ghost" className="pl-2 font-normal">
           Edit
         </Button>
       </DialogTrigger>
@@ -280,7 +282,17 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Save changes</Button>
+              {isLoading ? (
+                <Button
+                  disabled={true}
+                  className="flex w-full items-center justify-center "
+                >
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait ...
+                </Button>
+              ) : (
+                <Button type="submit">Save changes</Button>
+              )}
             </DialogFooter>
           </form>
         </Form>
