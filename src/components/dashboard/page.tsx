@@ -3,7 +3,6 @@ import path from "path"
 import { Metadata } from "next"
 import Image from "next/image"
 import { z } from "zod"
-:construction_worker:
 import { columns } from "./components/Columns"
 import { DataTable } from "./components/DataTable"
 import { UserNav } from "./components/user-nav"

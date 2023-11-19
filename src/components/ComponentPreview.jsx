@@ -21,7 +21,6 @@ export default function ComponentPreview({
   componentContainer,
 }) {
   const refIframe = useRef(null)
-  console.log(componentData, "comp data")
 
 // -  const [componentCode, setComponentCode] = useState('')
 //   const [componentHtml, setComponentHtml] = useState('')

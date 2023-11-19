@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import { GithubIcon } from 'lucide-react'
+import { FaGoogle } from 'react-icons/fa'
 import { Dialog, Transition } from '@headlessui/react'
 
 import { signIn } from 'next-auth/react'
@@ -30,7 +30,7 @@ export default function UnauthentificationScreen() {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Login with your Github account, to access the dashboard.
+                    Login with your Google account, to access the dashboard.
                   </p>
                 </div>
               </div>
@@ -38,9 +38,11 @@ export default function UnauthentificationScreen() {
             <div className="mt-5 sm:mt-6">
               <Button
                 className="inline-flex w-full justify-center"
-                onClick={() => signIn('github')}
+                onClick={async () => {
+                  await signIn('google')
+                }}
               >
-                <GithubIcon className="mr-2 h-4 w-4" /> Login with Github
+                <FaGoogle className="mr-2 h-4 w-4" /> Login with Google
               </Button>
             </div>
           </Dialog.Panel>

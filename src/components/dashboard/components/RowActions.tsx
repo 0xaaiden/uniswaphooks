@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Row } from '@tanstack/react-table'
 
@@ -16,6 +18,9 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@component/reusable/DropdownMenu'
+
+import EditAction from '@component/dashboard/components/EditAction'
+import DeleteAction from '@component/dashboard/components/DeleteAction'
 
 import { hookSchema } from '@component/dashboard/data/schema'
 import { statuses } from '@component/dashboard/data/data'
@@ -41,9 +46,18 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>View</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link target="_blank" href={hook.github}>
+            View
+          </Link>
+        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+
+        {/* @ts-ignore: It is really a random error of spreading. */}
+        <EditAction {...hook} />
+
+        {/* TODO: Implement to change the Status */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
@@ -57,7 +71,10 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+
+        {/* @ts-ignore: It is really a random error of spreading. */}
+        <DeleteAction {...hook} />
+        
       </DropdownMenuContent>
     </DropdownMenu>
   )

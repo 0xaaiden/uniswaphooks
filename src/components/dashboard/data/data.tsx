@@ -28,3 +28,12 @@ export const statuses = [
     icon: CrossCircledIcon,
   },
 ]
+
+// TODO: Add more categories
+export const categories = [
+  {
+    value: 'from-the-community',
+    label: 'From the community',
+    icon: '🌍',
+  },
+]

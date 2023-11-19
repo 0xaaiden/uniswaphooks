@@ -40,7 +40,6 @@ export default function NewHookForm() {
   })
 
   async function onSubmit(values) {
-    console.log(values)
     values.creator = extractCreator(values.github)
     try {
       const response = await fetch('/api/hook', {
