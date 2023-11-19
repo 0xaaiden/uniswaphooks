@@ -46,7 +46,7 @@ export default function AuthentificationScreen() {
       })
   }, [])
 
-  if (!session && process.env.NODE_ENV === 'production') {
+  if (!session && process.env.NODE_ENV === 'development') {
     return (
       <>
         <Transition.Root show={true} as={Fragment}>
