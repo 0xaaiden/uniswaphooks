@@ -24,7 +24,7 @@ const handler = NextAuth({
 
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      const allowedEmails = ['malekgarahellalbus@gmail.com', 'gg@ger.com']
+      const allowedEmails = ['malekgarahellalbus@gmail.com', 'aiden@fn03.xyz']
       if (user.email && allowedEmails.includes(user.email)) {
         return true
       } else {
