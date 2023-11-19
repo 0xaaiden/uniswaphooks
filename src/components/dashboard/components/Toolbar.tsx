@@ -8,6 +8,7 @@ import { Input } from '@component/reusable/Input'
 import { DataTableViewOptions } from '@component/dashboard/components/ViewOptions'
 
 import { statuses } from '@component/dashboard/data/data'
+import { categories } from '@component/dashboard/data/data'
 import { DataTableFacetedFilter } from '@component/dashboard/components/FacetedFilter'
 
 interface DataTableToolbarProps<TData> {
@@ -18,7 +19,6 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
-
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
@@ -37,6 +37,7 @@ export function DataTableToolbar<TData>({
             options={statuses}
           />
         )}
+        {/* TODO: Add filtering by Category */}
         {isFiltered && (
           <Button
             variant="ghost"
