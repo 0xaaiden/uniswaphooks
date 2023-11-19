@@ -1,7 +1,7 @@
 'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
-import PreviewCopy from './PreviewCopy'
 import { Copy } from 'lucide-react'
 
 export default function ChainCard({ chainPost }) {

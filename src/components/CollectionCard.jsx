@@ -9,7 +9,7 @@ export default function CollectionCard({ componentData }) {
   return (
     <>
       {componentData.count > 0 && (
-        <Link href={`/components/${componentData.category}/${componentData.slug}`}>
+        <Link href={`/components/${componentData.category}/${componentData.id}`}>
           <div className="group relative block h-full bg-white before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-dashed before:border-gray-900">
             <div className="rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
               <div className="p-4 sm:p-6">

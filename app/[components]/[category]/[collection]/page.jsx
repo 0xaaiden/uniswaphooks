@@ -3,9 +3,10 @@ import { join } from 'path'
 import { promises as fs } from 'fs'
 import { serialize } from 'next-mdx-remote/serialize'
 
+import { getCollectionData } from '@lib/utils'
+
 import { ogMeta, twitterMeta } from '@data/metadata'
 
-// import Ad from '@component/Ad'
 import Container from '@component/Container'
 import MdxRemoteRender from '@component/MdxRemoteRender'
 import CollectionLinks from '@component/CollectionLinks'
@@ -19,20 +20,26 @@ const componentsDirectory = join(process.cwd(), '/src/data/components')
 
 export async function generateMetadata({ params }) {
   const { collectionData } = await getCollection(params)
+  console.log(collectionData)
+  try {
+    const data = await getCollectionData(params)
 
-  return {
-    title: `${collectionData.seo.title} | UniswapHooks`,
-    description: collectionData.seo.description,
-    openGraph: {
-      title: `${collectionData.seo.title} | UniswapHooks`,
-      description: collectionData.seo.description,
-      ...ogMeta,
-    },
-    twitter: {
-      title: `${collectionData.seo.title} | UniswapHooks`,
-      description: collectionData.seo.description,
-      ...twitterMeta,
-    },
+    return {
+      title: `${data.title} | UniswapHooks`,
+      description: data.description,
+      openGraph: {
+        title: `${data.title} | UniswapHooks`,
+        description: data.description,
+        ...ogMeta,
+      },
+      twitter: {
+        title: `${data.title} | UniswapHooks`,
+        description: data.description,
+        ...twitterMeta,
+      },
+    }
+  } catch (error) {
+    console.error('Error fetching collection data:', error)
   }
 }
 
@@ -91,15 +98,20 @@ export default async function Page({ params }) {
         )
       : [],
   }
-  
+
+  console.log(collectionData)
+  console.log(collectionContent)
+  console.log(componentsData)
+
   return (
     <Container classNames="py-8 lg:py-12 space-y-8 lg:space-y-12">
       <CollectionLinks
         activeCollection={params.collection}
         activeCategory={params.category}
       />
-      {/* <Ad adType="text" adClass="bordered horizontal" adId="collection-page" /> */}
+
       <div className="prose max-w-none">
+        {/* TODO: Render with this componenet : ComponentPreview */}
         <MdxRemoteRender
           mdxSource={collectionContent}
           mdxComponents={mdxComponents}
