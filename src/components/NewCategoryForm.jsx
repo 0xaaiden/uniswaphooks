@@ -5,8 +5,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 
-import { extractCreator } from '@lib/utils'
-
 import {
   Form,
   FormControl,
@@ -25,9 +23,11 @@ import {
 } from '@component/reusable/Select'
 import { Button } from '@component/reusable/Button'
 import { Input } from '@component/reusable/Input'
+import { Textarea } from '@component/reusable/Textarea'
 
 const formSchema = z.object({
   title: z.string().min(3).max(50),
+  description: z.string(),
   category: z.string().min(3).max(50),
   emoji: z.string().nonempty(),
   tag: z.string().min(3).max(50),
@@ -39,6 +39,7 @@ export default function NewcategoryForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
+      description: '',
       category: 'hooks',
       emoji: '',
       tag: '',
@@ -99,6 +100,22 @@ export default function NewcategoryForm() {
             )}
           />
         </div>
+        <FormField
+          control={control}
+          name="description"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Category description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Category description" {...field} />
+              </FormControl>
+              <FormDescription>
+                Enter the description of your category.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="flex space-x-4">
           <FormField
             control={control}

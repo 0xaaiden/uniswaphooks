@@ -7,13 +7,13 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 import { DataTable } from '@component/dashboard/components/DataTable'
-import UnauthentificationScreen from '@component/UnauthenticatedScreen'
 import { columns } from '@component/dashboard/components/Columns'
+
+import UnauthentificationScreen from '@component/UnauthenticatedScreen'
 
 export default function AuthentificationScreen() {
   const { data: session } = useSession()
   const [hooksData, setHooksData] = useState([])
-  const [categoriesData, setCategoriesData] = useState([])
 
   useEffect(() => {
     Promise.all([
@@ -46,7 +46,7 @@ export default function AuthentificationScreen() {
       })
   }, [])
 
-  if (!session && process.env.NODE_ENV !== 'development') {
+  if (!session && process.env.NODE_ENV === 'developmenet') {
     return (
       <>
         <Transition.Root show={true} as={Fragment}>

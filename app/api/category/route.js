@@ -5,12 +5,13 @@ export async function POST(req) {
   try {
     const bodyAsString = await readStream(req.body)
     const body = JSON.parse(bodyAsString)
-    const { id, title, category, emoji, tag } = body
+    const { id, title, description, category, emoji, tag } = body
 
     const newCategory = await prisma.category.create({
       data: {
         id,
         title,
+        description,
         category,
         emoji,
         tag,
@@ -30,6 +31,7 @@ export async function POST(req) {
       }
     )
   } catch (err) {
+    console.log(err)
     return new Response(
       JSON.stringify({
         message: 'Something went wrong',

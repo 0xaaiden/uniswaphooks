@@ -24,8 +24,6 @@ async function getComponents() {
     })
   )
 
-  console.log('categoriesData', categoriesData)
-
   const componentsData = await Promise.all(
     componentSlugs.map(async (componentSlug) => {
       const componentPath = join(componentsPath, componentSlug)
@@ -42,10 +40,8 @@ async function getComponents() {
 
       const categoryPath = join(categoriesPath, `${componentData.category}.mdx`)
       const categoryItem = await fs.readFile(categoryPath, 'utf-8')
-      console.log('categoryItem', categoryItem, 'categoryPath', categoryPath)
 
       const { data: categoryData } = matter(categoryItem)
-      console.log(categoryData, 'data')
 
       return {
         title: componentData.title,
@@ -57,8 +53,6 @@ async function getComponents() {
       }
     })
   )
-
-  console.log('componentsData', componentsData)
 
   return {
     categoriesData,
@@ -97,16 +91,7 @@ export default async function CollectionLinks({
           const isActive =
             activeCategory === componentData.category &&
             activeCollection === componentData.slug
-          console.log(
-            'componentData',
-            componentData,
-            'activeCategory',
-            activeCategory,
-            'activeCollection',
-            activeCollection,
-            'isActive',
-            isActive
-          )
+
           return (
             <li key={componentData.id} className="shrink-0 md:shrink">
               <Link

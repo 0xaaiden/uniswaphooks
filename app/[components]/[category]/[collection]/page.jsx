@@ -91,6 +91,7 @@ export default async function Page({ params }) {
         )
       : [],
   }
+  
   return (
     <Container classNames="py-8 lg:py-12 space-y-8 lg:space-y-12">
       <CollectionLinks
@@ -98,11 +99,7 @@ export default async function Page({ params }) {
         activeCategory={params.category}
       />
       {/* <Ad adType="text" adClass="bordered horizontal" adId="collection-page" /> */}
-      <div
-        className="prose max-w-none
-            
-        "
-      >
+      <div className="prose max-w-none">
         <MdxRemoteRender
           mdxSource={collectionContent}
           mdxComponents={mdxComponents}
