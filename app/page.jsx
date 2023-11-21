@@ -8,7 +8,6 @@ import PopularHooks from '@component/PopularHooks'
 
 export default async function Page() {
   const data = await fetchData(getUrl())
-  console.log(data)
 
   return (
     <>

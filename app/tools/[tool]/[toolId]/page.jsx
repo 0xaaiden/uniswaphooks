@@ -1,14 +1,13 @@
-import { getCollectionData, getHookData, getCollections } from '@lib/utils'
+import { getToolData, getTools } from '@lib/utils'
 
 import { ogMeta, twitterMeta } from '@data/metadata'
 
 import Container from '@component/Container'
 import CollectionLinks from '@component/CollectionLinks'
-import ComponentPreview from '@component/ComponentPreview'
 
 export async function generateMetadata({ params }) {
   try {
-    const data = await getCollectionData(params)
+    const data = await getToolData(params)
 
     return {
       title: `${data.title} | UniswapHooks`,
@@ -30,28 +29,18 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const data = await getHookData(params)
-  const collections = await getCollections()
+  const data = await getToolData(params)
+  const tools = await getTools()
 
   return (
     <Container classNames="py-8 lg:py-12 space-y-8 lg:space-y-12">
       <CollectionLinks
-        activeCollection={params.collection}
-        activeCategory={params.category}
-        componentsData={collections}
+        activeCollection={params.toolId}
+        activeCategory={params.tool}
+        componentsData={tools}
       />
 
-      <h3 className="text-3xl font-bold">Hook {data[0].category.title}</h3>
-
-      {/**
-       * TODO: Fix the tailwind css classes, to remove the underlines
-       */}
-
-      <div className="prose grid max-w-none grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {data.map((componentData) => (
-          <ComponentPreview componentData={componentData} />
-        ))}
-      </div>
+      <div className="prose grid max-w-none grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
     </Container>
   )
 }

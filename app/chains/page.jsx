@@ -61,9 +61,7 @@ export default async function Page() {
     <>
       <HeroBanner
         title="Chains"
-        subtitle="
-          List of EVM networks where Uniswap v4 is deployed.
-        "
+        subtitle="List of EVM networks where Uniswap v4 is deployed."
       ></HeroBanner>
 
       <Container classNames="pb-8 lg:pb-12">

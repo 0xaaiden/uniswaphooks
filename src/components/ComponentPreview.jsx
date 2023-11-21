@@ -38,9 +38,9 @@ export default function ComponentPreview({ componentData }) {
     <div
       ref={ref}
       id={componentTitle}
-      className="max-w-md p-6"
+      className="max-w-md p-2"
     >
-      <div className="space-y-4">
+      <div className="space-y-2">
         <PreviewTitle
           componentTitle={componentTitle}
           componentHash={componentHash}
