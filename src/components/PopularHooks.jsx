@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { BsThreeDots } from 'react-icons/bs'
 import { Badge } from '@component/reusable/Badge'
 
 const uniswaplabs = [
@@ -132,13 +133,22 @@ const uniswaplabs = [
 export default function PopularHooks() {
   return (
     <>
-      {uniswaplabs.slice(0, 4).map((item) => (
+      {uniswaplabs.slice(0, 5).map((item) => (
         <Link href={item.github} key={item.id} target="_blank">
           <Badge variant="default" className="mb-1 mr-1">
             {item.category.emoji} {item.title}
           </Badge>
         </Link>
       ))}
+      <Badge>
+        <Link
+          href="/components/hooks/uniswap-labs"
+          className="flex items-center gap-2 mr-1"
+        >
+          <BsThreeDots />
+          View more
+        </Link>
+      </Badge>
     </>
   )
 }

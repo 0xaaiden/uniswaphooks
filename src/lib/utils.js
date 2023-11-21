@@ -75,10 +75,25 @@ export async function fetchData(baseUrl) {
   }
 }
 
+export async function getCollections() {
+  const data = await fetchData(getUrl())
+
+  return data.categories
+}
+
 export async function getCollectionData(params) {
   const data = await fetchData(getUrl())
 
   return data.categories.filter(
     (category) => category.id === params.collection
   )[0]
+}
+
+export async function getHookData(params) {
+  const data = await fetchData(getUrl())
+
+  return data.hooks.filter(
+    (hook) =>
+      hook.status === 'published' && hook.categoryId === params.collection
+  )
 }

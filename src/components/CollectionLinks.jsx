@@ -4,6 +4,8 @@ import matter from 'gray-matter'
 import { join } from 'path'
 import { promises as fs } from 'fs'
 
+import { getCollections } from '@lib/utils'
+
 import ButtonStyle from '@component/ButtonStyle'
 
 async function getComponents() {
@@ -36,7 +38,9 @@ async function getComponents() {
         `${componentData.category}-`,
         ''
       )
-      const componentCount = componentData.components ? Object.values(componentData.components).length : 0;
+      const componentCount = componentData.components
+        ? Object.values(componentData.components).length
+        : 0
 
       const categoryPath = join(categoriesPath, `${componentData.category}.mdx`)
       const categoryItem = await fs.readFile(categoryPath, 'utf-8')
@@ -64,28 +68,20 @@ export default async function CollectionLinks({
   activeCollection,
   activeCategory,
 }) {
-  const { categoriesData, componentsData } = await getComponents()
-
+  const componentsData = await getCollections()
   return (
     <div>
       <ul className="flex gap-4">
-        {categoriesData.map((categoryData) => (
-          <li
-            key={categoryData.title}
-            className="inline-flex items-center gap-1.5"
-          >
-            <span aria-hidden="true" role="img" className="text-sm">
-              {categoryData.emoji}
-            </span>
+        <li className="inline-flex items-center gap-1.5">
+          <span aria-hidden="true" role="img" className="text-sm">
+            🪝
+          </span>
 
-            <span className="text-xs font-medium text-gray-900">
-              {categoryData.title}
-            </span>
-          </li>
-        ))}
+          <span className="text-xs font-medium text-gray-900">Hooks</span>
+        </li>
       </ul>
 
-      <ul className="mt-4 flex gap-1 flex-wrap ">
+      <ul className="mt-4 flex flex-wrap gap-1 ">
         {componentsData.map((componentData) => {
           const buttonText = `${componentData.title} (${componentData.count})`
           const isActive =
@@ -95,7 +91,7 @@ export default async function CollectionLinks({
           return (
             <li key={componentData.id} className="shrink-0 md:shrink">
               <Link
-                href={`/components/${componentData.category}/${componentData.slug}`}
+                href={`/components/${componentData.category}/${componentData.id}`}
               >
                 <ButtonStyle
                   buttonEmoji={componentData.emoji}
