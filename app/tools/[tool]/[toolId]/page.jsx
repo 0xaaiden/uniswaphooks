@@ -66,7 +66,7 @@ async function getTools() {
 export default async function Page({ params }) {
   const data = await getToolData(params)
   const tools = await getTools()
-  console.log(data)
+
   return (
     <Container classNames="py-8 lg:py-12 space-y-8 lg:space-y-12">
       <CollectionLinks
@@ -75,7 +75,7 @@ export default async function Page({ params }) {
         componentsData={tools}
       />
 
-      <div className="prose grid max-w-none ">
+      <div>
         <ToolCard {...data} />
       </div>
     </Container>

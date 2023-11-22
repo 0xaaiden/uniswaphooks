@@ -47,11 +47,11 @@ export default function ToolCard(toolPost) {
   return (
     <div className="group relative block h-full w-full bg-white font-sans before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-dashed before:border-gray-900">
       <div className="h-full overflow-auto rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
-        <div className="overflow-auto p-4 px-80 sm:p-6 lg:p-4">
+        <div className="overflow-auto p-4 sm:p-6 lg:p-10">
           {toolPost.docs ? (
             <Link href={toolPost.docs} target="_blank">
               <span class="absolute right-3 flex items-center justify-center rounded-full px-2.5 py-0.5">
-                <p class="whitespace-nowrap pr-2 text-sm hover:font-semibold hover:underline hover:underline-offset-1">
+                <p class="hidden whitespace-nowrap pr-2 text-sm hover:font-semibold hover:underline hover:underline-offset-1 sm:inline-block">
                   Github
                 </p>
                 <FaGithub />
@@ -65,7 +65,7 @@ export default function ToolCard(toolPost) {
 
           <Form>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="mt-4 flex justify-between gap-6 px-80">
+              <div className="mt-4 flex flex-col justify-between gap-6 px-4 sm:flex-row sm:px-8 md:px-12 lg:px-80">
                 <FormField
                   control={control}
                   name="usdcDecimals"
@@ -134,7 +134,7 @@ export default function ToolCard(toolPost) {
                 />
               </div>
 
-              <div className="mt-4 flex w-full items-center justify-center">
+              <div className="mt-4 flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
                 <div className="flex items-center justify-center gap-4">
                   <div className="flex items-center justify-between rounded-md border border-gray-800 bg-white px-4 py-3 font-mono text-sm text-gray-800">
                     <div className="flex items-center gap-1 overflow-auto">
@@ -142,7 +142,11 @@ export default function ToolCard(toolPost) {
                         Price
                       </span>
                       <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                        {calculatedPrice ? calculatedPrice : '0'}
+                        {calculatedPrice
+                          ? calculatedPrice.length > 8
+                            ? `${calculatedPrice.substring(0, 8)}...`
+                            : calculatedPrice
+                          : '0'}
                       </span>
                     </div>
                     <span className="ml-2 cursor-pointer text-gray-800 duration-200 hover:text-gray-400 active:text-gray-600">
