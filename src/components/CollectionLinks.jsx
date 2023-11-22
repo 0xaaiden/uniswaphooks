@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { getCollections } from '@lib/utils'
 import ButtonStyle from '@component/ButtonStyle'
 
 export default async function CollectionLinks({
@@ -45,9 +44,7 @@ export default async function CollectionLinks({
                 </Link>
               )}
               {activeCategory === 'tool' && (
-                <Link
-                  href={`/tools/${componentData.category}/${componentData.id}`}
-                >
+                <Link href={`/tools/${activeCategory}/${componentData.id}`}>
                   <ButtonStyle
                     buttonEmoji={componentData.emoji}
                     buttonText={buttonText}

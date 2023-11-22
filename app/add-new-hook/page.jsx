@@ -13,7 +13,7 @@ export const metadata = {
     ...ogMeta,
   },
   twitter: {
-    title: ' Add a new Hook | UniswapHooks',
+    title: 'Add a new Hook | UniswapHooks',
     description: 'Want to add a new hook to the site? Fill out the form below.',
     ...twitterMeta,
   },

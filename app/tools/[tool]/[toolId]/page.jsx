@@ -6,6 +6,7 @@ import { join } from 'path'
 
 import Container from '@component/Container'
 import CollectionLinks from '@component/CollectionLinks'
+import ToolCard from '@component/tools/ToolCard'
 
 export async function generateMetadata({ params }) {
   try {
@@ -51,6 +52,7 @@ async function getTools() {
         id: toolData.id,
         title: toolData.title,
         description: toolData.description,
+        docs: toolData.docs,
         tag: toolData?.tag,
         emoji: toolData.emoji,
         category: toolData.category,
@@ -64,10 +66,7 @@ async function getTools() {
 export default async function Page({ params }) {
   const data = await getToolData(params)
   const tools = await getTools()
-
-  console.log('data', data)
-  console.log('tools', tools)
-
+  console.log(data)
   return (
     <Container classNames="py-8 lg:py-12 space-y-8 lg:space-y-12">
       <CollectionLinks
@@ -76,7 +75,9 @@ export default async function Page({ params }) {
         componentsData={tools}
       />
 
-      <div className="prose grid max-w-none grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+      <div className="prose grid max-w-none ">
+        <ToolCard {...data} />
+      </div>
     </Container>
   )
 }
