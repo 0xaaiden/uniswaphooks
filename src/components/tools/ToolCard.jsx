@@ -121,7 +121,7 @@ export default function ToolCard(toolPost) {
                       <FormControl>
                         <Input
                           autoComplete="off"
-                          placeholder="7.005e8.."
+                          placeholder="A very large number.."
                           {...field}
                         />
                       </FormControl>

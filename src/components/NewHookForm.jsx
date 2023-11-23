@@ -42,14 +42,23 @@ export default function NewHookForm() {
   async function onSubmit(values) {
     values.creator = extractCreator(values.github)
     try {
-      const response = await fetch('/api/hook', {
+      await fetch('/api/hook', {
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
           'Content-Type': 'application/json',
         },
       })
+
       router.push('/thank-you')
+
+      await fetch('/api/mailer', {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
     } catch (error) {
       console.log('Submission error:', error)
       router.push('/error')

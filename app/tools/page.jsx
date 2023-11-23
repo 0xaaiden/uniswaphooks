@@ -53,12 +53,9 @@ export default async function Page() {
 
   return (
     <>
-      {/**
-       * TODO: What to write in the Subtitle
-       */}
       <HeroBanner
         title="Tools"
-        subtitle="Got no idea what to write here lols.."
+        subtitle="Tools to help you understand Uniswap v4"
       ></HeroBanner>
 
       <Container classNames="pb-8 lg:pb-12">
