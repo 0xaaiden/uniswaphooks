@@ -9,12 +9,6 @@ import PopularHooks from '@component/PopularHooks'
 export default async function Page() {
   const data = await fetchData(getUrl())
 
-  // look for hooks with categoryId = uniswap-labs inside of data.hooks, return them all
-  const uniswaplabs = data.hooks.filter(
-    (hook) => hook.categoryId === 'uniswap-labs'
-  )
-  console.log(uniswaplabs)
-
   return (
     <>
       <HeroBanner
