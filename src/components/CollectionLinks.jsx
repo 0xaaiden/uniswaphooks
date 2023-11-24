@@ -27,8 +27,8 @@ export default async function CollectionLinks({
             : componentData.title
 
           const isActive =
-            activeCategory === componentData.category &&
-            activeCollection === componentData.slug
+            (activeCategory === componentData.category &&
+            activeCollection === componentData.id) || (activeCategory === 'tool' && activeCollection === componentData.id)
 
           return (
             <li key={componentData.id} className="shrink-0 md:shrink">

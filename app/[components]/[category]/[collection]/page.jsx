@@ -41,7 +41,7 @@ export default async function Page({ params }) {
         componentsData={collections}
       />
 
-      <h3 className="text-3xl font-bold">Hook {data[0].category.title}</h3>
+      <h3 className="text-3xl font-bold">{data[0].category.title}</h3>
 
       {/**
        * TODO: Fix the tailwind css classes, to remove the underlines
