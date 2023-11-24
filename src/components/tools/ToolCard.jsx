@@ -22,8 +22,8 @@ import CopyOutput from '@component/tools/CopyOutput'
 import { FaGithub, FaEquals } from 'react-icons/fa'
 
 const formSchema = z.object({
-  usdcDecimals: z.string(),
-  usdtDecimals: z.string(),
+  tokenOne: z.string(),
+  tokenTwo: z.string(),
   sqrtPrice: z.string(),
 })
 
@@ -37,7 +37,7 @@ export default function ToolCard(toolPost) {
     const univ3prices = require('@thanpolas/univ3prices')
 
     const price = univ3prices(
-      [values.usdcDecimals, values.usdtDecimals],
+      [values.tokenOne, values.tokenTwo],
       values.sqrtPrice
     ).toAuto()
 
@@ -48,7 +48,7 @@ export default function ToolCard(toolPost) {
     <div className="group relative block h-full w-full bg-white font-sans before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-dashed before:border-gray-900">
       <div className="h-full overflow-auto rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
         <div className="overflow-auto p-4 sm:p-6 lg:p-10">
-          {toolPost.docs ? (
+          {/*           {toolPost.docs ? (
             <Link href={toolPost.docs} target="_blank">
               <span class="absolute right-3 flex items-center justify-center rounded-full px-2.5 py-0.5">
                 <p class="hidden whitespace-nowrap pr-2 text-sm hover:font-semibold hover:underline hover:underline-offset-1 sm:inline-block">
@@ -57,7 +57,7 @@ export default function ToolCard(toolPost) {
                 <FaGithub />
               </span>
             </Link>
-          ) : null}
+          ) : null} */}
 
           <h2 className="flex items-center justify-center text-lg font-medium text-gray-900 sm:text-xl">
             {toolPost.title}
@@ -68,11 +68,11 @@ export default function ToolCard(toolPost) {
               <div className="mt-4 flex flex-col justify-between gap-6 px-4 sm:flex-row sm:px-8 md:px-12 lg:px-80">
                 <FormField
                   control={control}
-                  name="usdcDecimals"
+                  name="tokenOne"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-md font-semibold text-slate-600">
-                        USDC Decimals
+                        Token One
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -81,20 +81,18 @@ export default function ToolCard(toolPost) {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>
-                        Enter the USDC Decimals.
-                      </FormDescription>
+                      <FormDescription>Token One Decimals.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={control}
-                  name="usdtDecimals"
+                  name="tokenTwo"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-md font-semibold text-slate-600">
-                        USDT Decimals
+                        Token Two
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -103,9 +101,7 @@ export default function ToolCard(toolPost) {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>
-                        Enter the USDT Decimals.
-                      </FormDescription>
+                      <FormDescription>Token Two Decimals.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -136,6 +132,9 @@ export default function ToolCard(toolPost) {
 
               <div className="mt-4 flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
                 <div className="flex items-center justify-center gap-4">
+                  <Button type="submit" className="p-6">
+                    <FaEquals />
+                  </Button>
                   <div className="flex items-center justify-between rounded-md border border-gray-800 bg-white px-4 py-3 font-mono text-sm text-gray-800">
                     <div className="flex items-center gap-1 overflow-auto">
                       <span className="text-md font-semibold text-slate-600">
@@ -143,8 +142,8 @@ export default function ToolCard(toolPost) {
                       </span>
                       <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                         {calculatedPrice
-                          ? calculatedPrice.length > 8
-                            ? `${calculatedPrice.substring(0, 8)}...`
+                          ? calculatedPrice.length > 15
+                            ? `${calculatedPrice.substring(0, 15)}...`
                             : calculatedPrice
                           : '0'}
                       </span>
@@ -153,10 +152,6 @@ export default function ToolCard(toolPost) {
                       <CopyOutput value={calculatedPrice} />
                     </span>
                   </div>
-
-                  <Button type="submit" className="p-6">
-                    <FaEquals />
-                  </Button>
                 </div>
               </div>
             </form>
