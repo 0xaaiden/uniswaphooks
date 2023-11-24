@@ -32,18 +32,16 @@ export default function ComponentPreview({ componentData }) {
     creator: componentCreator,
   } = componentData
 
-  const componentHash = `component-${componentId}`
-
   return (
     <div
       ref={ref}
-      id={componentTitle}
+      id={componentId}
       className="max-w-md p-2"
     >
       <div className="space-y-2">
         <PreviewTitle
           componentTitle={componentTitle}
-          componentHash={componentHash}
+          componentId={componentId}
         />
 
         <div className="lg:flex lg:items-end">

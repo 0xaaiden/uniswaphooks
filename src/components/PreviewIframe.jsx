@@ -20,10 +20,10 @@ export default function PreviewIframe({
       <div
         className={`${iframeTheme} space-between mt-4 flex min-h-[200px] w-full rounded-lg ring-2 ring-gray-900 lg:transition-all`}
       >
-        <div className="items-left  m-4 ml-4 flex w-4/5  flex-col gap-2">
+        <div className="items-left m-4 ml-4 flex w-4/5 flex-col gap-2">
           <Link
             href={`#${componentTitle}`}
-            className="text-xl font-medium text-black"
+            className="text-xl font-medium text-black no-underline"
           >
             {componentTitle}
             <div className="text-md align-start flex">
