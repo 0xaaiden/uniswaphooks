@@ -22,10 +22,10 @@ export default function ToolCard({ toolPost, params }) {
           <h2 className="flex items-center justify-center text-lg font-medium text-gray-900 sm:text-xl">
             {toolPost.title}
           </h2>
+          <p className="flex items-center justify-center mt-2 text-sm text-gray-500">{toolPost.description}</p>
 
           {params.toolId === 'square-root-price' && <SquareRootPrice />}
           {params.toolId === 'tick-price' && <TickPrice />}
-
         </div>
       </div>
     </div>
