@@ -24,7 +24,7 @@ export async function POST(req) {
   const mailOptions = {
     from: `FindServices Mailer <` + process.env.SENDER_EMAIL + `>`,
     to: process.env.MAIN_EMAIL,
-    subject: `[FindServices] - New Hook Submission: ${body.title}`,
+    subject: `[UniswapHooks] - New Hook Submission: ${body.title}`,
     text: `
       -- New Hook Submission > FindServices
   

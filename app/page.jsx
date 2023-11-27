@@ -28,10 +28,6 @@ export default async function Page() {
       <Container classNames="pb-8 lg:pb-12">
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {data.categories.map((category) => {
-            const hooks = data.hooks.filter(
-              (hook) => hook.categoryId === category.id
-            )
-
             return (
               <li className="space-y-4" key={category.id}>
                 <CollectionCard componentData={category} />

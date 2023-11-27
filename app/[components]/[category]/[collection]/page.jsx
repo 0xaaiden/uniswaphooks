@@ -43,10 +43,6 @@ export default async function Page({ params }) {
 
       <h3 className="text-3xl font-bold">{data[0].category.title}</h3>
 
-      {/**
-       * TODO: Fix the tailwind css classes, to remove the underlines
-       */}
-
       <div className="prose grid max-w-none grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {data.map((componentData) => (
           <ComponentPreview componentData={componentData} />

@@ -76,7 +76,7 @@ export default async function Page({ params }) {
       />
 
       <div>
-        <ToolCard {...data} />
+        <ToolCard toolPost={data} params={params} />
       </div>
     </Container>
   )
