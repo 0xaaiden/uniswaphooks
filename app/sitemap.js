@@ -4,6 +4,34 @@ import matter from 'gray-matter'
 import { promises as fs } from 'fs'
 import { join } from 'path'
 
+async function getPosts() {
+  const postsPath = join(process.cwd(), '/src/data/posts')
+  const blogSlugs = await fs.readdir(postsPath)
+
+  const blogPosts = await Promise.all(
+    blogSlugs.map(async (blogSlug) => {
+      const postPath = join(postsPath, blogSlug)
+      const blogItem = await fs.readFile(postPath, 'utf-8')
+
+      const { data: blogData } = matter(blogItem)
+
+      return {
+        title: blogData.title,
+        date: blogData.date,
+        emoji: blogData.emoji,
+        slug: blogSlug.replace('.mdx', ''),
+      }
+    })
+  )
+
+  return blogPosts.sort((blogA, blogB) => {
+    const dateA = new Date(blogA.date)
+    const dateB = new Date(blogB.date)
+
+    return dateB - dateA
+  })
+}
+
 async function getTools() {
   const toolsPath = join(process.cwd(), '/src/data/tools')
   const toolSlugs = await fs.readdir(toolsPath)
@@ -16,11 +44,6 @@ async function getTools() {
 
       return {
         id: toolData.id,
-        title: toolData.title,
-        description: toolData.description,
-        tag: toolData?.tag,
-        emoji: toolData.emoji,
-        category: toolData.category,
       }
     })
   )
@@ -34,14 +57,13 @@ export default async function sitemap() {
     )
 
     const dataToolsResults = await getTools()
-    const dataTools = dataToolsResults
-      .filter((result) => result.status === 'fulfilled')
-      .map((result) => result.value)
-    const siteSlugsTools = dataTools.map(
-      (tool) => `components/tools/${tool.id}`
-    )
+    const dataTools = dataToolsResults.map((result) => result.value)
+    const siteSlugsTools = dataTools.map((tool) => `tools/tool/${tool.id}`)
 
-    const siteSlugs = [...siteSlugsHooks, ...siteSlugsTools]
+    const dataPosts = await getPosts()
+    const siteSlugsPosts = dataPosts.map((post) => `blog/${post.slug}`)
+
+    const siteSlugs = [...siteSlugsHooks, ...siteSlugsTools, ...siteSlugsPosts]
     const currentDate = new Date()
 
     const transformedSlugs = siteSlugs.map((siteSlug) => ({

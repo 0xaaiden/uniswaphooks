@@ -1,0 +1,175 @@
+---
+title: Launching Your First Hook with scaffold-hook - A Developer's Guide
+description: This comprehensive guide covers everything from setting up your development environment to deploying and testing your first custom hook. Perfect for developers seeking to explore and create in the Uniswap ecosystem.
+date: 11/15/2023
+emoji: 🚀
+---
+
+<div
+  style={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '2em',
+  }}
+>
+  <img
+    src="https://i.imgur.com/Kp1MPNO.png"
+    width="60%"
+    style={{ marginBottom: '0' }}
+  />
+ 
+</div>
+
+## Introduction
+`scaffold-hook` is a dynamic tool inspired by scaffold-eth, designed to ease the development and testing of Uniswap v4 Hooks. It focuses on the swap lifecycle, covering aspects like pool creation, liquidity provision, and swapping. This guide will walk you through the process of launching your own hook using `scaffold-hook`.
+
+## Key Features
+-  **Template Hook with Deployment Commands:** A ready-to-use template to start your hook development.
+- **User Interfaces for Pool Creation, Liquidity, and Swapping:** Simple interactions with the Uniswap v4 ecosystem.
+- **Local Network (Anvil) with Predeployed Uniswap v4:** Test your hooks in a controlled environment before going live.
+- **Testnet Support**: Extend testing to various Ethereum testnets.
+- **Foundry Integration**
+
+## Setup
+Before diving in, ensure you have Foundry and Node 18+ installed. Start by installing necessary dependencies:
+
+```bash
+git clone https://github.com/uniswapfoundation/scaffold-hook && cd scaffold-hook
+forge install
+npm install
+```
+Set up your environment by duplicating the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+## Getting Started
+Start the Local Network: Launch a local Ethereum network with predeployed Uniswap v4 contracts.
+
+```bash
+npm run anvil
+```
+
+Deploy the Template Hook: Use the following command to deploy your hook on the local network.
+
+```bash
+npm run deploy:anvil
+```
+Now, let's make your web application aware of your new hook. You'll find the hook address in the `run-latest.json` file and add it to `wagmi.config.ts`
+
+Regenerate Project Configurations: This step updates the React hooks, addresses, and ABIs for your project.
+
+```bash
+npm run wagmi
+````
+
+Launch the Web Application: Start exploring your hook in a web environment.
+
+```bash
+npm run dev
+```
+## Hook Configuration: A Deep Dive
+
+To tailor the hook to your needs, you might want to modify the file name, contract name, or hook flags. This requires updates in the `.env` file and in the hook contract to ensure consistency.
+
+### Understanding the `.env` File and Hook Definition
+When setting up your `scaffold-hook` project, the `.env` file plays a pivotal role. It's where you define key parameters for your hook, including the contract itself. This file is not just a part of the environment setup; it's integral to specifying which hook contract your project will use.
+
+-  Defining the Hook Contract in `.env`
+
+	In the `.env` file, you specify the hook contract using the `HOOK_CONTRACT` variable. This variable dictates which solidity file and contract within that file will be used as your hook. For example:
+
+	```plaintext
+	# Hook Contract
+	HOOK_CONTRACT="Counter.sol:Counter"
+	```
+
+	This line in your `.env` file tells the deployment scripts to use the `Counter` contract defined in `Counter.sol`. It's a direct link between your environment and the smart contract code. The hook contract, in this case, `Counter.sol`, defines the logic of your Uniswap v4 hook.
+	
+Let's take a closer look at the `DeployHook.s.sol` script in the `contracts/script` directory. This script is crucial for deploying your custom hook onto the blockchain.
+
+
+### Key Components of the Deployment Script `DeployHook.s.sol`
+
+1.  **Import Statements**: These bring in necessary libraries and contracts, such as `HookMiner` for address computation. The script then fetches the hook's creation code based on the .env file and `vm.getCode()` function reads the specified contract's bytecode for deployment.
+    
+    ```solidity
+    import {HookMiner} from "../test/utils/HookMiner.sol";
+    ```
+    ```solidity
+    bytes memory creationCode = vm.getCode(vm.envString("HOOK_CONTRACT"));
+    ```
+    
+    
+2.  **Setting Up Flags**: The script includes a function `getFlagsFromEnv()` which reads boolean flags from the environment file `.env`and encodes them into a `uint160` bit flags. This is crucial for specifying what features your hook will support.
+    
+	 ```solidity
+	function getFlagsFromEnv() internal view returns (uint160) {
+	        // ... (Code that sets flags based on environment variables)
+	    }
+	``` 
+   
+3.  **Hook Deployment**: The `run()` function combines the creation code of the hook with constructor arguments, mines a suitable salt, and deploys the hook using `CREATE2`. This ensures that your hook is deployed with the correct address and flags.
+    
+    ```solidity
+    function run() public {
+        // ... (Code for deploying the hook)
+    }
+    ``` 
+    
+
+### Building the Hook Contract: `Counter.sol`
+
+In the `contracts/src` directory, you'll find `Counter.sol`, a sample hook contract. This contract is an excellent example to understand how to structure your hook.
+
+### Structure of the Hook Contract
+
+    
+1.  **Constructor**: Sets up essential contract state, such as the pool manager.
+    
+    solidityCopy code
+    
+    ```solidity
+    constructor(IPoolManager _poolManager) {
+        poolManager = _poolManager;
+        // ...
+    }
+    ``` 
+    
+2.  **Hook Implementation**: Each function like `beforeSwap` and `afterSwap` is an opportunity to define what happens when these events occur in a pool. This is where you'll put your business logic.
+    
+    ```solidity
+    function afterSwap(address, PoolKey calldata key, IPoolManager.SwapParams calldata, BalanceDelta, bytes calldata)
+        external
+        override
+        returns (bytes4)
+    {
+        afterSwapCount[key.toId()]++;
+        return BaseTestHooks.afterSwap.selector;
+    }
+    ```
+
+## Additional Configuration
+
+### Custom Tokens
+
+`Scaffold-hook` comes with `MockERC20` for testing, but you can integrate custom tokens by defining them in `wagmi.config.ts` and updating the `TOKEN_ADDRESSES` in your project.
+
+### Debuggable Hook Interface
+
+For an Etherscan-style contract interface, define your hook in `wagmi.config.ts` and utilize the generated types for a debuggable interface.
+
+
+## Learn More
+
+Dive deeper into related technologies:
+
+-   **[Foundry Documentation](https://book.getfoundry.sh/)**: Understand the Foundry stack.
+-   **[wagmi Documentation](https://wagmi.sh/)**: Learn about wagmi Hooks and API.
+-   **[Next.js Documentation](https://nextjs.org/docs)**: Explore Next.js features and API.
+
+----------
+
+This guide offers a comprehensive overview for developers looking to launch their own hooks using `scaffold-hook`. 
