@@ -31,6 +31,11 @@ export default function Header() {
       href: '/blog',
       external: false,
     },
+    {
+      title: 'Tools',
+      href: '/tools',
+      external: false,
+    },
   ]
 
   return (

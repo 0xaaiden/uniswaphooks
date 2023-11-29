@@ -7,6 +7,7 @@ export default function MdxContent({
   mdxComponents = {},
   mdxScope = {},
 }) {
+
   return (
     <MDXRemote {...mdxSource} components={mdxComponents} scope={mdxScope} />
   )

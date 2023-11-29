@@ -1,7 +1,7 @@
 'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
-import PreviewCopy from './PreviewCopy'
 import { Copy } from 'lucide-react'
 
 export default function ChainCard({ chainPost }) {
@@ -9,7 +9,6 @@ export default function ChainCard({ chainPost }) {
     <div className="group  relative block h-full w-full bg-white font-sans before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-dashed  before:border-gray-900">
       <div className="h-full overflow-auto rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
         <div className="max-w-md overflow-auto p-4 sm:p-6 lg:p-4">
-          {/* Top center: Name of chain and its logo */}
           {chainPost.docs ? (
             <Link href={chainPost.docs} target="_blank">
               <span class="absolute right-3 flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700">
@@ -45,7 +44,6 @@ export default function ChainCard({ chainPost }) {
             </h2>
           </div>
 
-          {/* 2nd row: Chain ID and Currency */}
           <div className="mt-4 flex justify-between px-12">
             <p className="sm:text-md flex flex-col items-center gap-2 text-sm">
               <span className="text-md font-semibold text-slate-600">
@@ -73,7 +71,6 @@ export default function ChainCard({ chainPost }) {
             </p>
           </div>
 
-          {/* 3rd row: Snippet with PoolManager and address of the pool manager */}
           <div className="overflow-none mt-4 flex w-full justify-between">
             <div className="sm:text-md flex w-full flex-col items-center gap-2 text-sm">
               <div class="flex w-[280px]  items-center justify-between rounded-md border border-gray-800 bg-white px-4 py-3 align-bottom font-mono text-sm text-gray-800">
@@ -99,8 +96,6 @@ export default function ChainCard({ chainPost }) {
               </div>
             </div>
           </div>
-
-          {/* 4th row: RPC Urls */}
         </div>
       </div>
     </div>
