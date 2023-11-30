@@ -34,11 +34,17 @@ export function getUrl() {
 
 export async function fetchData(baseUrl) {
   try {
-    const [categoryResponse, hookResponse] = await Promise.all([
-      fetch(`${baseUrl}/api/category`, { method: 'GET' }),
-      fetch(`${baseUrl}/api/hook`, { method: 'GET' }),
-    ])
+    const fetchOptions = {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
+    }
 
+    const [categoryResponse, hookResponse] = await Promise.all([
+      fetch(`${baseUrl}/api/category`, fetchOptions),
+      fetch(`${baseUrl}/api/hook`, fetchOptions),
+    ])
     if (!categoryResponse.ok) {
       throw new Error(
         `Network response for categories was not ok: ${categoryResponse.status}`

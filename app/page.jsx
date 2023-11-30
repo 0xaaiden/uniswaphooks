@@ -1,4 +1,4 @@
-import { getUrl, fetchData } from '@lib/utils'
+import { getCollections } from '@lib/utils'
 
 import Container from '@component/Container'
 import HeroBanner from '@component/HeroBanner'
@@ -7,8 +7,7 @@ import HeaderSearch from '@component/HeaderSearch'
 import PopularHooks from '@component/PopularHooks'
 
 export default async function Page() {
-  const data = await fetchData(getUrl())
-
+  const collections = await getCollections()
   return (
     <>
       <HeroBanner
@@ -27,7 +26,7 @@ export default async function Page() {
 
       <Container classNames="pb-8 lg:pb-12">
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {data.categories.map((category) => {
+          {collections.sort((a, b) => (a.title > b.title ? 1 : -1)).sort((a, b) => (a.tag === 'new' ? -1 : 1)).map((category) => {
             return (
               <li className="space-y-4" key={category.id}>
                 <CollectionCard componentData={category} />

@@ -37,6 +37,10 @@ export default function TickPrice() {
   const [calculatedPrice, setCalculatedPrice] = useState()
   const { handleSubmit, control, value } = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      tokenOne: '18',
+      tokenTwo: '18',
+    },
   })
 
   async function onSubmit(values) {

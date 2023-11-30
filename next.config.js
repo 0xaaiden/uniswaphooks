@@ -8,7 +8,7 @@ module.exports = {
       'chainlist.org',
       'i.imgur.com',
       'icons.llamao.fi',
-      'polygonscan.com',
+      'coinbase.com',
     ],
   },
   reactStrictMode: true,
