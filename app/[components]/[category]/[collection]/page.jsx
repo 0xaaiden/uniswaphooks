@@ -38,7 +38,7 @@ export default async function Page({ params }) {
       <CollectionLinks
         activeCollection={params.collection}
         activeCategory={params.category}
-        componentsData={collections}
+        componentsData={collections.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))}
       />
 
       <h3 className="text-3xl font-bold">{data[0].category.title}</h3>
