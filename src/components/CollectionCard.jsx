@@ -2,10 +2,9 @@ import Link from 'next/link'
 
 export default function CollectionCard({ componentData }) {
   const hasTag = !!componentData.tag
-
   return (
     <>
-      {componentData.count > 0 && (
+      {componentData.category === 'hooks' && (
         <Link
           href={`/components/${componentData.category}/${componentData.id}`}
         >
@@ -29,7 +28,7 @@ export default function CollectionCard({ componentData }) {
                 </h2>
 
                 <p className="mt-1 text-xs text-gray-700">
-                  {componentData.count}{" "}
+                  {componentData.count}{' '}
                   {componentData.count > 1 ? 'Hooks' : 'Hook'}
                 </p>
               </div>
@@ -38,36 +37,8 @@ export default function CollectionCard({ componentData }) {
         </Link>
       )}
 
-      {componentData.count === 0 && (
-        <div className="group relative block h-full bg-white before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-dashed before:border-gray-900">
-          <div className="rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
-            <div className="p-4 sm:p-6">
-              <div className="flex items-start justify-between">
-                <span
-                  aria-hidden="true"
-                  role="img"
-                  className="text-lg sm:text-xl"
-                >
-                  {componentData.emoji}
-                </span>
-
-                {hasTag && <CardTag tagType={componentData.tag} />}
-              </div>
-
-              <h2 className="mt-4 font-medium text-gray-900 sm:text-lg">
-                {componentData.title}
-              </h2>
-
-              <p className="mt-1 text-xs text-gray-700">{componentCount}</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {!componentData.count && (
-        <Link
-          href={`/tools/tool/${componentData.id}`}
-        >
+      {componentData.category === 'tools' && (
+        <Link href={`/tools/tool/${componentData.id}`}>
           <div className="group relative block h-full bg-white before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-dashed before:border-gray-900">
             <div className="rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
               <div className="p-4 sm:p-6">
