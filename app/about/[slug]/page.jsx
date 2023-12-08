@@ -72,7 +72,6 @@ export default async function Page({ params }) {
       <article className="prose mx-auto">
         <h1>{pageData.title}</h1>
 
-
         <MdxRemoteRender
           mdxSource={pageContent}
           mdxComponents={mdxComponents}
