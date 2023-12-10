@@ -40,7 +40,7 @@ export const quickLinks = [
   },
   {
     title: 'Proof of Concept',
-    href: '#proof-of-concept',
+    href: '#proof-of-concepts',
     emoji: '🔬',
     external: false,
   },
@@ -50,5 +50,4 @@ export const quickLinks = [
     emoji: '📚',
     external: false,
   },
-  
 ]

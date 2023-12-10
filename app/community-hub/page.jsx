@@ -1,48 +1,55 @@
-import { quickLinks } from '@data/menuLinks'
-
 import HeroBanner from '@component/HeroBanner'
 import Container from '@component/Container'
-import PagesLinks from '@component/pages-links/PagesLinks'
 
 import matter from 'gray-matter'
 import { promises as fs } from 'fs'
 import { join } from 'path'
-import { serialize } from 'next-mdx-remote/serialize'
 
-import rehypeExternalLinks from 'rehype-external-links'
-import remarkSlug from 'remark-slug'
-import BlogPreview from '@component/BlogPreview'
+import BlogGrid from '@component/BlogGrid'
 
-import MdxRemoteRender from '@component/MdxRemoteRender'
-const mdxComponents = {
-  BlogPreview,
-}
+const postsPath = join(process.cwd(), '/src/data/community-hub')
 
-async function getTools() {
-  const toolsPath = join(
-    process.cwd(),
-    '/src/data/community-hub/getting-started.mdx'
+async function getPosts() {
+  const postSlugs = await fs.readdir(postsPath)
+
+  const postPosts = await Promise.all(
+    postSlugs.map(async (postSlug) => {
+      const postPath = join(postsPath, postSlug)
+      const postItem = await fs.readFile(postPath, 'utf-8')
+
+      const { data: postData } = matter(postItem)
+
+      return {
+        title: postData.title,
+        date: postData.date,
+        emoji: postData.emoji,
+        tag: postData.tag,
+        type: postData.type,
+        slug: postSlug.replace('.mdx', ''),
+      }
+    })
   )
-  const postItem = await fs.readFile(toolsPath, 'utf-8')
 
-  const { content, data: frontmatter } = matter(postItem)
+  return postPosts.sort((postA, postB) => {
+    const dateA = new Date(postA.date)
+    const dateB = new Date(postB.date)
 
-  const mdxSource = await serialize(content, {
-    mdxOptions: {
-      remarkPlugins: [remarkSlug],
-      rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]],
-    },
-    scope: frontmatter,
+    return dateB - dateA
   })
-
-  return {
-    blogData: frontmatter,
-    blogContent: mdxSource,
-  }
 }
 
 export default async function Page() {
-  const { blogData, blogContent } = await getTools()
+  const postPosts = await getPosts()
+  const sortedPosts = postPosts.sort((postA, postB) => {
+    if (postA.type == 'getting-started') {
+      return -1
+    } else if (postB.type == 'getting-started') {
+      return 1
+    } else {
+      return 0
+    }
+  })
+
   return (
     <>
       <HeroBanner
@@ -50,13 +57,7 @@ export default async function Page() {
         subtitle="Learn about Uniswap v4, with these educational resources"
       />
       <Container classNames="pb-8 lg:pb-12">
-        <PagesLinks componentsData={quickLinks} />
-        <article className="prose prose-img:rounded-lg max-w-7xl">
-          <MdxRemoteRender
-            mdxSource={blogContent}
-            mdxComponents={mdxComponents}
-          />
-        </article>
+        <BlogGrid blogPosts={sortedPosts} />
       </Container>
     </>
   )

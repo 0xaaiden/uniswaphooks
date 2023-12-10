@@ -66,6 +66,36 @@ export default function CollectionCard({ componentData }) {
           </div>
         </Link>
       )}
+
+      {componentData.category === 'articles' && (
+        <Link href={`/${componentData.id}`}>
+          <div className="group relative block h-full bg-white before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-dashed before:border-gray-900">
+            <div className="rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
+              <div className="p-4 sm:p-6">
+                <div className="flex items-start justify-between">
+                  <span
+                    aria-hidden="true"
+                    role="img"
+                    className="text-lg sm:text-xl"
+                  >
+                    {componentData.emoji}
+                  </span>
+
+                  {hasTag && <CardTag tagType={componentData.tag} />}
+                </div>
+
+                <h2 className="mt-4 font-medium text-gray-900 sm:text-lg">
+                  {componentData.title}
+                </h2>
+
+                <p className="mt-1 text-xs text-gray-700">
+                  {componentData.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        </Link>
+      )}
     </>
   )
 }
@@ -74,8 +104,9 @@ function CardTag({ tagType }) {
   const isNew = tagType === 'new'
   const isSoon = tagType === 'soon'
   const isUpdated = tagType === 'updated'
+  const isCustom = tagType === 'community'
 
-  if (!isNew && !isUpdated && !isSoon) {
+  if (!isNew && !isUpdated && !isSoon && !isCustom) {
     return <></>
   }
 
@@ -85,7 +116,7 @@ function CardTag({ tagType }) {
         isNew && 'bg-green-100 text-green-700'
       } ${isUpdated && 'bg-blue-100 text-blue-700'} ${
         isSoon && 'bg-yellow-100 text-yellow-700'
-      }`}
+      } ${isCustom && 'bg-purple-100 text-purple-700'}`}
     >
       {tagType}
     </span>

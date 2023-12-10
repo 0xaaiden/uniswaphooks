@@ -83,7 +83,15 @@ export async function fetchData(baseUrl) {
 
 export async function getCollections() {
   const data = await fetchData(getUrl())
-
+  data.categories.push({
+    id: 'community-hub',
+    title: 'Community Hub',
+    description: 'Educational resources, and more!',
+    emoji: '🌱',
+    category: 'articles',
+    tag: 'community',
+  })
+  
   return data.categories
 }
 
