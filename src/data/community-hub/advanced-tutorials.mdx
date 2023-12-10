@@ -5,3 +5,231 @@ emoji: 🚀
 tag: community
 type: advanced-tutorials
 ---
+
+## Advanced Tutorials
+
+Ready to dive deeper? These advanced tutorials are designed to enhance your understanding and skills, covering complex topics and techniques.
+
+### Creating Custom Hooks in Uniswap v4
+
+Custom hooks in Uniswap v4 allow developers to add unique functionalities and behaviors to their decentralized applications. This step-by-step guide will take you through the entire process of creating and implementing a custom hook in Uniswap v4.
+
+#### Understanding Hooks in Uniswap v4
+
+- Hooks in Uniswap v4 provide a way to customize and extend the core functionalities of Uniswap pools.
+- They can be used to implement features like custom trading strategies, fee models, or integrations with other DeFi protocols.
+
+#### Prerequisites
+
+- Solid understanding of Solidity and smart contract development.
+- Familiarity with Uniswap v4 architecture and its core concepts.
+- Development environment setup with Hardhat or Truffle, and a code editor like Visual Studio Code.
+
+#### Step 1: Setting Up the Project
+
+```bash
+mkdir uniswap-v4-hooks
+cd uniswap-v4-hooks
+npm init -y
+npm install --save-dev hardhat @nomiclabs/hardhat-ethers ethers
+npx hardhat init
+```
+
+- Create a new directory for your project and initialize a Node.js project.
+- Install the required dependencies for the project. We will be using Hardhat as our development environment.
+- Run the `npx hardhat` command to initialize the project with a sample contract and test file.
+
+#### Step 2: Writing the Hook Contract
+
+- Start by creating a new file named `UniswapV4Hook.sol` in the `contracts` directory.
+- Define the structure of your hook. It might include functions like `beforeSwap`, `afterSwap`, `beforeMint`, `afterMint`, etc.
+
+  ```solidity
+  // contracts/MyCustomHook.sol
+
+  pragma solidity ^0.8.0;
+
+  import "@uniswap/v4-core/contracts/interfaces/IUniswapV4Hook.sol";
+
+  contract MyCustomHook is IUniswapV4Hook {
+      // Implement hook functions here
+  }
+  ```
+
+- Implement the hook functions. You can use the `IUniswapV4Hook` interface to get a list of all the available hook functions.
+- For example, the `beforeSwap` hook function is called before a swap is executed. It can be used to implement custom trading strategies or fee models.
+
+  ```solidity
+  // contracts/MyCustomHook.sol
+
+  pragma solidity ^0.8.0;
+
+  import "@uniswap/v4-core/contracts/interfaces/IUniswapV4Hook.sol";
+
+  contract MyCustomHook is IUniswapV4Hook {
+      function beforeSwap(
+          address tokenIn,
+          address tokenOut,
+          uint256 amountIn,
+          uint256 amountOut
+      ) external override {
+          // Implement custom trading strategies or fee models
+      }
+  }
+  ```
+
+#### Step 3: Testing Your Hook
+
+- Write tests for your hook contract. You can use the `UniswapV4HookTester` contract to test your hook functions.
+- For example, the `beforeSwap` hook function can be tested by calling the `testBeforeSwap` function of the `UniswapV4HookTester` contract.
+
+  ```solidity
+  // test/MyCustomHook.test.sol
+
+  pragma solidity ^0.8.0;
+
+  import "@uniswap/v4-core/contracts/interfaces/IUniswapV4Hook.sol";
+  import "@uniswap/v4-core/contracts/test/UniswapV4HookTester.sol";
+
+  contract MyCustomHookTest is IUniswapV4Hook {
+      function testBeforeSwap(
+          address tokenIn,
+          address tokenOut,
+          uint256 amountIn,
+          uint256 amountOut
+      ) external {
+          UniswapV4HookTester tester = new UniswapV4HookTester();
+          tester.testBeforeSwap(tokenIn, tokenOut, amountIn, amountOut);
+      }
+  }
+  ```
+
+  - Use `Hardhat` to write and run tests for your hook contract.
+
+  - For example, the `beforeSwap` hook function can be tested by calling the `testBeforeSwap` function of the `UniswapV4HookTester` contract. `npx hardhat test`
+
+    ```solidity
+    // test/MyCustomHookTest.sol
+
+    const { expect } = require("chai");
+
+    describe("MyCustomHook", function() {
+        it("Should do something", async function() {
+            // Test logic here
+        });
+    });
+    ```
+
+#### Step 4: Deploying Your Hook
+
+- Compile and deploy your hook to a test network like `Rinkeby` or `Kovan`.
+- Use `Hardhat` to compile and deploy your hook contract.
+
+  ```bash
+  npx hardhat compile
+  npx hardhat run scripts/deploy.js --network rinkeby=
+  ```
+
+- Ensure you have test ETH in your deployed account to pay for gas fees.
+
+#### Step 5: Integrating with a Frontend
+
+- Create a frontend application to interact with your hook contract. You can use `React` or `Vue.js` for this purpose.
+
+- Use Web3 libraries like `Ethers.js` or `Web3.js` to interact with your hook contract.
+
+  ```javascript
+  // src/App.js
+
+  import { ethers } from 'ethers'
+  import { MyCustomHook } from './artifacts/contracts/MyCustomHook.sol/MyCustomHook.json'
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
+  const contract = new ethers.Contract(
+    '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    MyCustomHook.abi,
+    signer
+  )
+
+  function App() {
+    // Interact with your hook contract here
+  }
+  ```
+
+### Conclusion
+
+By following these steps, you can create a custom hook in Uniswap v4 that meets your specific requirements, whether for advanced trading strategies, fee models, or other innovative functionalities. Remember to thoroughly test and audit your code, especially when dealing with financial applications.
+
+## Optimizing Gas Usage in Uniswap v4
+
+Effective gas optimization is crucial for building efficient and cost-effective smart contracts on the Ethereum network. In this tutorial, we delve into various strategies and best practices for minimizing gas costs in your Uniswap v4 projects.
+
+### Understanding Gas in Ethereum
+
+- **Gas in Ethereum**: Gas is a unit that measures the amount of computational effort required to execute operations on the Ethereum network.
+- **Gas Costs**: Every transaction on Ethereum requires gas, and the cost of this gas fluctuates based on network demand.
+
+### Prerequisites
+
+- Familiarity with Solidity and smart contract development.
+- Basic understanding of Uniswap v4's architecture and contract interactions.
+
+### Strategies for Gas Optimization
+
+#### 1. Efficient Use of Storage
+
+- **Avoid Unnecessary State Changes**: State changes are expensive. Only write to storage when absolutely necessary.
+- **Use Tight Variable Packing**: Solidity stores variables in 32-byte storage slots. By efficiently packing smaller data types into a single slot, you can reduce storage costs.
+
+#### 2. Optimizing Loops and Conditional Statements
+
+- **Minimize Operations Inside Loops**: Keep the code inside loops as simple as possible. Complex calculations inside loops can significantly increase gas costs.
+- **Early Exit from Functions**: Implement early return patterns in functions to avoid unnecessary computation.
+
+#### 3. Smart Contract Architecture
+
+- **Modular Contracts**: Breaking your smart contract into smaller, reusable modules can make them more gas-efficient.
+- **Proxy Patterns**: Use proxy contracts for upgrading contracts without redeploying the entire codebase, saving deployment gas.
+
+#### 4. Gas-Efficient Libraries and Tools
+
+- **Use OpenZeppelin Contracts**: OpenZeppelin provides well-tested, gas-efficient contract libraries.
+- **Solidity Optimizer**: Enable the Solidity optimizer in your compiler settings to improve the efficiency of the bytecode.
+
+```solidity
+// Enable Solidity optimizer in Hardhat config
+module.exports = {
+  solidity: {
+    version: "0.8.4",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200
+      }
+    }
+  }
+};
+```
+
+#### 5. Testing and Analysis
+
+- **Gas Estimators**: Use gas estimators like `eth-gas-reporter` to estimate the gas costs of your smart contracts.
+- **Gas Profilers**: Use gas profilers like `hardhat-gas-reporter` to analyze the gas costs of your smart contracts.
+
+```bash
+# Install gas reporter
+npm install --save-dev eth-gas-reporter
+
+# Add gas reporter to Hardhat config
+require("hardhat-gas-reporter");
+
+# Run gas reporter
+npx hardhat test --network rinkeby
+```
+
+### Final Thoughts
+
+Optimizing gas usage is an ongoing process and requires continuous learning and adaptation to new patterns and best practices. By applying these strategies, you can significantly reduce the gas costs of your Uniswap v4 projects, leading to more efficient and economical smart contracts.
+
+For more detailed strategies and insights on gas optimization, check out this [comprehensive guide](https://medium.com/@solidity101/maximizing-gas-efficiency-expert-strategies-for-solidity-developers-%EF%B8%8F-a19f7a7df4e9).
