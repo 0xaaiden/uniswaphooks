@@ -32,13 +32,19 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const data = await getHookData(params)
   const collections = await getCollections()
+  //if one of the collections category is 'articles' remove it from the list
+  const filteredCollections = collections.filter(
+    (collection) => collection.category !== 'articles'
+  )
 
   return (
     <Container classNames="py-8 lg:py-12 space-y-8 lg:space-y-12">
       <CollectionLinks
         activeCollection={params.collection}
         activeCategory={params.category}
-        componentsData={collections.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))}
+        componentsData={filteredCollections.sort((a, b) =>
+          a.createdAt < b.createdAt ? 1 : -1
+        )}
       />
 
       <h3 className="text-3xl font-bold">{data[0].category.title}</h3>
