@@ -34,7 +34,7 @@ export default function BlogCard({ blogPost }) {
       {blogPost.tag === 'community' && (
         <Link
           href="/community-hub/[slug]"
-          as={`/community-hub/${blogPost.slug}`}
+          as={`/community-hub/${blogPost.section}/${blogPost.slug}`}
         >
           <div className="group relative block h-full bg-white before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-dashed before:border-gray-900">
             <div className="h-full rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
@@ -53,7 +53,7 @@ export default function BlogCard({ blogPost }) {
                   </h2>
 
                   <span className="mt-1 text-xs text-gray-700">
-                    # {blogPost.type}
+                    # {blogPost.section}
                   </span>
                 </div>
               </div>

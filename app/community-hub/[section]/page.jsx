@@ -4,10 +4,10 @@ import matter from 'gray-matter'
 import { promises as fs } from 'fs'
 import { join } from 'path'
 
-import HeroBanner from '@component/HeroBanner'
 import Container from '@component/Container'
-import BlogGrid from '@component/BlogGrid'
+import HeroBanner from '@component/HeroBanner'
 import CollectionLinks from '@component/CollectionLinks'
+import BlogGrid from '@component/BlogGrid'
 
 import { sections } from '@data/community-hub'
 
@@ -42,17 +42,17 @@ async function getPosts() {
   })
 }
 
-export default async function Page() {
+// Params is compososed section and id
+// Example: /community-hub/section/id
+// The section must be always from @data/community-hub, if not, it will return 404
+// Unless the section = 'new' then it will get a form to add new resources
+
+export default async function Page({ params }) {
+  console.log(params)
   const postPosts = await getPosts()
-  const sortedPosts = postPosts.sort((postA, postB) => {
-    if (postA.section == 'getting-started') {
-      return -1
-    } else if (postB.section == 'getting-started') {
-      return 1
-    } else {
-      return 0
-    }
-  })
+  const postPostsFromSection = postPosts.filter(
+    (post) => post.section == params.section
+  )
 
   const activeCategory = {
     category: 'Educational Resources',
@@ -62,7 +62,10 @@ export default async function Page() {
   return (
     <>
       <HeroBanner
-        title="Community Hub"
+        title={params.section
+          .split('-')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')}
         subtitle="Learn about Uniswap v4, with these educational resources"
       >
         <p className="-mt-6 text-base text-gray-900">
@@ -79,12 +82,12 @@ export default async function Page() {
 
       <Container classNames="pb-8 lg:pb-12">
         <CollectionLinks
-          activeCollection={sections}
+          activeCollection={params.section}
           activeCategory={activeCategory}
           componentsData={sections}
         />
         <div className="h-8" />
-        <BlogGrid blogPosts={sortedPosts} />
+        <BlogGrid blogPosts={postPostsFromSection} />
       </Container>
     </>
   )

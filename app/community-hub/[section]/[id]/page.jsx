@@ -17,7 +17,7 @@ const mdxComponents = {
   BlogPreview,
 }
 
-const postsPath = join(process.cwd(), '/src/data/community-hub')
+const postsPath = join(process.cwd(), '/src/data/community-hub/')
 
 export async function generateMetadata({ params }) {
   const { postData } = await getPost(params)
@@ -43,7 +43,7 @@ export async function generateStaticParams() {
 }
 
 async function getPost(params) {
-  const postPath = join(postsPath, `${params.slug}.mdx`)
+  const postPath = join(postsPath, `${params.section}.mdx`)
   const postItem = await fs.readFile(postPath, 'utf-8')
 
   const { content, data: frontmatter } = matter(postItem)
@@ -62,7 +62,13 @@ async function getPost(params) {
   }
 }
 
+// Params is compososed section and id
+// Example: /community-hub/section/id
+// The section must be always from @data/community-hub, if not, it will return 404
+// Unless the section = 'new' then it will get a form to add new resources
+
 export default async function Page({ params }) {
+  console.log(params)
   const { postData, postContent } = await getPost(params)
 
   const schemaData = {
@@ -70,7 +76,7 @@ export default async function Page({ params }) {
     '@type': 'NewsArticle',
     headline: `${postData.title}`,
     image: 'https://www.uniswaphooks.com/og.jpg',
-    type: `${postData.type}`,
+    type: `${postData.section}`,
   }
 
   return (
@@ -83,7 +89,7 @@ export default async function Page({ params }) {
       <Container classNames="py-8 lg:py-12">
         <article className="prose prose-img:rounded-lg mx-auto">
           <header>
-            <span className="text-sm text-gray-700"># {postData.type}</span>
+            <span className="text-sm text-gray-700"># {postData.section}</span>
 
             <h1 className="mt-1">{postData.title}</h1>
           </header>

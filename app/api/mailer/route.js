@@ -22,11 +22,11 @@ export async function POST(req) {
   })
 
   const mailOptions = {
-    from: `FindServices Mailer <` + process.env.SENDER_EMAIL + `>`,
+    from: `FindMalek Mailer <` + process.env.SENDER_EMAIL + `>`,
     to: process.env.MAIN_EMAIL,
     subject: `[UniswapHooks] - New Hook Submission: ${body.title}`,
     text: `
-      -- New Hook Submission > FindServices
+      -- New Hook Submission > FindMalek
   
       - Title: ${body.title}
       - Description: ${body.description}
@@ -40,7 +40,7 @@ export async function POST(req) {
   
       This is an automated message. Please do not reply to this email.`,
     html: `
-      <p>-- New Hook Submission &gt; FindServices</p>
+      <p>-- New Hook Submission &gt; FindMalek</p>
   
       <ul>
         <li>Title: ${body.title}</li>
