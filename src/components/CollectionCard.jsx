@@ -69,9 +69,13 @@ export default function CollectionCard({ componentData }) {
 
       {componentData.category === 'articles' && (
         <Link href={`/${componentData.id}`}>
-          <div className="group relative block h-full bg-white before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-dashed before:border-gray-900">
-            <div className="rounded-lg border-2 border-gray-900 bg-white transition group-hover:-translate-y-2 ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2">
-              <div className="p-4 sm:p-6">
+          <div className="group relative block h-full bg-white before:absolute before:inset-0 hover:rounded-lg hover:border-2 hover:border-dashed hover:border-gray-900">
+            <div
+              className="animate-background rounded-md 
+       bg-gradient-to-r from-green-500 via-amber-800 to-lime-500 bg-[length:200%_200%] p-0.5 transition
+      [animation-duration:_2s] group-hover:-translate-y-2  ltr:group-hover:-translate-x-2 rtl:group-hover:translate-x-2 md:block"
+            >
+              <div className="rounded-md bg-white p-4 sm:p-6">
                 <div className="flex items-start justify-between">
                   <span
                     aria-hidden="true"
@@ -116,7 +120,7 @@ function CardTag({ tagType }) {
         isNew && 'bg-green-100 text-green-700'
       } ${isUpdated && 'bg-blue-100 text-blue-700'} ${
         isSoon && 'bg-yellow-100 text-yellow-700'
-      } ${isCustom && 'bg-purple-100 text-purple-700'}`}
+      } ${isCustom && 'bg-lime-100 text-lime-700'}`}
     >
       {tagType}
     </span>
