@@ -2,7 +2,7 @@ import { ogMeta, twitterMeta } from '@data/metadata'
 
 import Container from '@component/Container'
 import HeroBanner from '@component/HeroBanner'
-import NewHookForm from '@component/NewHookForm'
+import NewHookForm from '@component/form/NewHook'
 
 export const metadata = {
   title: 'Add a new Hook | UniswapHooks',
