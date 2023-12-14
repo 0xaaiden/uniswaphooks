@@ -30,6 +30,7 @@ const formSchema = z.object({
 export default function NewHookForm() {
   const router = useRouter()
   const { handleSubmit, control } = useForm({
+    mode: 'onChange',
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
@@ -81,7 +82,7 @@ export default function NewHookForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        />{/* 
         <FormField
           control={control}
           name="description"
@@ -97,7 +98,7 @@ export default function NewHookForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <div className="flex space-x-4">
           <div className="flex-1">
             <FormField
