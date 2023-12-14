@@ -13,7 +13,7 @@ export const sections = [
   },
   {
     id: 'proof-of-concepts',
-    title: 'Proof of Concepts',
+    title: 'POCs',
     emoji: '🔬',
     description: 'Proof of concepts for new ideas',
   },
@@ -36,28 +36,10 @@ export const sections = [
     description: 'Videos for building new projects',
   },
   {
-    id: 'podcasts',
-    title: 'Podcasts',
-    emoji: '🎙',
-    description: 'Podcasts for building new projects',
-  },
-  {
     id: 'books',
     title: 'Books',
     emoji: '📚',
     description: 'Books for building new projects',
-  },
-  {
-    id: 'courses',
-    title: 'Courses',
-    emoji: '🎓',
-    description: 'Courses for building new projects',
-  },
-  {
-    id: 'cheatsheets',
-    title: 'Cheatsheets',
-    emoji: '📄',
-    description: 'Cheatsheets for building new projects',
   },
   {
     id: 'events',
