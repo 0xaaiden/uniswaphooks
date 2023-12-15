@@ -13,6 +13,7 @@ module.exports = {
       padding: '2rem',
       screens: {
         '2xl': '1400px',
+        '3xl': '1600px',
       },
     },
     extend: {
@@ -37,7 +38,7 @@ module.exports = {
         },
       },
       animation: {
-        'borderAnimation': 'borderAnimation 2s linear infinite',
+        borderAnimation: 'borderAnimation 2s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },

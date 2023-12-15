@@ -27,6 +27,14 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "app/dashboard/layout.jsx", "src/components/dashboard/components/EditAction.tsx", "app/tools/page.jsx", "src/components/form/NewResource.tsx"],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "app/dashboard/layout.jsx",
+    "src/components/dashboard/components/EditAction.tsx",
+    "app/tools/page.jsx"
+  ],
   "exclude": ["node_modules"]
 }

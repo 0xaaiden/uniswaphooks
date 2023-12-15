@@ -45,27 +45,28 @@ const formSchema = z.object({
 })
 
 export default function NewResourceForm() {
-  const { handleSubmit, control, setValue } = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: 'onChange',
     defaultValues: {
       title: '',
       section: '',
       authorName: '',
       authorLink: '',
-      mdxContent: '# f',
+      mdxContent: '',
     },
   })
 
-  async function onSubmit(values) {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
   }
 
   return (
-    <Form>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="grid sm:grid-cols-1 lg:grid-cols-6 lg:gap-4 ">
           <FormField
-            control={control}
+            control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem className="lg:col-span-5">
@@ -87,7 +88,7 @@ export default function NewResourceForm() {
           />
 
           <FormField
-            control={control}
+            control={form.control}
             name="section"
             render={({ field }) => (
               <FormItem>
@@ -127,13 +128,13 @@ export default function NewResourceForm() {
                             key={section.id}
                             value={section.title}
                             onSelect={() => {
-                              setValue('section', section.id)
+                              form.setValue('section', section.id)
                             }}
                           >
                             <Check
                               className={cn(
                                 'mr-2 h-4 w-4',
-                                section.id === field.value
+                                field.value === section.id
                                   ? 'opacity-100'
                                   : 'opacity-0'
                               )}
@@ -152,7 +153,7 @@ export default function NewResourceForm() {
           />
         </div>
         <FormField
-          control={control}
+          control={form.control}
           name="mdxContent"
           render={({ field }) => (
             <FormItem>
@@ -160,13 +161,7 @@ export default function NewResourceForm() {
                 Description <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <>
-                  <Textarea
-                    placeholder="Description of the educational resource... Use Markdown to format your text."
-                    {...field}
-                  />
-                  <TipTap value={field.value} onChange={field.onChange()} />
-                </>
+                <TipTap description={field.value} onChange={field.onChange} />
               </FormControl>
               <FormDescription>
                 The content of the educational resource in MDX format.
@@ -175,7 +170,50 @@ export default function NewResourceForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <div className="grid sm:grid-cols-1 lg:grid-cols-2 lg:gap-4 ">
+          <FormField
+            control={form.control}
+            name="authorName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Author name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name of the author..." {...field} />
+                </FormControl>
+                <FormDescription>
+                  Please provide the name of the author.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="authorLink"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Author link</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Link to the author's website..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Please provide the link to the author's website.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button
+          className="inline-flex w-full items-center rounded-md border-2 border-current bg-white px-3 py-1.5 text-xs font-semibold text-gray-900 transition hover:-rotate-2 hover:scale-110 hover:bg-white focus:outline-none focus:ring active:text-pink-500"
+          type="submit"
+        >
+          Submit
+        </Button>
       </form>
     </Form>
   )

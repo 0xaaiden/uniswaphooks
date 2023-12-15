@@ -31,6 +31,7 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@tanstack/react-table": "^8.10.7",
     "@thanpolas/univ3prices": "^3.0.2",
+    "@tiptap/extension-heading": "^2.1.13",
     "@tiptap/pm": "^2.1.13",
     "@tiptap/react": "^2.1.13",
     "@tiptap/starter-kit": "^2.1.13",
@@ -55,6 +56,7 @@
     "react-show-more-text": "^1.6.2",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
+    "turndown": "^7.1.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
