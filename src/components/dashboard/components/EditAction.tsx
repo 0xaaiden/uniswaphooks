@@ -52,7 +52,7 @@ const formSchema = z.object({
 
 export default function EditAction(hook: z.infer<typeof hookSchema>) {
   const [isLoading, setIsLoading] = useState(false)
-  const { handleSubmit, control } = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       id: hook.id,
@@ -98,10 +98,10 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
         </DialogHeader>
 
         {/* @ts-ignore: It is really a random error of spreading. */}
-        <Form>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
-              control={control}
+              control={form.control}
               name="categoryId"
               render={({ field }) => (
                 <FormItem>
@@ -130,7 +130,7 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
             />
             <div className="flex gap-4 space-x-2">
               <FormField
-                control={control}
+                control={form.control}
                 name="title"
                 render={({ field }) => (
                   <FormItem>
@@ -150,7 +150,7 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
                 )}
               />
               <FormField
-                control={control}
+                control={form.control}
                 name="creator"
                 render={({ field }) => (
                   <FormItem>
@@ -172,7 +172,7 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
             </div>
 
             <FormField
-              control={control}
+              control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
@@ -193,7 +193,7 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
             />
             <div className="flex gap-4 space-x-2">
               <FormField
-                control={control}
+                control={form.control}
                 name="github"
                 render={({ field }) => (
                   <FormItem>
@@ -221,7 +221,7 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
                 )}
               />
               <FormField
-                control={control}
+                control={form.control}
                 name="website"
                 render={({ field }) => (
                   <FormItem>
@@ -252,7 +252,7 @@ export default function EditAction(hook: z.infer<typeof hookSchema>) {
 
             <DialogFooter className="flex w-full justify-between">
               <FormField
-                control={control}
+                control={form.control}
                 name="status"
                 render={({ field }) => (
                   <FormItem>

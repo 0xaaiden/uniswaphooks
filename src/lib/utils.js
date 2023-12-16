@@ -5,6 +5,16 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs))
 }
 
+export function getURL() {
+  if (process.env.NODE_ENV === 'development') {
+    return 'http://localhost:3000'
+  } else if (process.env.NODE_ENV === 'production')
+    return 'https://uniswaphooks.com'
+  else {
+    return 'https://uniswaphooks-preview.vercel.app'
+  }
+}
+
 export function extractCreator(github) {
   return github.split('/')[3]
 }
@@ -91,7 +101,7 @@ export async function getCollections() {
     category: 'articles',
     tag: 'community',
   })
-  
+
   return data.categories
 }
 

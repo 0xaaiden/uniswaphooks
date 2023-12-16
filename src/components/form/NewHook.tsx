@@ -55,7 +55,7 @@ export default function NewHookForm() {
 
       await fetch('/api/mailer', {
         method: 'POST',
-        body: JSON.stringify({ ...values, creator }),
+        body: JSON.stringify({ ...values, creator, type: 'hooks' }),
         headers: {
           'Content-Type': 'application/json',
         },

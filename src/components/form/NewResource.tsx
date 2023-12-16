@@ -3,6 +3,7 @@
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 
 import { cn } from '@lib/utils'
 
@@ -30,7 +31,6 @@ import {
 import { Input } from '@component/reusable/Input'
 import { Textarea } from '@component/reusable/Textarea'
 import { Button } from '@component/reusable/Button'
-import TipTap from '@component/reusable/TipTap'
 
 import { sections } from '@data/community-hub'
 
@@ -39,26 +39,46 @@ import { Check, ChevronsUpDown } from 'lucide-react'
 const formSchema = z.object({
   title: z.string(),
   section: z.string(),
-  authorName: z.string(),
-  authorLink: z.string().url(),
-  mdxContent: z.string(),
+  description: z.string(),
 })
 
 export default function NewResourceForm() {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
       title: '',
       section: '',
-      authorName: '',
-      authorLink: '',
-      mdxContent: '',
+      description: '',
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
+
+    try {
+      await fetch('/api/resource', {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      router.push('/thank-you')
+
+      await fetch('/api/mailer', {
+        method: 'POST',
+        body: JSON.stringify({ ...values, type: 'resources' }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    } catch (error) {
+      console.log('Submission error:', error)
+      router.push('/error')
+    }
   }
 
   return (
@@ -102,7 +122,7 @@ export default function NewResourceForm() {
                         variant="outline"
                         role="combobox"
                         className={cn(
-                          'w-full justify-between',
+                          'w-full justify-between border-gray-500 text-left',
                           !field.value && 'text-muted-foreground'
                         )}
                       >
@@ -154,60 +174,26 @@ export default function NewResourceForm() {
         </div>
         <FormField
           control={form.control}
-          name="mdxContent"
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
                 Description <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <TipTap description={field.value} onChange={field.onChange} />
+                <Textarea
+                  placeholder="A short description of the educational resource..."
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
-                The content of the educational resource in MDX format.
+                The content of the educational resource.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="grid sm:grid-cols-1 lg:grid-cols-2 lg:gap-4 ">
-          <FormField
-            control={form.control}
-            name="authorName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Author name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Name of the author..." {...field} />
-                </FormControl>
-                <FormDescription>
-                  Please provide the name of the author.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
-          <FormField
-            control={form.control}
-            name="authorLink"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Author link</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Link to the author's website..."
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Please provide the link to the author's website.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
         <Button
           className="inline-flex w-full items-center rounded-md border-2 border-current bg-white px-3 py-1.5 text-xs font-semibold text-gray-900 transition hover:-rotate-2 hover:scale-110 hover:bg-white focus:outline-none focus:ring active:text-pink-500"
           type="submit"

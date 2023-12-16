@@ -21,7 +21,7 @@ export async function POST(req) {
     },
   })
 
-  const mailOptions = {
+  const mailOptionsHooks = {
     from: `FindMalek Mailer <` + process.env.SENDER_EMAIL + `>`,
     to: process.env.MAIN_EMAIL,
     subject: `[UniswapHooks] - New Hook Submission: ${body.title}`,
@@ -55,7 +55,41 @@ export async function POST(req) {
     `,
   }
 
+  const mailOptionsResouces = {
+    from: `FindMalek Mailer <` + process.env.SENDER_EMAIL + `>`,
+    to: process.env.MAIN_EMAIL,
+    subject: `[UniswapHooks] - New Resouces Submission: ${body.title}`,
+    text: `
+      -- New Resouces Submission > FindMalek
+  
+      - Title: ${body.title}
+      - Description: ${body.description}
+  
+      - Section: ${body.section}
+      - Status: Pending...
+  
+      This is an automated message. Please do not reply to this email.`,
+    html: `
+      <p>-- New Resouces Submission &gt; FindMalek</p>
+
+      <ul>
+        <li>Title: ${body.title}</li>
+        <li>Description: ${body.description}</li>
+        <li>Section: ${body.section}</li>
+        <li>Status: Pending...</li>
+      </ul>
+
+      <p>This is an automated message. Please do not reply to this email. Go to <a href="https://uniswaphooks-hffkt195g-findmalek.vercel.app/dashboard" target="_blank">Dashboard</a> to manage your resources.</p>
+    `,
+  }
+
   try {
+    if (body.type === 'hooks') {
+      var mailOptions = mailOptionsHooks
+    } else {
+      var mailOptions = mailOptionsResouces
+    }
+    
     await mailTransporter.sendMail(mailOptions)
     return new Response('200')
   } catch (error) {

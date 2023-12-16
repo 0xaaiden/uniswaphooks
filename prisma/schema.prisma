@@ -45,9 +45,7 @@ model EducationalResource {
   id              Int      @id @default(autoincrement())
   title           String
   section         String
-  authorName      String
-  authorLink      String
-  mdxContent      String   @db.Text
+  description      String   @db.Text
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }

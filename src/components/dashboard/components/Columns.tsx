@@ -17,7 +17,9 @@ export const columns: ColumnDef<Hook>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        onCheckedChange={(value: boolean) =>
+          table.toggleAllPageRowsSelected(!!value)
+        }
         aria-label="Select all"
         className="translate-y-[2px]"
       />
@@ -38,9 +40,7 @@ export const columns: ColumnDef<Hook>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Hook ID" />
     ),
-    cell: ({ row }) => (
-      <div className="w-[400px]">HOOK-{row.getValue('id')}</div>
-    ),
+    cell: ({ row }) => <div>HOOK-{row.getValue('id')}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -52,7 +52,7 @@ export const columns: ColumnDef<Hook>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {row.getValue('title')}
           </span>
         </div>
@@ -89,7 +89,7 @@ export const columns: ColumnDef<Hook>[] = [
           <Link
             target="_blank"
             href={row.getValue('github')}
-            className="max-w-[50px] truncate font-medium text-blue-600 hover:underline"
+            className="max-w-[150px] truncate font-medium text-blue-600 hover:underline"
           >
             Github Repository
           </Link>
