@@ -32,6 +32,7 @@ export const resourceSchema = z.object({
   title: z.string(),
   description: z.string(),
   section: z.string(),
+  imageUrl: z.string(),
 
   status: z.string(),
   createdAt: z.string(),

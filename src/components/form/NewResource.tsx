@@ -62,7 +62,6 @@ export default function NewResourceForm() {
   const [documentFile, setDocumentFile] = useState<File>()
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0]
-    console.log(selectedFile)
     setDocumentFile(selectedFile)
   }
 
@@ -84,8 +83,8 @@ export default function NewResourceForm() {
             `/resources/${id}/image.png`
           )
           await fetch('/api/resource', {
-            method: 'POST',
-            body: JSON.stringify(values),
+            method: 'PUT',
+            body: JSON.stringify({...values, id}),
             headers: {
               'Content-Type': 'application/json',
             },
