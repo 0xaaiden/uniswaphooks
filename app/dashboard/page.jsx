@@ -1,3 +1,6 @@
+'use client'
+
+import React, { useState, useEffect } from 'react'
 import { getURL } from '@lib/utils'
 
 import {
@@ -13,57 +16,47 @@ import {
   CardHeader,
   CardTitle,
 } from '@component/reusable/Card'
-
 import { DataTable } from '@component/dashboard/components/DataTable'
 import { columnsHook } from '@component/dashboard/components/Columns'
 import { columnsResource } from '@component/dashboard/components/Columns'
 
-async function getData(baseUrl = getURL()) {
-  const [categoriesResponse, hooksResponse, resourcesResponse] =
-    await Promise.all([
-      fetch(`${baseUrl}/api/category?timestamp=${Date.now()}`, {
-        method: 'GET',
-      }).then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-        return response.json()
-      }),
-      fetch(`${baseUrl}/api/hook?timestamp=${Date.now()}`, {
-        method: 'GET',
-      }).then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-        return response.json()
-      }),
-      fetch(`${baseUrl}/api/resource?timestamp=${Date.now()}`, {
-        method: 'GET',
-      }).then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-        return response.json()
-      }),
-    ])
+export default function Dashboard() {
+  const [data, setData] = useState({ hooks: [], resources: [] })
 
-  const categoriesData = categoriesResponse.data
-  const hooksData = hooksResponse.data
-  const resourcesData = resourcesResponse.data
+  useEffect(() => {
+    async function getData() {
+      try {
+        const baseUrl = getURL()
+        const responseHooks = await fetch(`${baseUrl}/api/hook`, {
+          method: 'GET',
+        }).then((res) => res.json())
+        const responseCategories = await fetch(`${baseUrl}/api/category`, {
+          method: 'GET',
+        }).then((res) => res.json())
+        const responseResources = await fetch(`${baseUrl}/api/resource`, {
+          method: 'GET',
+        }).then((res) => res.json())
 
-  const hooksWithCategories = hooksData.map((hook) => ({
-    ...hook,
-    categories: categoriesData,
-  }))
+        const categoriesData = responseCategories.data
+        const hooksData = responseHooks.data
+        const resourcesData = responseResources.data
 
-  return {
-    hooks: hooksWithCategories,
-    resources: resourcesData,
-  }
-}
+        const hooksWithCategories = hooksData.map((hook) => ({
+          ...hook,
+          categories: categoriesData,
+        }))
 
-export default async function Page() {
-  const data = await getData()
+        setData({
+          hooks: hooksWithCategories,
+          resources: resourcesData,
+        })
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+
+    getData()
+  }, [])
 
   return (
     <>
