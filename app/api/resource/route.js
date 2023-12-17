@@ -7,7 +7,7 @@ export async function POST(req) {
     const body = JSON.parse(bodyAsString)
     const { title, section, description } = body
 
-    const newResource = await prisma.educationalresource.create({
+    const newResource = await prisma.resource.create({
       data: {
         title,
         section,
@@ -46,7 +46,11 @@ export async function POST(req) {
 
 export async function GET() {
   try {
-    const resources = await prisma.educationalresource.findMany()
+    const resources = await prisma.resource.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
 
     return new Response(
       JSON.stringify({
@@ -81,9 +85,9 @@ export async function PUT(req) {
   try {
     const bodyAsString = await readStream(req.body)
     const body = JSON.parse(bodyAsString)
-    const { id, title, section, description } = body
+    const { id, title, section, description, status } = body
 
-    const updatedResource = await prisma.educationalresource.update({
+    const updatedResource = await prisma.resource.update({
       where: {
         id,
       },
@@ -91,6 +95,7 @@ export async function PUT(req) {
         title,
         section,
         description,
+        status,
       },
     })
 
@@ -98,6 +103,47 @@ export async function PUT(req) {
       JSON.stringify({
         message: 'Resource updated successfully',
         data: updatedResource,
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+  } catch (err) {
+    console.log(err)
+    return new Response(
+      JSON.stringify({
+        message: 'Something went wrong',
+        error: err.message,
+      }),
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+  }
+}
+
+export async function DELETE(req) {
+  try {
+    const bodyAsString = await readStream(req.body)
+    const body = JSON.parse(bodyAsString)
+    const { id } = body
+
+    const deletedResource = await prisma.resource.delete({
+      where: {
+        id,
+      },
+    })
+
+    return new Response(
+      JSON.stringify({
+        message: 'Resource deleted successfully',
+        data: deletedResource,
       }),
       {
         status: 200,

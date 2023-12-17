@@ -89,7 +89,7 @@ export async function POST(req) {
     } else {
       var mailOptions = mailOptionsResouces
     }
-    
+
     await mailTransporter.sendMail(mailOptions)
     return new Response('200')
   } catch (error) {

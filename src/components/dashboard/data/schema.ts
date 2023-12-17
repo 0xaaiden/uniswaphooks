@@ -25,3 +25,16 @@ export const hookSchema = z.object({
 })
 
 export type Hook = z.infer<typeof hookSchema>
+
+export const resourceSchema = z.object({
+  id: z.number(),
+
+  title: z.string(),
+  description: z.string(),
+  section: z.string(),
+
+  status: z.string(),
+  createdAt: z.string(),
+})
+
+export type Resource = z.infer<typeof resourceSchema>

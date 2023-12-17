@@ -55,8 +55,6 @@ export default function NewResourceForm() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-
     try {
       await fetch('/api/resource', {
         method: 'POST',
@@ -193,6 +191,11 @@ export default function NewResourceForm() {
             </FormItem>
           )}
         />
+
+        {/**
+         * @TODO: Add an image preview
+         * @TODO: Add an image upload
+         */}
 
         <Button
           className="inline-flex w-full items-center rounded-md border-2 border-current bg-white px-3 py-1.5 text-xs font-semibold text-gray-900 transition hover:-rotate-2 hover:scale-110 hover:bg-white focus:outline-none focus:ring active:text-pink-500"
