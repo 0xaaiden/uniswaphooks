@@ -121,3 +121,9 @@ export async function getHookData(params) {
       hook.status === 'published' && hook.categoryId === params.collection
   )
 }
+
+export function encodeFilePathToUrl(filePath) {
+  const parts = filePath.split('/');
+  const encodedParts = parts.map((part) => encodeURIComponent(part));
+  return encodedParts.join('/');
+}

@@ -46,6 +46,7 @@ model Resource {
 
   title           String
   section         String
+  imageUrl        String?
   description      String   @db.Text
 
   status String @default("pending")

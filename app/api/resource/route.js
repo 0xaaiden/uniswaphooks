@@ -5,13 +5,14 @@ export async function POST(req) {
   try {
     const bodyAsString = await readStream(req.body)
     const body = JSON.parse(bodyAsString)
-    const { title, section, description } = body
+    const { title, section, description, imageUrl } = body
 
     const newResource = await prisma.resource.create({
       data: {
         title,
         section,
         description,
+        imageUrl,
       },
     })
 
@@ -85,7 +86,7 @@ export async function PUT(req) {
   try {
     const bodyAsString = await readStream(req.body)
     const body = JSON.parse(bodyAsString)
-    const { id, title, section, description, status } = body
+    const { id, title, section, description, imageUrl, status } = body
 
     const updatedResource = await prisma.resource.update({
       where: {
@@ -95,6 +96,7 @@ export async function PUT(req) {
         title,
         section,
         description,
+        imageUrl,
         status,
       },
     })

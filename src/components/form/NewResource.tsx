@@ -3,9 +3,12 @@
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ChangeEvent, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 import { cn } from '@lib/utils'
+import { uploadFile } from '@lib/storage'
 
 import {
   Form,
@@ -40,6 +43,7 @@ const formSchema = z.object({
   title: z.string(),
   section: z.string(),
   description: z.string(),
+  imageUrl: z.string().optional(),
 })
 
 export default function NewResourceForm() {
@@ -51,18 +55,46 @@ export default function NewResourceForm() {
       title: '',
       section: '',
       description: '',
+      imageUrl: '',
     },
   })
 
+  const [documentFile, setDocumentFile] = useState<File>()
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0]
+    console.log(selectedFile)
+    setDocumentFile(selectedFile)
+  }
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await fetch('/api/resource', {
+      const result = await fetch('/api/resource', {
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
           'Content-Type': 'application/json',
         },
       })
+
+      const id = (await result.json()).data.id
+      if (documentFile) {
+        try {
+          values.imageUrl = await uploadFile(
+            documentFile,
+            `/resources/${id}/image.png`
+          )
+          await fetch('/api/resource', {
+            method: 'POST',
+            body: JSON.stringify(values),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+        } catch (error) {
+          console.log('Image upload error:', error)
+          router.push('/error')
+        }
+      }
 
       router.push('/thank-you')
 
@@ -192,10 +224,27 @@ export default function NewResourceForm() {
           )}
         />
 
-        {/**
-         * @TODO: Add an image preview
-         * @TODO: Add an image upload
-         */}
+        <FormField
+          control={form.control}
+          name="imageUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <Input
+                  id="imageUrl"
+                  type="file"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                />
+              </FormControl>
+              <FormDescription>
+                Please provide an image for the educational resource.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <Button
           className="inline-flex w-full items-center rounded-md border-2 border-current bg-white px-3 py-1.5 text-xs font-semibold text-gray-900 transition hover:-rotate-2 hover:scale-110 hover:bg-white focus:outline-none focus:ring active:text-pink-500"
