@@ -1,8 +1,9 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useState, createElement } from 'react'
+import { useState, createElement, ChangeEvent } from 'react'
 import * as z from 'zod'
 
 import { Loader2 } from 'lucide-react'
@@ -55,6 +56,7 @@ import { statuses } from '@component/dashboard/data/data'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { sections } from '@data/community-hub'
 
+import { uploadFile } from '@lib/storage'
 import { cn } from '@lib/utils'
 
 const formSchemaHook = z.object({
@@ -73,6 +75,7 @@ const formSchemaResource = z.object({
   title: z.string(),
   description: z.string(),
   section: z.string(),
+  imageUrl: z.string(),
   status: z.string(),
 })
 
@@ -336,13 +339,27 @@ export function EditActionResource(resource: z.infer<typeof resourceSchema>) {
       title: resource.title,
       description: resource.description,
       section: resource.section,
+      imageUrl: resource.imageUrl,
       status: resource.status,
     },
   })
 
+  const [documentFile, setDocumentFile] = useState<File>()
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0]
+    setDocumentFile(selectedFile)
+  }
+
   async function onSubmit(values: z.infer<typeof formSchemaResource>) {
     setIsLoading(true)
     try {
+      if (documentFile) {
+        values.imageUrl = await uploadFile(
+          documentFile,
+          `resources/${values.id}/image.png`
+        )
+      }
+
       await fetch('/api/resource', {
         method: 'PUT',
         body: JSON.stringify(values),
@@ -479,11 +496,36 @@ export function EditActionResource(resource: z.infer<typeof resourceSchema>) {
                 </FormItem>
               )}
             />
+            <div className="flex gap-4 space-x-2">
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Image</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="imageUrl"
+                        type="file"
+                        onChange={handleFileChange}
+                        accept="image/*"
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Please provide an image for the educational resource.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/**
-             * @TODO: Add an image preview
-             * @TODO: Add an image upload
-             */}
+              <Image
+                src={`${resource.imageUrl}?${Date.now()}}`}
+                width={200}
+                height={200}
+                alt={resource.title}
+              />
+            </div>
 
             <DialogFooter className="flex w-full justify-between">
               <FormField

@@ -81,7 +81,6 @@ export function DataTableRowActions<TData>({
       </DropdownMenu>
     )
   } else {
-    console.log(row.original)
     const resource = resourceSchema.parse(row.original)
 
     return (

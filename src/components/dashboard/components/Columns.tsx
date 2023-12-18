@@ -189,6 +189,25 @@ export const columnsResource: ColumnDef<Resource>[] = [
     },
   },
   {
+    accessorKey: 'imageUrl',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Resource Image" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <Link
+            href={row.getValue('imageUrl')}
+            target="_blank"
+            className="max-w-[150px] truncate font-medium text-blue-600 hover:underline"
+          >
+            Image Resource
+          </Link>
+        </div>
+      )
+    },
+  },
+  {
     accessorKey: 'status',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
