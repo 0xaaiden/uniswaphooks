@@ -1,8 +1,6 @@
 import Link from 'next/link'
 
-import matter from 'gray-matter'
-import { promises as fs } from 'fs'
-import { join } from 'path'
+import { getUrl } from '@lib/get-url'
 
 import Container from '@component/Container'
 import HeroBanner from '@component/HeroBanner'
@@ -12,41 +10,22 @@ import NewResourceForm from '@component/form/NewResource'
 
 import { sections } from '@data/community-hub'
 
-const postsPath = join(process.cwd(), '/src/data/community-hub')
+async function getResources() {
+  const baseUrl = getUrl()
 
-async function getPosts() {
-  const postSlugs = await fs.readdir(postsPath)
-
-  const postPosts = await Promise.all(
-    postSlugs.map(async (postSlug) => {
-      const postPath = join(postsPath, postSlug)
-      const postItem = await fs.readFile(postPath, 'utf-8')
-
-      const { data: postData } = matter(postItem)
-
-      return {
-        title: postData.title,
-        date: postData.date,
-        emoji: postData.emoji,
-        tag: postData.tag,
-        section: postData.section,
-        slug: postSlug.replace('.mdx', ''),
+  try {
+    const responseResources = await fetch(
+      `${baseUrl}/api/resource?${Date.now()}`,
+      {
+        method: 'GET',
       }
-    })
-  )
+    ).then((res) => res.json())
 
-  return postPosts.sort((postA, postB) => {
-    const dateA = new Date(postA.date)
-    const dateB = new Date(postB.date)
-
-    return dateB - dateA
-  })
+    return responseResources.data
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
 }
-
-// Params is compososed section and id
-// Example: /community-hub/section/id
-// The section must be always from @data/community-hub, if not, it will return 404
-// Unless the section = 'new' then it will get a form to add new resources
 
 export default async function Page({ params }) {
   if (params.section && params.section == 'new') {
@@ -79,7 +58,7 @@ export default async function Page({ params }) {
     params.section &&
     sections.find((section) => section.id == params.section)
   ) {
-    const postPosts = await getPosts()
+    const postPosts = await getResources()
     const postPostsFromSection = postPosts.filter(
       (post) => post.section == params.section
     )

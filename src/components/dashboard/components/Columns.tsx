@@ -182,7 +182,7 @@ export const columnsResource: ColumnDef<Resource>[] = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] truncate font-medium">
-            {row.getValue('title')}
+            {row.original.emoji} {row.getValue('title')}
           </span>
         </div>
       )

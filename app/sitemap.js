@@ -1,4 +1,4 @@
-import { getUrl, fetchData } from '@lib/utils'
+import { fetchData, getUrl } from '@lib/utils'
 
 import matter from 'gray-matter'
 import { promises as fs } from 'fs'

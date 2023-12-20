@@ -35,30 +35,36 @@ import { Input } from '@component/reusable/Input'
 import { Textarea } from '@component/reusable/Textarea'
 import { Button } from '@component/reusable/Button'
 
+import EmojiPicker from '@component/emoji-picker/EmojiPicker'
+
 import { sections } from '@data/community-hub'
 
-import { Check, ChevronsUpDown } from 'lucide-react'
+import { Check, ChevronsUpDown, SmilePlus } from 'lucide-react'
 
 const formSchema = z.object({
+  emoji: z.string().optional(),
   title: z.string(),
   section: z.string(),
   description: z.string(),
   imageUrl: z.string().optional(),
+  resourceUrl: z.string(),
 })
 
 export default function NewResourceForm() {
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    mode: 'onChange',
     defaultValues: {
+      emoji: '',
       title: '',
       section: '',
       description: '',
-      imageUrl: '',
+      imageUrl: 'https://placehold.co/400x400',
+      resourceUrl: '',
     },
   })
 
+  const [selectedEmoji, setSelectedEmoji] = useState(null)
   const [documentFile, setDocumentFile] = useState<File>()
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0]
@@ -66,6 +72,11 @@ export default function NewResourceForm() {
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!values.emoji) {
+      values.emoji = sections.find((section) => section.id === values.section)
+        ?.emoji
+    }
+
     try {
       const result = await fetch('/api/resource', {
         method: 'POST',
@@ -84,7 +95,7 @@ export default function NewResourceForm() {
           )
           await fetch('/api/resource', {
             method: 'PUT',
-            body: JSON.stringify({...values, id}),
+            body: JSON.stringify({ ...values, id }),
             headers: {
               'Content-Type': 'application/json',
             },
@@ -123,10 +134,34 @@ export default function NewResourceForm() {
                   Title <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Title of the educational resource..."
-                    {...field}
-                  />
+                  <div className="flex items-center space-x-4">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button className="focus:outline-none">
+                          {selectedEmoji ? (
+                            <span className="text-2xl">{selectedEmoji}</span>
+                          ) : (
+                            <SmilePlus
+                              className="h-6 w-6 text-gray-500"
+                              role="button"
+                            />
+                          )}
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full bg-transparent p-0">
+                        <EmojiPicker
+                          onSelect={(emoji) => {
+                            setSelectedEmoji(emoji)
+                            form.setValue('emoji', emoji)
+                          }}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <Input
+                      placeholder="Title of the educational resource..."
+                      {...field}
+                    />
+                  </div>
                 </FormControl>
                 <FormDescription>
                   Please provide the title of the educational resource.
@@ -160,8 +195,8 @@ export default function NewResourceForm() {
                             ?.emoji}{' '}
                         {field.value
                           ? sections.find(
-                              (section) => section.id === field.value
-                            )?.title
+                            (section) => section.id === field.value
+                          )?.title
                           : 'Choose a section'}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -223,27 +258,51 @@ export default function NewResourceForm() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="imageUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <Input
-                  id="imageUrl"
-                  type="file"
-                  onChange={handleFileChange}
-                  accept="image/*"
-                />
-              </FormControl>
-              <FormDescription>
-                Please provide an image for the educational resource.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid sm:grid-cols-1 lg:grid-cols-2 lg:gap-4 ">
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Image</FormLabel>
+                <FormControl>
+                  <Input
+                    id="imageUrl"
+                    type="file"
+                    onChange={handleFileChange}
+                    accept="image/*"
+                  />
+                </FormControl>
+                <FormDescription>
+                  Please provide an image for the educational resource.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="resourceUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Resource URL <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="URL of the educational resource..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Please provide the URL of the educational resource.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <Button
           className="inline-flex w-full items-center rounded-md border-2 border-current bg-white px-3 py-1.5 text-xs font-semibold text-gray-900 transition hover:-rotate-2 hover:scale-110 hover:bg-white focus:outline-none focus:ring active:text-pink-500"

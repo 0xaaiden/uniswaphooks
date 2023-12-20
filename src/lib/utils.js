@@ -5,16 +5,6 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs))
 }
 
-export function getURL() {
-  if (process.env.NODE_ENV === 'development') {
-    return 'http://localhost:3000'
-  } else if (process.env.NODE_ENV === 'production')
-    return 'https://uniswaphooks.com'
-  else {
-    return 'https://uniswaphooks-preview.vercel.app'
-  }
-}
-
 export function extractCreator(github) {
   return github.split('/')[3]
 }
@@ -34,11 +24,11 @@ export async function readStream(stream) {
 
 export function getUrl() {
   if (process.env.NODE_ENV === 'development') {
-    return 'http://localhost:3000'
-  } else if (process.env.NODE_ENV === 'production')
-    return 'https://uniswaphooks.com'
-  else {
-    return 'https://uniswaphooks-preview.vercel.app'
+    return process.env.NEXT_PUBLIC_DEV_URL
+  } else if (process.env.NODE_ENV === 'production') {
+    return process.env.NEXT_PUBLIC_PROD_URL
+  } else {
+    return process.env.NEXT_PUBLIC_PREVIEW_URL
   }
 }
 
@@ -123,7 +113,27 @@ export async function getHookData(params) {
 }
 
 export function encodeFilePathToUrl(filePath) {
-  const parts = filePath.split('/');
-  const encodedParts = parts.map((part) => encodeURIComponent(part));
-  return encodedParts.join('/');
+  const parts = filePath.split('/')
+  const encodedParts = parts.map((part) => encodeURIComponent(part))
+  return encodedParts.join('/')
+}
+
+export async function getResources() {
+  const baseUrl = getUrl()
+  console.log(baseUrl)
+
+  try {
+    const responseResources = await fetch(
+      `${baseUrl}/api/resource?${Date.now()}`,
+      {
+        method: 'GET',
+      }
+    ).then((res) => res.json())
+
+    return responseResources.data.filter(
+      (resource) => resource.status == 'published'
+    )
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
 }

@@ -49,11 +49,13 @@ import { Input } from '@component/reusable/Input'
 import { Button } from '@component/reusable/Button'
 import { Textarea } from '@component/reusable/Textarea'
 
+import EmojiPicker from '@component/emoji-picker/EmojiPicker'
+
 import { hookSchema } from '@component/dashboard/data/schema'
 import { resourceSchema } from '@component/dashboard/data/schema'
 import { statuses } from '@component/dashboard/data/data'
 
-import { Check, ChevronsUpDown } from 'lucide-react'
+import { Check, ChevronsUpDown, SmilePlus } from 'lucide-react'
 import { sections } from '@data/community-hub'
 
 import { uploadFile } from '@lib/storage'
@@ -72,6 +74,7 @@ const formSchemaHook = z.object({
 
 const formSchemaResource = z.object({
   id: z.number(),
+  emoji: z.string(),
   title: z.string(),
   description: z.string(),
   section: z.string(),
@@ -257,7 +260,7 @@ export function EditActionHook(hook: z.infer<typeof hookSchema>) {
                     <FormLabel>
                       <Link
                         target="_blank"
-                        href={hook.website}
+                        href={hook.website || '#'}
                         className="hover:underline hover:underline-offset-1"
                       >
                         Website
@@ -265,7 +268,7 @@ export function EditActionHook(hook: z.infer<typeof hookSchema>) {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={hook.website}
+                        placeholder={hook.website || '#'}
                         autoComplete="off"
                         {...field}
                       />
@@ -336,6 +339,7 @@ export function EditActionResource(resource: z.infer<typeof resourceSchema>) {
     resolver: zodResolver(formSchemaResource),
     defaultValues: {
       id: resource.id,
+      emoji: resource.emoji,
       title: resource.title,
       description: resource.description,
       section: resource.section,
@@ -344,6 +348,7 @@ export function EditActionResource(resource: z.infer<typeof resourceSchema>) {
     },
   })
 
+  const [selectedEmoji, setSelectedEmoji] = useState(null)
   const [documentFile, setDocumentFile] = useState<File>()
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0]
@@ -394,17 +399,44 @@ export function EditActionResource(resource: z.infer<typeof resourceSchema>) {
                 control={form.control}
                 name="title"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Resource title</FormLabel>
+                  <FormItem className="lg:col-span-5">
+                    <FormLabel>
+                      Title <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder={resource.title}
-                        autoComplete="off"
-                        {...field}
-                      />
+                      <div className="flex items-center space-x-4">
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button className="focus:outline-none">
+                              {selectedEmoji ? (
+                                <span className="text-2xl">
+                                  {selectedEmoji}
+                                </span>
+                              ) : (
+                                <SmilePlus
+                                  className="h-6 w-6 text-gray-500"
+                                  role="button"
+                                />
+                              )}
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full bg-transparent p-0">
+                            <EmojiPicker
+                              onSelect={(emoji) => {
+                                setSelectedEmoji(emoji)
+                                form.setValue('emoji', emoji)
+                              }}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                        <Input
+                          placeholder="Title of the educational resource..."
+                          {...field}
+                        />
+                      </div>
                     </FormControl>
                     <FormDescription>
-                      This is the title of the resource.
+                      Please provide the title of the educational resource.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -434,8 +466,8 @@ export function EditActionResource(resource: z.infer<typeof resourceSchema>) {
                               )?.emoji}{' '}
                             {field.value
                               ? sections.find(
-                                  (section) => section.id === field.value
-                                )?.title
+                                (section) => section.id === field.value
+                              )?.title
                               : 'Choose a section'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>

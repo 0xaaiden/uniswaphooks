@@ -41,7 +41,7 @@ export default function NewHookForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const creator = extractCreator(values.github)
-    console.log({ ...values, creator })
+
     try {
       await fetch('/api/hook', {
         method: 'POST',

@@ -42,15 +42,20 @@ model Category {
 }
 
 model Resource {
-  id              Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  title           String
-  section         String
-  imageUrl        String?
-  description      String   @db.Text
+  title       String
+
+  section     String
+  emoji       String
+
+  imageUrl    String?
+  resourceUrl String
+  description String  @db.Text
 
   status String @default("pending")
+  tag    String @default("community")
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

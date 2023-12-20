@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { getURL } from '@lib/utils'
+import { getUrl } from '@lib/get-url'
 
 import {
   Tabs,
@@ -26,7 +26,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function getData() {
       try {
-        const baseUrl = getURL()
+        const baseUrl = getUrl()
         const responseHooks = await fetch(`${baseUrl}/api/hook`, {
           method: 'GET',
         }).then((res) => res.json())

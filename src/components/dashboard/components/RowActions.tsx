@@ -23,7 +23,7 @@ import {
   DeleteActionResource,
 } from '@component/dashboard/components/DeleteAction'
 
-import { getUrl } from '@lib/utils'
+import { getUrl } from '@lib/get-url'
 
 import { hookSchema } from '@component/dashboard/data/schema'
 import { resourceSchema } from '@component/dashboard/data/schema'
@@ -52,7 +52,7 @@ export function DataTableRowActions<TData>({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem>
-            <Link target="_blank" href={hook.github}>
+            <Link target="_blank" href={hook.github || '#'}>
               Open Github
             </Link>
           </DropdownMenuItem>
