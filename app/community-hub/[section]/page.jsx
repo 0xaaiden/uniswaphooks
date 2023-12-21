@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { getUrl } from '@lib/get-url'
+import { getUrl } from '@lib/utils'
 
 import Container from '@component/Container'
 import HeroBanner from '@component/HeroBanner'

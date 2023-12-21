@@ -53,7 +53,7 @@ export function DataTableRowActions<TData>({
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem>
             <Link target="_blank" href={hook.github || '#'}>
-              Open Github
+              Open Hook
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -94,13 +94,19 @@ export function DataTableRowActions<TData>({
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
+        <DropdownMenuContent align="end" className="w-[180px]">
+          <DropdownMenuItem>
+            <Link target="_blank" href={resource.resourceUrl}>
+              Open Resource
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Link
               target="_blank"
-              href={`/community-hub/${resource.section}/${resource.id}`}
+              href={`/community-hub/${resource.section}#${resource.id}`}
             >
-              Open Resource
+              View
             </Link>
           </DropdownMenuItem>
           <EditActionResource {...resource} />

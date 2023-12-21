@@ -78,6 +78,7 @@ const formSchemaResource = z.object({
   title: z.string(),
   description: z.string(),
   section: z.string(),
+  resourceUrl: z.string(),
   imageUrl: z.string(),
   status: z.string(),
 })
@@ -344,6 +345,7 @@ export function EditActionResource(resource: z.infer<typeof resourceSchema>) {
       description: resource.description,
       section: resource.section,
       imageUrl: resource.imageUrl,
+      resourceUrl: resource.resourceUrl,
       status: resource.status,
     },
   })
@@ -466,8 +468,8 @@ export function EditActionResource(resource: z.infer<typeof resourceSchema>) {
                               )?.emoji}{' '}
                             {field.value
                               ? sections.find(
-                                (section) => section.id === field.value
-                              )?.title
+                                  (section) => section.id === field.value
+                                )?.title
                               : 'Choose a section'}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
@@ -553,11 +555,40 @@ export function EditActionResource(resource: z.infer<typeof resourceSchema>) {
 
               <Image
                 src={`${resource.imageUrl}?${Date.now()}}`}
-                width={200}
-                height={200}
+                width={50}
+                height={50}
                 alt={resource.title}
               />
             </div>
+
+            <FormField
+              control={form.control}
+              name="resourceUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    <Link
+                      target="_blank"
+                      href={resource.resourceUrl}
+                      className="hover:underline hover:underline-offset-1"
+                    >
+                      Resource URL
+                    </Link>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={resource.resourceUrl}
+                      autoComplete="off"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    This is the URL of the resource.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <DialogFooter className="flex w-full justify-between">
               <FormField

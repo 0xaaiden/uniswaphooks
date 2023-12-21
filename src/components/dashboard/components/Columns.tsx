@@ -189,49 +189,22 @@ export const columnsResource: ColumnDef<Resource>[] = [
     },
   },
   {
-    accessorKey: 'imageUrl',
+    accessorKey: 'resourceUrl',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Resource Image" />
+      <DataTableColumnHeader column={column} title="Resource Links" />
     ),
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
           <Link
-            href={row.getValue('imageUrl')}
+            href={row.getValue('resourceUrl')}
             target="_blank"
             className="max-w-[150px] truncate font-medium text-blue-600 hover:underline"
           >
-            Image Resource
+            Resource Link
           </Link>
         </div>
       )
-    },
-  },
-  {
-    accessorKey: 'status',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
-    ),
-    cell: ({ row }) => {
-      const status = statuses.find(
-        (status) => status.value === row.getValue('status')
-      )
-
-      if (!status) {
-        return null
-      }
-
-      return (
-        <div className="flex w-[100px] items-center">
-          {status.icon && (
-            <status.icon className="text-muted-foreground mr-2 h-4 w-4" />
-          )}
-          <span>{status.label}</span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
     },
   },
   {
@@ -258,6 +231,33 @@ export const columnsResource: ColumnDef<Resource>[] = [
               </Tooltip>
             </TooltipProvider>
           </span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
+    accessorKey: 'status',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    cell: ({ row }) => {
+      const status = statuses.find(
+        (status) => status.value === row.getValue('status')
+      )
+
+      if (!status) {
+        return null
+      }
+
+      return (
+        <div className="flex w-[100px] items-center">
+          {status.icon && (
+            <status.icon className="text-muted-foreground mr-2 h-4 w-4" />
+          )}
+          <span>{status.label}</span>
         </div>
       )
     },
