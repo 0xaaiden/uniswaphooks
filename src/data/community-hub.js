@@ -8,7 +8,7 @@ export const sections = [
   {
     id: 'case-studies',
     title: 'Case Studies',
-    emoji: '📖',
+    emoji: '📈',
     description: 'Case studies of real-world projects',
   },
   {
@@ -46,5 +46,11 @@ export const sections = [
     title: 'Events',
     emoji: '🎟',
     description: 'Events for building new projects',
+  },
+  {
+    id: 'templates',
+    title: 'Templates',
+    emoji: '📝',
+    description: 'Templates for building new projects',
   },
 ]

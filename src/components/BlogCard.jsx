@@ -3,8 +3,11 @@
 import Link from 'next/link'
 import ShowMoreText from 'react-show-more-text'
 
+import { Badge } from '@component/reusable/Badge'
+
 export default function BlogCard({ blogPost }) {
   if (blogPost.tag === 'community') {
+
     return (
       <Link target="_blank" href={blogPost.resourceUrl}>
         <section
@@ -38,9 +41,11 @@ export default function BlogCard({ blogPost }) {
                   {blogPost.description}
                 </ShowMoreText>
 
-                <span className="mt-1 text-xs text-gray-700">
+                <Badge
+                  className="mt-4"
+                >
                   # {blogPost.section}
-                </span>
+                </Badge>
               </div>
             </div>
           </div>
