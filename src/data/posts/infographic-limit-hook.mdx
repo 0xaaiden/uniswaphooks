@@ -19,6 +19,9 @@ emoji: 🔁
     width="60%"
     style={{ marginBottom: '0' }}
   />
+<p style={{ fontSize: '1rem', marginTop: '0' }}>
+    Limit Order Hook Infographic
+  </p>
 </a>
 
 ## Introduction
@@ -26,10 +29,10 @@ Uniswap V4 introduces a game-changing capability with the `Limit Order Hook`. Th
 
 The accompanying infographic is a detailed walkthrough of the Limit Order Hook, an open-source contribution from Uniswap Labs. It outlines the core components, types, and functions that make up the architecture of this feature, giving you a structural overview of how it operates within a Uniswap V4 Pool.
 
-## Types and Data Structures:
+## Types and Data Structures
 At the foundation, we have the `PoolKey` and `Epoch`, key structs that help organize and navigate the various states of orders within the system. With `EpochInfo`, developers can trace the lifecycle of orders, ensuring transparency and consistency in transactions.
 
-##  Core Functions:
+##  Core Functions
 The infographic outlines main functions such as `place`, `kill`, `afterSwap`, and `withdraw`, each serving a pivotal role in managing limit orders. From placing a new order to withdrawing filled ones, these functions constitute the workflow that users and developers must familiarize themselves with.
 
 ## Execution Flow
@@ -42,4 +45,4 @@ The infographic outlines main functions such as `place`, `kill`, `afterSwap`, an
 - **Withdrawing a Filled Order (`withdraw` function):** Finally, the `withdraw` function allows users to extract their completed orders from the system.
   
 ## Credits
-Thanks to [@ProgrammerSmart](https://twitter.com/ProgrammerSmart) for creating the infographic!
+Thanks to [@ProgrammerSmart](https://twitter.com/ProgrammerSmart) for creating the infographic.
