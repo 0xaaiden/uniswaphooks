@@ -1,0 +1,48 @@
+---
+title: A Guide to Uniswap V4's Limit Order Hook
+description: 
+date: 12/23/2023
+emoji: 🔁
+---
+
+<a
+  style={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '2em',
+  }}
+  href="https://i.imgur.com/RCCI4Sj.png"
+>
+  <img
+    src="https://i.imgur.com/RCCI4Sj.png"
+    width="60%"
+    style={{ marginBottom: '0' }}
+  />
+<p style={{ fontSize: '1rem', marginTop: '0' }}>
+    Limit Order Hook Infographic
+  </p>
+</a>
+
+## Introduction
+Uniswap V4 introduces a game-changing capability with the `Limit Order Hook`. This advanced hook enhances automated trading strategies by offering fine-grained control over order execution, a significant leap for liquidity providers and traders who require precision and efficiency in their DeFi engagements.
+
+The accompanying infographic is a detailed walkthrough of the Limit Order Hook, an open-source contribution from Uniswap Labs. It outlines the core components, types, and functions that make up the architecture of this feature, giving you a structural overview of how it operates within a Uniswap V4 Pool.
+
+## Types and Data Structures
+At the foundation, we have the `PoolKey` and `Epoch`, key structs that help organize and navigate the various states of orders within the system. With `EpochInfo`, developers can trace the lifecycle of orders, ensuring transparency and consistency in transactions.
+
+##  Core Functions
+The infographic outlines main functions such as `place`, `kill`, `afterSwap`, and `withdraw`, each serving a pivotal role in managing limit orders. From placing a new order to withdrawing filled ones, these functions constitute the workflow that users and developers must familiarize themselves with.
+
+## Execution Flow
+- **Initiating a Limit Order (`place` function):** The journey begins with the `place` function, where a new limit order is created. This function locks the pool and triggers a series of steps to modify the pool's position. Here, the `getEpoch` and `setEpoch` sub-functions play a critical role in managing the order's time-bound aspects, ensuring the order is slotted into the correct epoch for execution.
+
+- **Canceling a Limit Order (`kill` function):** Cancellation is handled by the `kill` function. It retrieves the current epoch and locks the pool to secure the transaction. The function then proceeds to adjust the pool's position, claims fees for limit order placers, and withdraws the tokens back from the Uniswap V4 contract, effectively removing the order from the pool.
+
+- **Post-Swap Order Adjustment (`afterSwap` function):** After a swap occurs, the `afterSwap` function is called to update the status of limit orders. It calculates the ticks crossed during the swap and adjusts limit orders accordingly. This function ensures that liquidity is managed correctly without the need to transfer ERC20 tokens out of the Uniswap V4 contract.
+
+- **Withdrawing a Filled Order (`withdraw` function):** Finally, the `withdraw` function allows users to extract their completed orders from the system.
+  
+## Credits
+Thanks to [@ProgrammerSmart](https://twitter.com/ProgrammerSmart) for creating the infographic.
