@@ -120,13 +120,15 @@ export function encodeFilePathToUrl(filePath) {
 
 export async function getResources() {
   const baseUrl = getUrl()
-  console.log(baseUrl)
 
   try {
     const responseResources = await fetch(
       `${baseUrl}/api/resource?${Date.now()}`,
       {
         method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
       }
     ).then((res) => res.json())
 
