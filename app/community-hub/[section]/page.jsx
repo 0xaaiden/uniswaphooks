@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { getUrl } from '@lib/utils'
+import { getResources } from '@lib/utils'
 
 import Container from '@component/Container'
 import HeroBanner from '@component/HeroBanner'
@@ -9,23 +9,6 @@ import BlogGrid from '@component/BlogGrid'
 import NewResourceForm from '@component/form/NewResource'
 
 import { sections } from '@data/community-hub'
-
-async function getResources() {
-  const baseUrl = getUrl()
-
-  try {
-    const responseResources = await fetch(
-      `${baseUrl}/api/resource?${Date.now()}`,
-      {
-        method: 'GET',
-      }
-    ).then((res) => res.json())
-
-    return responseResources.data
-  } catch (error) {
-    console.error('Error fetching data:', error)
-  }
-}
 
 export default async function Page({ params }) {
   if (params.section && params.section == 'new') {

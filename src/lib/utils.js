@@ -33,17 +33,15 @@ export function getUrl() {
 }
 
 export async function fetchData(baseUrl) {
+  console.log('fetching data', baseUrl)
   try {
-    const fetchOptions = {
-      method: 'GET',
-      headers: {
-        'Cache-Control': 'no-cache',
-      },
-    }
-
     const [categoryResponse, hookResponse] = await Promise.all([
-      fetch(`${baseUrl}/api/category`, fetchOptions),
-      fetch(`${baseUrl}/api/hook`, fetchOptions),
+      fetch(`${baseUrl}/api/category?${Date.now()}`, {
+        method: 'GET',
+      }),
+      fetch(`${baseUrl}/api/hook?${Date.now()}`, {
+        method: 'GET',
+      }),
     ])
     if (!categoryResponse.ok) {
       throw new Error(
@@ -77,6 +75,7 @@ export async function fetchData(baseUrl) {
 
     return { categories: updatedCategories, hooks: hooksData.data }
   } catch (error) {
+    console.error('Error fetching data:', error)
     throw error
   }
 }
