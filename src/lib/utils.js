@@ -33,7 +33,6 @@ export function getUrl() {
 }
 
 export async function fetchData(baseUrl) {
-  console.log('fetching data', baseUrl)
   try {
     const [categoryResponse, hookResponse] = await Promise.all([
       fetch(`${baseUrl}/api/category?${Date.now()}`, {
