@@ -36,10 +36,10 @@ export const sections = [
     description: 'Videos for building new projects',
   },
   {
-    id: 'books',
-    title: 'Books',
-    emoji: '📚',
-    description: 'Books for building new projects',
+    id: 'articles',
+    title: 'Articles',
+    emoji: '📰',
+    description: 'Articles for building new projects',
   },
   {
     id: 'events',
