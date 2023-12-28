@@ -24,26 +24,23 @@ export async function readStream(stream) {
 
 export function getUrl() {
   if (process.env.NODE_ENV === 'development') {
-    return 'http://localhost:3000'
-  } else if (process.env.NODE_ENV === 'production')
-    return 'https://uniswaphooks.com'
-  else {
-    return 'https://uniswaphooks-preview.vercel.app'
+    return process.env.NEXT_PUBLIC_DEV_URL
+  } else if (process.env.NODE_ENV === 'production') {
+    return process.env.NEXT_PUBLIC_PROD_URL
+  } else {
+    return process.env.NEXT_PUBLIC_PREVIEW_URL
   }
 }
 
 export async function fetchData(baseUrl) {
   try {
-    const fetchOptions = {
-      method: 'GET',
-      headers: {
-        'Cache-Control': 'no-cache',
-      },
-    }
-
     const [categoryResponse, hookResponse] = await Promise.all([
-      fetch(`${baseUrl}/api/category`, fetchOptions),
-      fetch(`${baseUrl}/api/hook`, fetchOptions),
+      fetch(`${baseUrl}/api/category?${Date.now()}`, {
+        method: 'GET',
+      }),
+      fetch(`${baseUrl}/api/hook?${Date.now()}`, {
+        method: 'GET',
+      }),
     ])
     if (!categoryResponse.ok) {
       throw new Error(
@@ -77,12 +74,21 @@ export async function fetchData(baseUrl) {
 
     return { categories: updatedCategories, hooks: hooksData.data }
   } catch (error) {
+    console.error('Error fetching data:', error)
     throw error
   }
 }
 
 export async function getCollections() {
   const data = await fetchData(getUrl())
+  data.categories.push({
+    id: 'community-hub',
+    title: 'Community Hub',
+    description: 'Educational resources, and more!',
+    emoji: '🌱',
+    category: 'articles',
+    tag: 'community',
+  })
 
   return data.categories
 }
@@ -102,4 +108,32 @@ export async function getHookData(params) {
     (hook) =>
       hook.status === 'published' && hook.categoryId === params.collection
   )
+}
+
+export function encodeFilePathToUrl(filePath) {
+  const parts = filePath.split('/')
+  const encodedParts = parts.map((part) => encodeURIComponent(part))
+  return encodedParts.join('/')
+}
+
+export async function getResources() {
+  const baseUrl = getUrl()
+
+  try {
+    const responseResources = await fetch(
+      `${baseUrl}/api/resource?${Date.now()}`,
+      {
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      }
+    ).then((res) => res.json())
+
+    return responseResources.data.filter(
+      (resource) => resource.status == 'published'
+    )
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
 }

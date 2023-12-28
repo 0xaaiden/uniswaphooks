@@ -68,7 +68,7 @@ function HeadingsGroup({ groupItem }) {
         const { itemText, itemId } = firstItem
 
         const itemHasChildren = childItems.length > 0
-
+        
         return (
           <li key={itemId}>
             <a href={`#${itemId}`}>{itemText}</a>

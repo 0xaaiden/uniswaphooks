@@ -23,7 +23,7 @@ export function DataTableToolbar<TData>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter hooks by title..."
+          placeholder="Filter by title..."
           value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('title')?.setFilterValue(event.target.value)
@@ -37,7 +37,6 @@ export function DataTableToolbar<TData>({
             options={statuses}
           />
         )}
-        {/* TODO: Add filtering by Category */}
         {isFiltered && (
           <Button
             variant="ghost"

@@ -9,6 +9,8 @@ module.exports = {
       'i.imgur.com',
       'icons.llamao.fi',
       'coinbase.com',
+      'zsexknpkikhnetgdoayv.supabase.co',
+      'placehold.co',
     ],
   },
   reactStrictMode: true,

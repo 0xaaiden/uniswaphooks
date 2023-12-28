@@ -1,4 +1,4 @@
-import { getUrl, fetchData } from '@lib/utils'
+import { fetchData, getUrl, getResources } from '@lib/utils'
 
 import matter from 'gray-matter'
 import { promises as fs } from 'fs'
@@ -63,7 +63,17 @@ export default async function sitemap() {
     const dataPosts = await getPosts()
     const siteSlugsPosts = dataPosts.map((post) => `blog/${post.slug}`)
 
-    const siteSlugs = [...siteSlugsHooks, ...siteSlugsTools, ...siteSlugsPosts]
+    const resourcesPosts = await getResources()
+    const siteSlugsResourcesPosts = resourcesPosts.map(
+      (post) => `community-hub/${post.section}#${post.id}`
+    )
+
+    const siteSlugs = [
+      ...siteSlugsHooks,
+      ...siteSlugsTools,
+      ...siteSlugsPosts,
+      ...siteSlugsResourcesPosts,
+    ]
     const currentDate = new Date()
 
     const transformedSlugs = siteSlugs.map((siteSlug) => ({

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 import Container from '@component/Container'
@@ -11,32 +12,14 @@ import HeaderMenu from '@component/HeaderMenu'
 import HeaderMenuLinks from '@component/HeaderMenuLinks'
 import IconGithub from '@component/IconGithub'
 import SubmitButton from '@component/submitButton'
-import Image from 'next/image'
+
+import { menuLinks } from '@data/menuLinks'
 
 export default function Header() {
   const routerPathname = usePathname()
 
   const [showMenu, setShowMenu] = useState(false)
-
   useEffect(() => setShowMenu(false), [routerPathname])
-
-  const menuLinks = [
-    {
-      title: 'EVM Chains',
-      href: '/chains',
-      external: false,
-    },
-    {
-      title: 'Blog',
-      href: '/blog',
-      external: false,
-    },
-    {
-      title: 'Tools',
-      href: '/tools',
-      external: false,
-    },
-  ]
 
   return (
     <header className="sticky inset-x-0 top-0 z-50 border-b border-gray-200 bg-white">
@@ -99,7 +82,6 @@ function SponsorLink() {
         <span className="hidden text-xs font-medium md:block">
           Uniswap Foundation
         </span>
-        {/* <span className=" md:hidden text-xs font-medium">Uniswap Fnd</span> */}
       </span>
     </Link>
   )

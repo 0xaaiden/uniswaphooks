@@ -96,7 +96,7 @@ export default async function Page({ params }) {
             mdxComponents={mdxComponents}
           />
         </article>
-      </Container> 
+      </Container>
     </>
   )
 }

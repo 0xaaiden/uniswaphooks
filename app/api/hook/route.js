@@ -5,8 +5,11 @@ export async function POST(req) {
   try {
     const bodyAsString = await readStream(req.body)
     const body = JSON.parse(bodyAsString)
-    const { title, description, creator, website, github } = body
-    const categoryId = 'from-the-community'
+    let { title, description, creator, website, github, categoryId } = body
+
+    if (categoryId === '') {
+      categoryId = 'from-the-community'
+    }
 
     const newHook = await prisma.hook.create({
       data: {
@@ -15,7 +18,11 @@ export async function POST(req) {
         creator,
         website,
         github,
-        categoryId,
+        category: {
+          connect: {
+            id: categoryId,
+          },
+        },
       },
     })
 

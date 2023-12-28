@@ -39,6 +39,7 @@ async function getPosts() {
         title: blogData.title,
         date: blogData.date,
         emoji: blogData.emoji,
+        tag: blogData.tag,
         slug: blogSlug.replace('.mdx', ''),
       }
     })

@@ -66,12 +66,16 @@ async function getTools() {
 export default async function Page({ params }) {
   const data = await getToolData(params)
   const tools = await getTools()
-
+  const activeCategory = {
+    category: params.tool,
+    emoji: '🔧',
+  }
+  
   return (
     <Container classNames="py-8 lg:py-12 space-y-8 lg:space-y-12">
       <CollectionLinks
         activeCollection={params.toolId}
-        activeCategory={params.tool}
+        activeCategory={activeCategory}
         componentsData={tools}
       />
 

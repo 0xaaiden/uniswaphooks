@@ -29,7 +29,7 @@ const formSchema = z.object({
 
 export default function NewHookForm() {
   const router = useRouter()
-  const { handleSubmit, control } = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
@@ -39,12 +39,13 @@ export default function NewHookForm() {
     },
   })
 
-  async function onSubmit(values) {
-    values.creator = extractCreator(values.github)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const creator = extractCreator(values.github)
+
     try {
       await fetch('/api/hook', {
         method: 'POST',
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, creator }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -54,7 +55,7 @@ export default function NewHookForm() {
 
       await fetch('/api/mailer', {
         method: 'POST',
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, creator, type: 'hooks' }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -66,10 +67,10 @@ export default function NewHookForm() {
   }
 
   return (
-    <Form>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
-          control={control}
+          control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem>
@@ -82,8 +83,9 @@ export default function NewHookForm() {
             </FormItem>
           )}
         />
+
         <FormField
-          control={control}
+          control={form.control}
           name="description"
           render={({ field }) => (
             <FormItem>
@@ -98,10 +100,11 @@ export default function NewHookForm() {
             </FormItem>
           )}
         />
+
         <div className="flex space-x-4">
           <div className="flex-1">
             <FormField
-              control={control}
+              control={form.control}
               name="github"
               render={({ field }) => (
                 <FormItem>
@@ -119,7 +122,7 @@ export default function NewHookForm() {
           </div>
           <div className="flex-1">
             <FormField
-              control={control}
+              control={form.control}
               name="website"
               render={({ field }) => (
                 <FormItem>
