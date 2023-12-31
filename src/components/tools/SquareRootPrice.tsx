@@ -6,13 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@component/reusable/Select'
-import {
   Form,
   FormControl,
   FormDescription,
@@ -30,34 +23,31 @@ import { FaEquals } from 'react-icons/fa'
 const formSchema = z.object({
   tokenOne: z.string(),
   tokenTwo: z.string(),
-  tick: z.string(),
+  sqrtPrice: z.string(),
 })
 
-export default function TickPrice() {
-  const [calculatedPrice, setCalculatedPrice] = useState()
-  const { handleSubmit, control, value } = useForm({
+export default function SquareRootPrice() {
+  const [calculatedPrice, setCalculatedPrice] = useState('')
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      tokenOne: '18',
-      tokenTwo: '18',
-    },
   })
 
-  async function onSubmit(values) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const univ3prices = require('@thanpolas/univ3prices')
 
-    const price = univ3prices
-      .tickPrice([values.tokenOne, values.tokenTwo], values.tick)
-      .toAuto()
+    const price = univ3prices(
+      [values.tokenOne, values.tokenTwo],
+      values.sqrtPrice
+    ).toAuto()
+
     setCalculatedPrice(price)
   }
-
   return (
-    <Form>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} >
         <div className="mt-4 flex flex-col justify-between gap-6 px-4 sm:flex-row sm:px-8 md:px-12 lg:px-80">
           <FormField
-            control={control}
+            control={form.control}
             name="tokenOne"
             render={({ field }) => (
               <FormItem>
@@ -73,7 +63,7 @@ export default function TickPrice() {
             )}
           />
           <FormField
-            control={control}
+            control={form.control}
             name="tokenTwo"
             render={({ field }) => (
               <FormItem>
@@ -89,12 +79,12 @@ export default function TickPrice() {
             )}
           />
           <FormField
-            control={control}
-            name="tick"
+            control={form.control}
+            name="sqrtPrice"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-md font-semibold text-slate-600">
-                  Tick
+                  Square Root Price
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -103,7 +93,7 @@ export default function TickPrice() {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>Tick Price in Q128 format.</FormDescription>
+                <FormDescription>Enter the Square Root Price.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -128,7 +118,6 @@ export default function TickPrice() {
                     : '0'}
                 </span>
               </div>
-
               <span className="ml-2 cursor-pointer text-gray-800 duration-200 hover:text-gray-400 active:text-gray-600">
                 <CopyOutput value={calculatedPrice} />
               </span>
