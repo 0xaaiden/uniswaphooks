@@ -7,7 +7,7 @@ export async function POST(req) {
     const body = JSON.parse(bodyAsString)
     let { title, description, creator, website, github, categoryId } = body
 
-    if (categoryId === '') {
+    if (!categoryId || categoryId === '') {
       categoryId = 'from-the-community'
     }
 

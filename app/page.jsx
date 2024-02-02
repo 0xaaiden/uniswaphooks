@@ -1,5 +1,4 @@
 import { getCollections } from '@lib/utils'
-import { menuLinks } from '@data/menuLinks'
 
 import Container from '@component/Container'
 import HeroBanner from '@component/HeroBanner'

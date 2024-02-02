@@ -51,7 +51,7 @@ export async function POST(req) {
         <li>Status: Pending...</li>
       </ul>
   
-      <p>This is an automated message. Please do not reply to this email. Go to <a href="https://uniswaphooks-git-dashboard-findmalek.vercel.app/dashboard" target="_blank">Dashboard</a> to manage your hooks.</p>
+      <p>This is an automated message. Please do not reply to this email. Go to <a href="https://uniswaphooks-git-dashboard-findmalek.vercel.app" target="_blank">Dashboard</a> to manage your hooks.</p>
     `,
   }
 
@@ -79,7 +79,7 @@ export async function POST(req) {
         <li>Status: Pending...</li>
       </ul>
 
-      <p>This is an automated message. Please do not reply to this email. Go to <a href="https://uniswaphooks-git-dashboard-findmalek.vercel.app/dashboard" target="_blank">Dashboard</a> to manage your resources.</p>
+      <p>This is an automated message. Please do not reply to this email. Go to <a href="https://uniswaphooks-git-dashboard-findmalek.vercel.app" target="_blank">Dashboard</a> to manage your resources.</p>
     `,
   }
 
